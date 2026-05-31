@@ -1,0 +1,138 @@
+{
+  "generated_at_utc": "2026-05-31T13:39:43Z",
+  "window_hours": 24,
+  "baseline": {
+    "name": "GME January 2021",
+    "short_percent_float": 122.97,
+    "source": "SEC Staff Report on Equity and Options Market Structure Conditions in Early 2021",
+    "source_url": "https://www.sec.gov/files/staff-report-equity-options-market-struction-conditions-early-2021.pdf"
+  },
+  "symbols": {
+    "SPCE": {
+      "profile": {
+        "symbol": "SPCE",
+        "company": "Virgin Galactic",
+        "aliases": [
+          "Virgin Galactic",
+          "Virgin Galactic Holdings"
+        ]
+      },
+      "market": {
+        "status": "ok",
+        "note": "",
+        "price": 6.179999828338623,
+        "price_change_5d_pct": 124.72726648504081,
+        "price_change_20d_pct": 159.66384584777035,
+        "volume": 176789800.0,
+        "volume_avg_20d": 23803060.0,
+        "volume_ratio_20d": 7.427187932980045,
+        "short_percent_float": 22.58,
+        "shares_short": 22707202.0,
+        "short_ratio": 2.62,
+        "float_shares": 100481064.0,
+        "shares_outstanding": 104451974.0,
+        "market_cap": 645513216.0,
+        "average_volume": 12046819.0,
+        "beta": null
+      },
+      "social": {
+        "reddit": {
+          "status": "skipped",
+          "note": "Missing REDDIT_CLIENT_ID or REDDIT_CLIENT_SECRET",
+          "mention_count": null
+        },
+        "x": {
+          "status": "skipped",
+          "note": "Missing X_BEARER_TOKEN",
+          "mention_count": null
+        },
+        "youtube": {
+          "status": "skipped",
+          "note": "Missing YOUTUBE_API_KEY",
+          "mention_count": null
+        }
+      },
+      "score": {
+        "score": 39.090115739112136,
+        "confidence": 0.65,
+        "components": {
+          "short_pressure": 18.36220216312922,
+          "volume_pressure": 37.13593966490023,
+          "price_momentum": 83.1515109900272,
+          "social_heat": null,
+          "leader_concentration": null
+        },
+        "label": "low similarity",
+        "verdict_ko": "현재는 GME 2021과의 구조적 유사성이 낮습니다. 숏 압력이 GME 2021의 극단적 기준에는 못 미침; 소셜 결집 신호가 아직 제한적; 명확한 단일 인플루언서 집중도 약함."
+      }
+    },
+    "GME": {
+      "profile": {
+        "symbol": "GME",
+        "company": "GameStop",
+        "aliases": [
+          "GameStop",
+          "Gamestop"
+        ]
+      },
+      "market": {
+        "status": "ok",
+        "note": "",
+        "price": 21.18000030517578,
+        "price_change_5d_pct": -5.824808711757723,
+        "price_change_20d_pct": -15.110221813554425,
+        "volume": 6402400.0,
+        "volume_avg_20d": 9857660.0,
+        "volume_ratio_20d": 0.6494847661615434,
+        "short_percent_float": 14.149999999999999,
+        "shares_short": 57937281.0,
+        "short_ratio": 5.51,
+        "float_shares": 408209710.0,
+        "shares_outstanding": 448691227.0,
+        "market_cap": 9503280128.0,
+        "average_volume": 7389809.0,
+        "beta": 1.833
+      },
+      "social": {
+        "reddit": {
+          "status": "skipped",
+          "note": "Missing REDDIT_CLIENT_ID or REDDIT_CLIENT_SECRET",
+          "mention_count": null
+        },
+        "x": {
+          "status": "skipped",
+          "note": "Missing X_BEARER_TOKEN",
+          "mention_count": null
+        },
+        "youtube": {
+          "status": "skipped",
+          "note": "Missing YOUTUBE_API_KEY",
+          "mention_count": null
+        }
+      },
+      "score": {
+        "score": 6.310071145493709,
+        "confidence": 0.65,
+        "components": {
+          "short_pressure": 11.506871594697893,
+          "volume_pressure": 3.2474238308077172,
+          "price_momentum": 0.0,
+          "social_heat": null,
+          "leader_concentration": null
+        },
+        "label": "low similarity",
+        "verdict_ko": "현재는 GME 2021과의 구조적 유사성이 낮습니다. 숏 압력이 GME 2021의 극단적 기준에는 못 미침; 소셜 결집 신호가 아직 제한적; 명확한 단일 인플루언서 집중도 약함."
+      }
+    }
+  },
+  "meta": {
+    "runtime": "github-pages-actions",
+    "repo": "tudoryoon/-spce-data",
+    "disclaimer": "Research automation only. Not investment advice."
+  },
+  "comparison": {
+    "target": "SPCE",
+    "baseline": "GME",
+    "headline": "현재는 GME 2021과의 구조적 유사성이 낮습니다. 숏 압력이 GME 2021의 극단적 기준에는 못 미침; 소셜 결집 신호가 아직 제한적; 명확한 단일 인플루언서 집중도 약함."
+  }
+}

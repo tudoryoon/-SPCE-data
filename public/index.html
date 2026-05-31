@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SPCE Data Monitor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">$SPCE / $GME</p>
+          <h1>SPCE Data Monitor</h1>
+        </div>
+        <div class="topbar-actions">
+          <span id="last-updated" class="timestamp">Loading</span>
+          <button id="refresh-button" class="icon-button" type="button" aria-label="Refresh data" title="Refresh data">
+            <span aria-hidden="true">↻</span>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="score-band">
+          <div class="score-readout">
+            <span class="label">GME 2021 유사도</span>
+            <strong id="score-main">--</strong>
+            <span id="score-label" class="status-chip">--</span>
+          </div>
+          <p id="verdict" class="verdict">데이터를 불러오는 중입니다.</p>
+        </section>
+
+        <section class="metric-grid" aria-label="SPCE key metrics">
+          <article class="metric-card">
+            <span>Short float</span>
+            <strong id="metric-short">--</strong>
+            <small>GME 기준 122.97%</small>
+          </article>
+          <article class="metric-card">
+            <span>5D move</span>
+            <strong id="metric-move">--</strong>
+            <small>단기 모멘텀</small>
+          </article>
+          <article class="metric-card">
+            <span>Volume / 20D</span>
+            <strong id="metric-volume">--</strong>
+            <small>거래량 압력</small>
+          </article>
+          <article class="metric-card">
+            <span>Social heat</span>
+            <strong id="metric-social">--</strong>
+            <small>Reddit / X / YouTube</small>
+          </article>
+          <article class="metric-card">
+            <span>Leader focus</span>
+            <strong id="metric-leader">--</strong>
+            <small>작성자 집중도</small>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <h2>점수 구성</h2>
+              <span id="confidence-chip" class="status-chip">--</span>
+            </div>
+            <div id="component-bars" class="bar-list"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <h2>소셜 언급량</h2>
+              <span id="window-chip" class="status-chip">24h</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Source</th>
+                    <th>Mentions</th>
+                    <th>Top</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="social-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel wide">
+            <div class="panel-heading">
+              <h2>유사도 히스토리</h2>
+              <span class="status-chip">SPCE</span>
+            </div>
+            <div id="score-chart" class="chart"></div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-heading">
+              <h2>SPCE vs GME</h2>
+              <span class="status-chip">현재값</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>SPCE</th>
+                    <th>GME 2021</th>
+                  </tr>
+                </thead>
+                <tbody id="comparison-table"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>현재 GME 상태</h2>
+            <span class="status-chip">watch</span>
+          </div>
+          <div id="gme-strip" class="strip"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+

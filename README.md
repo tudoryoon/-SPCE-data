@@ -27,6 +27,10 @@ https://tudoryoon.github.io/-SPCE-data/
 
 키가 없어도 시장 데이터와 숏비중 기반 모니터링은 계속 작동하며, 해당 소셜 소스는 `skipped`로 표시됩니다.
 
+## Pages 설정
+
+워크플로는 `public/` 산출물을 `gh-pages` 브랜치에 발행합니다. GitHub Pages가 자동으로 열리지 않으면 레포의 `Settings -> Pages`에서 `Deploy from a branch`, 브랜치 `gh-pages`, 폴더 `/`를 선택하면 됩니다.
+
 ## 로컬 실행
 
 ```powershell

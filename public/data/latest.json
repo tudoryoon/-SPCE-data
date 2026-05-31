@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-05-31T13:39:43Z",
+  "generated_at_utc": "2026-05-31T13:41:19Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -127,7 +127,7 @@
   },
   "meta": {
     "runtime": "github-pages-actions",
-    "repo": "tudoryoon/-spce-data",
+    "repo": "tudoryoon/-SPCE-data",
     "disclaimer": "Research automation only. Not investment advice."
   },
   "comparison": {

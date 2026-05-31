@@ -576,7 +576,7 @@ def build_snapshot(window_hours: int) -> dict[str, Any]:
         "symbols": {},
         "meta": {
             "runtime": "github-pages-actions",
-            "repo": "tudoryoon/-spce-data",
+            "repo": "tudoryoon/-SPCE-data",
             "disclaimer": "Research automation only. Not investment advice.",
         },
     }
@@ -626,4 +626,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

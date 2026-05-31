@@ -7,7 +7,7 @@
 배포 후 URL:
 
 ```text
-https://tudoryoon.github.io/-spce-data/
+https://tudoryoon.github.io/-SPCE-data/
 ```
 
 ## 구조
@@ -41,4 +41,3 @@ python -m http.server 8000 -d public
 ## 점수 기준
 
 GME 2021 기준선은 SEC Staff Report의 `short interest as a percent of float reached 122.97%` 수치를 사용합니다. 유사도 점수는 투자 신호가 아니라 구조 비교용 리서치 지표입니다.
-

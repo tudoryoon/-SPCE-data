@@ -14,7 +14,18 @@ https://tudoryoon.github.io/-SPCE-data/
 
 - `public/`: GitHub Pages로 배포되는 정적 대시보드
 - `scripts/update_data.py`: 시장 데이터와 소셜 언급량을 수집해 `public/data/*.json` 생성
-- `.github/workflows/deploy.yml`: 30분마다 데이터 갱신 후 GitHub Pages 배포
+- `.github/workflows/deploy.yml`: 1시간마다 데이터 갱신 후 GitHub Pages 배포
+
+## WSB 트렌딩 지표
+
+WallStreetBets Top Trending Stocks 패널은 ApeWisdom의 공개 r/wallstreetbets mention ranking을 사용합니다. 기본 집계 범위는 24시간이며, Reddit OAuth 키가 있으면 최근 WSB 글/댓글 샘플에 rules-based BoW 감성 분류를 적용해 Positive / Negative / Neutral stacked bar로 표시합니다.
+
+- Mention count: r/wallstreetbets에서 종목 티커가 언급된 수
+- Positive: `calls`, `long`, `squeeze`, `moon`, `buy` 등 상승 방향성 단어가 우세한 글/댓글
+- Negative: `puts`, `shorting`, `dump`, `sell`, `overpriced` 등 하락 방향성 단어가 우세한 글/댓글
+- Neutral: 방향성이 없거나 긍정/부정이 섞인 글/댓글
+
+Reddit 키가 없으면 mention ranking은 표시하되 감성 split은 neutral로 둡니다.
 
 ## GitHub Secrets
 

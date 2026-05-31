@@ -26,6 +26,16 @@ function compact(value) {
   return Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value));
 }
 
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;",
+  }[char]));
+}
+
 function pct(value) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
   const cls = Number(value) >= 0 ? "positive" : "negative";
@@ -96,6 +106,7 @@ function render() {
 
   renderComponents(components);
   renderSocial(spce.social);
+  renderWsbTrending(latest.wsb_trending);
   renderComparison(spce, latest.baseline);
   renderGme(gme);
   renderChart();
@@ -131,6 +142,84 @@ function renderSocial(social) {
     `;
   });
   $("social-table").innerHTML = rows.join("");
+}
+
+function renderWsbTrending(wsb) {
+  if (!wsb || !Array.isArray(wsb.items) || !wsb.items.length) {
+    setText("wsb-status", "no data");
+    $("wsb-method").textContent = "WSB data unavailable";
+    $("wsb-chart").innerHTML = `<div class="empty-state">No WSB ranking data yet</div>`;
+    $("wsb-table").innerHTML = "";
+    return;
+  }
+
+  const sourceLabel = wsb.sentiment_source === "reddit_oauth_bow_sample" ? "BoW sentiment sample" : "mentions only";
+  setText("wsb-status", `${wsb.window_hours || 24}h · ${sourceLabel}`);
+  $("wsb-method").textContent = "ApeWisdom WSB 24h mention ranking; Reddit BoW sentiment when keys exist.";
+  $("wsb-method").title = wsb.methodology || "";
+  $("wsb-chart").innerHTML = stackedMentionChart(wsb.items.slice(0, 12));
+  $("wsb-table").innerHTML = wsb.items.slice(0, 10).map((item) => {
+    const prior = item.mentions_24h_ago === null || item.mentions_24h_ago === undefined ? "--" : compact(item.mentions_24h_ago);
+    const net = item.net_sentiment === null || item.net_sentiment === undefined ? "--" : `${num(item.net_sentiment * 100, 0)}%`;
+    const netClass = item.net_sentiment > 0.05 ? "positive" : item.net_sentiment < -0.05 ? "negative" : "neutral";
+    return `
+      <tr>
+        <td><strong>${esc(item.ticker)}</strong></td>
+        <td>${compact(item.mentions)}</td>
+        <td>${prior}</td>
+        <td class="${netClass}">${net}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function stackedMentionChart(items) {
+  const width = 940;
+  const height = 360;
+  const pad = { top: 34, right: 16, bottom: 78, left: 54 };
+  const innerW = width - pad.left - pad.right;
+  const innerH = height - pad.top - pad.bottom;
+  const maxMentions = Math.max(1, ...items.map((item) => Number(item.mentions) || 0));
+  const gap = 13;
+  const barW = Math.max(22, (innerW - gap * (items.length - 1)) / Math.max(1, items.length));
+  const y = (value) => pad.top + innerH - (value / maxMentions) * innerH;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((ratio) => Math.round(maxMentions * ratio));
+  const grid = ticks.map((tick) => `
+    <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
+    <text x="12" y="${y(tick) + 4}" fill="#69736f" font-size="12">${compact(tick)}</text>
+  `).join("");
+  const bars = items.map((item, index) => {
+    const x = pad.left + index * (barW + gap);
+    const positive = Number(item.positive) || 0;
+    const negative = Number(item.negative) || 0;
+    const neutral = Number(item.neutral) || 0;
+    const total = Math.max(positive + negative + neutral, Number(item.mentions) || 0);
+    const posH = (positive / maxMentions) * innerH;
+    const negH = (negative / maxMentions) * innerH;
+    const neuH = (neutral / maxMentions) * innerH;
+    const base = pad.top + innerH;
+    const highlight = item.ticker === "SPCE" ? `<rect x="${x - 4}" y="${y(total) - 8}" width="${barW + 8}" height="${(total / maxMentions) * innerH + 12}" rx="7" fill="none" stroke="#2f6fb0" stroke-width="2"/>` : "";
+    return `
+      ${highlight}
+      <rect x="${x}" y="${base - posH}" width="${barW}" height="${posH}" fill="#0f8a5f"/>
+      <rect x="${x}" y="${base - posH - negH}" width="${barW}" height="${negH}" fill="#b54242"/>
+      <rect x="${x}" y="${base - posH - negH - neuH}" width="${barW}" height="${neuH}" fill="#7b7d86"/>
+      <text transform="translate(${x + barW / 2} ${height - 42}) rotate(-34)" text-anchor="end" fill="#18201d" font-size="13" font-weight="700">${esc(item.ticker)}</text>
+      <text x="${x + barW / 2}" y="${Math.max(18, y(total) - 10)}" text-anchor="middle" fill="#69736f" font-size="12">${compact(total)}</text>
+    `;
+  }).join("");
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="WallStreetBets trending stock mentions">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+      <text x="${pad.left}" y="18" fill="#69736f" font-size="13">Company mentions</text>
+      <circle cx="${width - 280}" cy="15" r="7" fill="#0f8a5f"/><text x="${width - 267}" y="19" fill="#18201d" font-size="13">Positive</text>
+      <circle cx="${width - 190}" cy="15" r="7" fill="#b54242"/><text x="${width - 177}" y="19" fill="#18201d" font-size="13">Negative</text>
+      <circle cx="${width - 96}" cy="15" r="7" fill="#7b7d86"/><text x="${width - 83}" y="19" fill="#18201d" font-size="13">Neutral</text>
+      ${grid}
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${pad.top + innerH}" y2="${pad.top + innerH}" stroke="#aeb9b2"/>
+      ${bars}
+    </svg>
+  `;
 }
 
 function renderComparison(spce, baseline) {
@@ -203,4 +292,3 @@ function lineChart(points) {
 $("refresh-button").addEventListener("click", loadData);
 loadData();
 setInterval(loadData, 300000);
-

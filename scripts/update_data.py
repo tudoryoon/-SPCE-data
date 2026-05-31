@@ -67,6 +67,92 @@ SOCIAL_THRESHOLDS_24H = {
     "youtube": 50.0,
 }
 
+WSB_TOP_LIMIT = 15
+WSB_SAMPLE_PAGES = 4
+TICKER_DENYLIST = {
+    "A",
+    "AI",
+    "ALL",
+    "ARE",
+    "BE",
+    "BIG",
+    "CEO",
+    "CFO",
+    "DD",
+    "EPS",
+    "ETF",
+    "FOR",
+    "GDP",
+    "GO",
+    "IMO",
+    "IPO",
+    "IRS",
+    "IT",
+    "LOL",
+    "NEW",
+    "NOW",
+    "ON",
+    "ONE",
+    "OR",
+    "PE",
+    "PM",
+    "RH",
+    "SEC",
+    "TA",
+    "THE",
+    "USA",
+    "YOLO",
+}
+BULLISH_TERMS = [
+    "buy",
+    "bought",
+    "buying",
+    "calls",
+    "call",
+    "long",
+    "moon",
+    "rocket",
+    "squeeze",
+    "short squeeze",
+    "gamma squeeze",
+    "breakout",
+    "undervalued",
+    "oversold",
+    "bullish",
+    "rip",
+    "ripping",
+    "runup",
+    "pump",
+    "loaded",
+    "holding",
+    "hold",
+    "diamond",
+    "tendies",
+]
+BEARISH_TERMS = [
+    "puts",
+    "put",
+    "shorting",
+    "shorted",
+    "sell",
+    "selling",
+    "dump",
+    "dumping",
+    "overpriced",
+    "overvalued",
+    "bearish",
+    "rug",
+    "crash",
+    "bankruptcy",
+    "dilution",
+    "diluting",
+    "scam",
+    "fraud",
+    "bagholder",
+    "bagholders",
+    "dead",
+]
+
 
 def utc_now() -> datetime:
     return datetime.now(timezone.utc)
@@ -457,6 +543,175 @@ def collect_youtube(symbol: str, window_hours: int) -> dict[str, Any]:
     }
 
 
+def count_terms(text: str, terms: list[str]) -> int:
+    lowered = text.lower()
+    count = 0
+    for term in terms:
+        if " " in term:
+            count += lowered.count(term)
+        else:
+            count += len(re.findall(rf"\b{re.escape(term)}\b", lowered))
+    return count
+
+
+def classify_sentiment(text: str) -> str:
+    bullish = count_terms(text, BULLISH_TERMS)
+    bearish = count_terms(text, BEARISH_TERMS)
+    if bullish - bearish >= 1:
+        return "positive"
+    if bearish - bullish >= 1:
+        return "negative"
+    return "neutral"
+
+
+def extract_tickers(text: str, allowed: set[str]) -> set[str]:
+    cashtags = {
+        match.group(1).upper()
+        for match in re.finditer(r"(?<![A-Za-z0-9])\$([A-Za-z]{1,5})(?![A-Za-z0-9])", text)
+    }
+    uppercase_tokens = {
+        match.group(0)
+        for match in re.finditer(r"(?<![A-Za-z0-9$])([A-Z]{2,5})(?![A-Za-z0-9])", text)
+    }
+    tickers = (cashtags | uppercase_tokens) & allowed
+    return {ticker for ticker in tickers if ticker not in TICKER_DENYLIST or ticker in cashtags}
+
+
+def fetch_apewisdom_wsb(limit: int = WSB_TOP_LIMIT) -> tuple[list[dict[str, Any]], str | None]:
+    payload, err = http_get_json("https://apewisdom.io/api/v1.0/filter/wallstreetbets")
+    if err:
+        return [], err
+    rows = []
+    for item in ((payload or {}).get("results") or [])[:limit]:
+        rows.append(
+            {
+                "rank": int(item.get("rank") or 0),
+                "ticker": str(item.get("ticker") or "").upper(),
+                "name": item.get("name"),
+                "mentions": int(item.get("mentions") or 0),
+                "upvotes": int(item.get("upvotes") or 0),
+                "rank_24h_ago": int(item.get("rank_24h_ago") or 0) if item.get("rank_24h_ago") not in (None, "") else None,
+                "mentions_24h_ago": int(item.get("mentions_24h_ago") or 0) if item.get("mentions_24h_ago") not in (None, "") else None,
+            }
+        )
+    return rows, None
+
+
+def reddit_listing_items(path: str, headers: dict[str, str], window_hours: int, pages: int) -> tuple[list[dict[str, Any]], list[str]]:
+    start_ts = (utc_now() - timedelta(hours=window_hours)).timestamp()
+    items: list[dict[str, Any]] = []
+    errors: list[str] = []
+    after = None
+    for _page in range(pages):
+        params: dict[str, Any] = {"limit": 100, "raw_json": 1}
+        if after:
+            params["after"] = after
+        payload, err = http_get_json(f"https://oauth.reddit.com/r/wallstreetbets/{path}", params=params, headers=headers)
+        if err:
+            errors.append(f"{path}: {err}")
+            break
+        children = (((payload or {}).get("data") or {}).get("children") or [])
+        oldest_seen = None
+        for child in children:
+            data = child.get("data") or {}
+            created = float(data.get("created_utc") or 0)
+            if oldest_seen is None or created < oldest_seen:
+                oldest_seen = created
+            if created < start_ts:
+                continue
+            if path == "comments":
+                text = f"{data.get('link_title') or ''}\n{data.get('body') or ''}"
+                permalink = data.get("permalink") or ""
+            else:
+                text = f"{data.get('title') or ''}\n{data.get('selftext') or ''}"
+                permalink = data.get("permalink") or ""
+            items.append(
+                {
+                    "id": data.get("id"),
+                    "author": data.get("author") or "unknown",
+                    "created_utc": created,
+                    "text": text,
+                    "score": int(data.get("score") or 0),
+                    "permalink": "https://www.reddit.com" + permalink,
+                }
+            )
+        after = ((payload or {}).get("data") or {}).get("after")
+        if not after or (oldest_seen is not None and oldest_seen < start_ts):
+            break
+        time.sleep(0.15)
+    return items, errors
+
+
+def collect_wsb_trending(window_hours: int) -> dict[str, Any]:
+    ape_rows, ape_error = fetch_apewisdom_wsb(WSB_TOP_LIMIT)
+    allowed = {row["ticker"] for row in ape_rows if row.get("ticker")}
+    sentiment_counts: dict[str, Counter[str]] = {ticker: Counter() for ticker in allowed}
+    mention_keys: set[tuple[str, str, str]] = set()
+    sample_total = 0
+    errors: list[str] = []
+    sentiment_source = "apewisdom_mentions_only"
+
+    headers, auth_error = reddit_headers()
+    if headers and allowed:
+        sentiment_source = "reddit_oauth_bow_sample"
+        for path in ["new", "comments"]:
+            items, item_errors = reddit_listing_items(path, headers, window_hours, WSB_SAMPLE_PAGES)
+            errors.extend(item_errors)
+            for item in items:
+                tickers = extract_tickers(item["text"], allowed)
+                if not tickers:
+                    continue
+                label = classify_sentiment(item["text"])
+                hour_bucket = datetime.fromtimestamp(item["created_utc"], timezone.utc).strftime("%Y%m%d%H")
+                for ticker in tickers:
+                    key = (item["author"], ticker, hour_bucket)
+                    if key in mention_keys:
+                        continue
+                    mention_keys.add(key)
+                    sentiment_counts[ticker][label] += 1
+                    sample_total += 1
+    elif auth_error:
+        errors.append(auth_error)
+
+    rows = []
+    for row in ape_rows:
+        ticker = row["ticker"]
+        total = int(row.get("mentions") or 0)
+        counts = sentiment_counts.get(ticker, Counter())
+        sample_mentions = sum(counts.values())
+        if sample_mentions:
+            positive = round(total * counts["positive"] / sample_mentions)
+            negative = round(total * counts["negative"] / sample_mentions)
+            neutral = max(0, total - positive - negative)
+        else:
+            positive = 0
+            negative = 0
+            neutral = total
+        rows.append(
+            {
+                **row,
+                "positive": positive,
+                "negative": negative,
+                "neutral": neutral,
+                "net_sentiment": (positive - negative) / total if total else None,
+                "sample_mentions": sample_mentions,
+            }
+        )
+
+    return {
+        "status": "ok" if ape_rows and not errors else ("partial" if ape_rows else "error"),
+        "note": "; ".join(errors[:4]) if errors else "",
+        "source": "ApeWisdom wallstreetbets ranking + local Reddit BoW sentiment split",
+        "source_url": "https://apewisdom.io/api/v1.0/filter/wallstreetbets",
+        "methodology": "Rank by 24h r/wallstreetbets mention volume. Sentiment split uses a local rules-based bag-of-words classifier on recent WSB posts/comments when Reddit OAuth credentials are available; otherwise mentions are shown as neutral.",
+        "window_hours": 24,
+        "sentiment_source": sentiment_source,
+        "sample_mentions": sample_total,
+        "items": rows,
+        "error": ape_error,
+    }
+
+
 def score_symbol(symbol_data: dict[str, Any], window_hours: int) -> dict[str, Any]:
     market = symbol_data.get("market") or {}
     social = symbol_data.get("social") or {}
@@ -565,7 +820,19 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
                 for source, payload in (data.get("social") or {}).items()
             },
         }
-    return {"generated_at_utc": snapshot["generated_at_utc"], "symbols": symbols}
+    wsb_spce = next(
+        (item for item in ((snapshot.get("wsb_trending") or {}).get("items") or []) if item.get("ticker") == "SPCE"),
+        {},
+    )
+    return {
+        "generated_at_utc": snapshot["generated_at_utc"],
+        "symbols": symbols,
+        "wsb": {
+            "spce_mentions": wsb_spce.get("mentions"),
+            "spce_rank": wsb_spce.get("rank"),
+            "spce_net_sentiment": wsb_spce.get("net_sentiment"),
+        },
+    }
 
 
 def build_snapshot(window_hours: int) -> dict[str, Any]:
@@ -574,6 +841,7 @@ def build_snapshot(window_hours: int) -> dict[str, Any]:
         "window_hours": window_hours,
         "baseline": BASELINE,
         "symbols": {},
+        "wsb_trending": collect_wsb_trending(window_hours),
         "meta": {
             "runtime": "github-pages-actions",
             "repo": "tudoryoon/-SPCE-data",

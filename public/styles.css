@@ -209,6 +209,50 @@ h2 {
   margin-bottom: 14px;
 }
 
+.panel-subtitle {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.trend-panel {
+  margin-bottom: 18px;
+}
+
+.trend-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.46fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.stacked-chart {
+  min-height: 360px;
+  overflow-x: auto;
+}
+
+.stacked-chart svg {
+  display: block;
+  width: 100%;
+  min-width: 820px;
+  height: 360px;
+}
+
+.compact-table table {
+  min-width: 420px;
+}
+
+.empty-state {
+  display: grid;
+  min-height: 220px;
+  place-items: center;
+  color: var(--muted);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+}
+
 .bar-list {
   display: grid;
   gap: 14px;
@@ -337,7 +381,8 @@ tr:last-child td {
 
 @media (max-width: 980px) {
   .score-band,
-  .dashboard-grid {
+  .dashboard-grid,
+  .trend-layout {
     grid-template-columns: 1fr;
   }
 
@@ -362,6 +407,11 @@ tr:last-child td {
     justify-content: space-between;
   }
 
+  .panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .metric-grid,
   .strip {
     grid-template-columns: 1fr;
@@ -371,4 +421,3 @@ tr:last-child td {
     white-space: normal;
   }
 }
-

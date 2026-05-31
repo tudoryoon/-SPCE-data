@@ -59,6 +59,32 @@
           </article>
         </section>
 
+        <section class="panel trend-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>WallStreetBets Top Trending Stocks</h2>
+              <p id="wsb-method" class="panel-subtitle">r/wallstreetbets 24h mentions</p>
+            </div>
+            <span id="wsb-status" class="status-chip">--</span>
+          </div>
+          <div class="trend-layout">
+            <div id="wsb-chart" class="stacked-chart"></div>
+            <div class="table-wrap compact-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ticker</th>
+                    <th>Mentions</th>
+                    <th>24h Ago</th>
+                    <th>Net</th>
+                  </tr>
+                </thead>
+                <tbody id="wsb-table"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         <section class="dashboard-grid">
           <article class="panel">
             <div class="panel-heading">
@@ -131,4 +157,3 @@
     <script src="app.js"></script>
   </body>
 </html>
-

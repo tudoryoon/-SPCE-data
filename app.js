@@ -96,6 +96,15 @@ function localTime(iso) {
   }).format(new Date(iso));
 }
 
+function localHourLabel(time) {
+  return new Intl.DateTimeFormat("ko-KR", {
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    hour12: false,
+  }).format(new Date(time));
+}
+
 function setText(id, value) {
   const el = $(id);
   if (el) el.textContent = value;
@@ -139,6 +148,7 @@ async function loadData() {
     state.history = Array.isArray(history) ? history : [];
     render();
   } catch (error) {
+    console.error("Failed to load dashboard data", error);
     setText("last-updated", "불러오기 실패");
   }
 }
@@ -613,7 +623,7 @@ function renderWsbTrending(wsb) {
 }
 
 function renderWsbMentionHistory() {
-  const points = state.history
+  const rawPoints = state.history
     .map((item) => ({
       time: new Date(item.generated_at_utc).getTime(),
       value: item.wsb?.spce_mentions,
@@ -622,20 +632,40 @@ function renderWsbMentionHistory() {
     .filter((item) => Number.isFinite(item.time) && item.value !== null && item.value !== undefined);
   const latestItem = state.latest?.wsb_trending?.items?.find((item) => item.ticker === "SPCE");
   const latestTime = new Date(state.latest?.generated_at_utc || 0).getTime();
-  if (latestItem && Number.isFinite(latestTime) && !points.some((item) => item.time === latestTime)) {
-    points.push({
+  if (latestItem && Number.isFinite(latestTime) && !rawPoints.some((item) => item.time === latestTime)) {
+    rawPoints.push({
       time: latestTime,
       value: latestItem.mentions,
       rank: latestItem.rank,
     });
   }
-  points.sort((a, b) => a.time - b.time);
+  const points = hourlyMentionPoints(rawPoints);
   const latestPoint = points[points.length - 1];
   setText(
     "wsb-history-latest",
-    latestPoint ? `최신 ${compact(latestPoint.value)} · 순위 #${latestPoint.rank || "--"}` : "--",
+    latestPoint ? `최신 ${compact(latestPoint.value)} · 순위 #${latestPoint.rank || "--"} · ${localHourLabel(latestPoint.time)}` : "--",
   );
   $("wsb-history-chart").innerHTML = mentionHistoryChart(points);
+}
+
+function hourlyMentionPoints(rawPoints) {
+  const buckets = new Map();
+  rawPoints
+    .filter((point) => Number.isFinite(point.time) && point.value !== null && point.value !== undefined)
+    .sort((a, b) => a.time - b.time)
+    .forEach((point) => {
+      const hour = Math.floor(point.time / 3600000) * 3600000;
+      const current = buckets.get(hour);
+      if (!current || point.time > current.collectedTime) {
+        buckets.set(hour, {
+          time: hour,
+          collectedTime: point.time,
+          value: point.value,
+          rank: point.rank,
+        });
+      }
+    });
+  return [...buckets.values()].sort((a, b) => a.time - b.time);
 }
 
 function renderSpceGoogleTrends(trends) {
@@ -837,7 +867,8 @@ function mentionHistoryChart(points) {
     <text x="10" y="${y(tick) + 4}" fill="#69736f" font-size="12">${compact(tick)}</text>
   `).join("");
   const markers = points.map((point) => {
-    const tooltip = `날짜: ${new Date(point.time).toLocaleString("ko-KR")}\n언급량: ${compact(point.value)}\n순위: #${point.rank || "--"}`;
+    const collectedLine = point.collectedTime ? `\n수집시각: ${new Date(point.collectedTime).toLocaleString("ko-KR")}` : "";
+    const tooltip = `시간대: ${localHourLabel(point.time)}${collectedLine}\n언급량: ${compact(point.value)}\n순위: #${point.rank || "--"}`;
     return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="#2f6fb0"></circle>`;
   }).join("");
   const firstLabel = localTime(new Date(points[0].time).toISOString());

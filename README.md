@@ -14,7 +14,7 @@ https://tudoryoon.github.io/-SPCE-data/
 
 - `public/`: GitHub Pages로 배포되는 정적 대시보드
 - `scripts/update_data.py`: 시장 데이터와 소셜 언급량을 수집해 `public/data/*.json` 생성
-- `.github/workflows/deploy.yml`: 1시간마다 데이터 갱신 후 GitHub Pages 배포
+- `.github/workflows/deploy.yml`: 3시간마다 데이터 갱신 후 GitHub Pages 배포
 
 ## WSB 트렌딩 지표
 

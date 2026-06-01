@@ -384,5 +384,41 @@
       "spce_rank": 1,
       "spce_net_sentiment": 0.0
     }
+  },
+  {
+    "generated_at_utc": "2026-06-01T03:52:14Z",
+    "symbols": {
+      "SPCE": {
+        "price": 6.179999828338623,
+        "price_change_5d_pct": 124.72726648504081,
+        "volume_ratio_20d": 7.427187932980045,
+        "short_percent_float": 22.58,
+        "score": 39.090115739112136,
+        "confidence": 0.65,
+        "social_mentions": {
+          "reddit": null,
+          "x": null,
+          "youtube": null
+        }
+      },
+      "GME": {
+        "price": 21.18000030517578,
+        "price_change_5d_pct": -5.824808711757723,
+        "volume_ratio_20d": 0.6494847661615434,
+        "short_percent_float": 14.149999999999999,
+        "score": 6.310071145493709,
+        "confidence": 0.65,
+        "social_mentions": {
+          "reddit": null,
+          "x": null,
+          "youtube": null
+        }
+      }
+    },
+    "wsb": {
+      "spce_mentions": 915,
+      "spce_rank": 1,
+      "spce_net_sentiment": 0.0
+    }
   }
 ]

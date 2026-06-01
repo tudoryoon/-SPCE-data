@@ -44,6 +44,105 @@ GME_2021_SOCIAL_BENCHMARK = {
     "note": "외부 소셜 리스닝 벤치마크입니다. 현재 ApeWisdom 24시간 WSB 순위와는 산식이 다릅니다.",
 }
 
+GME_2021_SHORT_INTEREST_FALLBACK = [
+    {
+        "settlement_date": "2020-11-13",
+        "shares_short": 67454064.0,
+        "previous_shares_short": 66806277.0,
+        "change_shares": 647787.0,
+        "change_percent": 0.97,
+        "average_daily_volume": 4802213.0,
+        "days_to_cover": 14.05,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2020-11-30",
+        "shares_short": 67982121.0,
+        "previous_shares_short": 67454064.0,
+        "change_shares": 528057.0,
+        "change_percent": 0.78,
+        "average_daily_volume": 7797115.0,
+        "days_to_cover": 8.72,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2020-12-15",
+        "shares_short": 68127116.0,
+        "previous_shares_short": 67982121.0,
+        "change_shares": 144995.0,
+        "change_percent": 0.21,
+        "average_daily_volume": 9885845.0,
+        "days_to_cover": 6.89,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2020-12-31",
+        "shares_short": 71196206.0,
+        "previous_shares_short": 68127116.0,
+        "change_shares": 3069090.0,
+        "change_percent": 4.5,
+        "average_daily_volume": 11588797.0,
+        "days_to_cover": 6.14,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2021-01-15",
+        "shares_short": 61782730.0,
+        "previous_shares_short": 71196206.0,
+        "change_shares": -9413476.0,
+        "change_percent": -13.22,
+        "average_daily_volume": 29385884.0,
+        "days_to_cover": 2.1,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2021-01-29",
+        "shares_short": 21409004.0,
+        "previous_shares_short": 61782730.0,
+        "change_shares": -40373726.0,
+        "change_percent": -65.35,
+        "average_daily_volume": 96789540.0,
+        "days_to_cover": 1.0,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2021-02-12",
+        "shares_short": 16468038.0,
+        "previous_shares_short": 21409004.0,
+        "change_shares": -4940966.0,
+        "change_percent": -23.08,
+        "average_daily_volume": 40407815.0,
+        "days_to_cover": 1.0,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+    {
+        "settlement_date": "2021-02-26",
+        "shares_short": 14200138.0,
+        "previous_shares_short": 16468038.0,
+        "change_shares": -2267900.0,
+        "change_percent": -13.77,
+        "average_daily_volume": 35190707.0,
+        "days_to_cover": 1.0,
+        "market_class": "NYSE",
+        "revision_flag": None,
+        "stock_split_flag": None,
+    },
+]
+
 SYMBOLS = {
     "SPCE": {
         "company": "Virgin Galactic",
@@ -512,6 +611,14 @@ def collect_gme_2021_case() -> dict[str, Any]:
 
     short_interest = collect_finra_short_interest_history("GME", "2020-11-01", "2021-03-01")
     short_interest_history = short_interest.get("history") or []
+    if not short_interest_history:
+        short_interest_history = [dict(row) for row in GME_2021_SHORT_INTEREST_FALLBACK]
+        short_interest = {
+            **short_interest,
+            "status": "fallback",
+            "source": "FINRA 통합 공매도 잔고 (고정 fallback)",
+            "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
+        }
     short_interest_peak = max(short_interest_history, key=lambda item: item.get("shares_short") or 0) if short_interest_history else None
     short_flow = collect_finra_daily_short_volume_files("GME", "2021-01-04", "2021-02-12")
     short_flow_history = short_flow.get("history") or []

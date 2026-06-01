@@ -117,6 +117,7 @@ function koStatus(value) {
   if (raw === "error") return "오류";
   if (raw === "skipped") return "건너뜀";
   if (raw === "missing") return "누락";
+  if (raw === "fallback") return "대체 데이터";
   return value;
 }
 

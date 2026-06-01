@@ -546,7 +546,7 @@
     }
   },
   {
-    "generated_at_utc": "2026-06-01T04:22:16Z",
+    "generated_at_utc": "2026-06-01T04:26:53Z",
     "symbols": {
       "SPCE": {
         "price": 6.179999828338623,
@@ -584,7 +584,7 @@
       }
     },
     "wsb": {
-      "spce_mentions": 923,
+      "spce_mentions": 921,
       "spce_rank": 1,
       "spce_net_sentiment": 0.0
     }

@@ -4,11 +4,11 @@ const state = {
 };
 
 const componentLabels = {
-  short_pressure: "Short pressure",
-  volume_pressure: "Volume pressure",
-  price_momentum: "Price momentum",
-  social_heat: "Social heat",
-  leader_concentration: "Leader focus",
+  short_pressure: "공매도 압력",
+  volume_pressure: "거래량 압력",
+  price_momentum: "가격 모멘텀",
+  social_heat: "소셜 관심도",
+  leader_concentration: "인플루언서 집중도",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -46,6 +46,26 @@ function esc(value) {
   }[char]));
 }
 
+function tooltipAttr(value) {
+  return `data-tooltip="${esc(value)}"`;
+}
+
+function showChartTooltip(event, target) {
+  const tooltip = $("chart-tooltip");
+  if (!tooltip || !target?.dataset?.tooltip) return;
+  tooltip.textContent = target.dataset.tooltip;
+  tooltip.hidden = false;
+  const x = Math.min(window.innerWidth - tooltip.offsetWidth - 12, event.clientX + 14);
+  const y = Math.min(window.innerHeight - tooltip.offsetHeight - 12, event.clientY + 14);
+  tooltip.style.left = `${Math.max(8, x)}px`;
+  tooltip.style.top = `${Math.max(8, y)}px`;
+}
+
+function hideChartTooltip() {
+  const tooltip = $("chart-tooltip");
+  if (tooltip) tooltip.hidden = true;
+}
+
 function pct(value) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
   const cls = Number(value) >= 0 ? "positive" : "negative";
@@ -79,6 +99,27 @@ function setText(id, value) {
   if (el) el.textContent = value;
 }
 
+function koClassification(value) {
+  if (!value) return "--";
+  if (value.includes("below the current top-100") || value.includes("보다는 낮")) return "높은 편이지만 현재 상위 100개 고공매도 구간보다는 낮습니다.";
+  if (value.includes("Top-100") || value.includes("상위 100개 고공매도 구간입니다")) return "현재 상위 100개 고공매도 구간에 들어갑니다.";
+  if (value.includes("아닙니다")) return value;
+  if (value.includes("10%")) return "일반적인 10% 기준으로는 높은 공매도 비율입니다.";
+  if (value.includes("높은")) return value;
+  return value;
+}
+
+function koStatus(value) {
+  const raw = String(value || "").toLowerCase();
+  if (!raw) return "--";
+  if (raw === "ok") return "정상";
+  if (raw === "empty") return "데이터 없음";
+  if (raw === "error") return "오류";
+  if (raw === "skipped") return "건너뜀";
+  if (raw === "missing") return "누락";
+  return value;
+}
+
 async function fetchJson(path) {
   const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`${path}: ${response.status}`);
@@ -95,7 +136,7 @@ async function loadData() {
     state.history = Array.isArray(history) ? history : [];
     render();
   } catch (error) {
-    setText("last-updated", "Load failed");
+    setText("last-updated", "불러오기 실패");
   }
 }
 
@@ -106,8 +147,8 @@ function render() {
   const components = spce.score.components;
 
   setText("last-updated", localTime(latest.generated_at_utc));
-  setText("confidence-chip", `confidence ${num(spce.score.confidence * 100, 0)}%`);
-  setText("window-chip", `${latest.window_hours}h`);
+  setText("confidence-chip", `신뢰도 ${num(spce.score.confidence * 100, 0)}%`);
+  setText("window-chip", `${latest.window_hours}시간`);
 
   $("metric-short").innerHTML = `${num(spce.market.short_percent_float)}%`;
   $("metric-move").innerHTML = pct(spce.market.price_change_5d_pct);
@@ -151,7 +192,7 @@ function renderSocial(social) {
         <td>${source.toUpperCase()}</td>
         <td>${item.mention_count === null || item.mention_count === undefined ? "--" : compact(item.mention_count)}</td>
         <td>${top}</td>
-        <td><span class="status-chip">${item.status || "--"}</span></td>
+        <td><span class="status-chip">${koStatus(item.status)}</span></td>
       </tr>
     `;
   });
@@ -164,42 +205,42 @@ function renderShortDeepDive(market) {
   const volume = market.finra_short_volume || {};
   const settlement = detail.official_settlement_date || "--";
   const volumeDate = detail.daily_short_volume_date || "--";
-  setText("short-source-chip", settlement === "--" ? "FINRA" : `SI ${settlement} | flow ${volumeDate}`);
+  setText("short-source-chip", settlement === "--" ? "FINRA" : `잔고 ${settlement} | 흐름 ${volumeDate}`);
   $("short-metric-grid").innerHTML = [
     {
-      label: "Shares short",
+      label: "공매도 주식 수",
       value: compact(detail.shares_short),
-      sub: `${detail.shares_short_source || "--"} open interest`,
+      sub: `${detail.shares_short_source || "--"} 잔고 기준`,
     },
     {
-      label: "Short / float",
+      label: "유통주식 대비",
       value: `${num(detail.short_percent_float)}%`,
-      sub: `${compact(detail.float_shares)} float shares`,
+      sub: `유통주식 ${compact(detail.float_shares)}`,
     },
     {
-      label: "Days to cover",
+      label: "커버 소요일",
       value: num(detail.official_days_to_cover),
-      sub: `${compact(detail.official_average_daily_volume)} avg vol`,
+      sub: `평균 거래량 ${compact(detail.official_average_daily_volume)}`,
     },
     {
-      label: "Change vs prior",
+      label: "직전 대비 변화",
       value: signedPct(detail.short_interest_change_percent),
       sub: signedCompact(detail.short_interest_change_shares),
     },
     {
-      label: "Short notional",
+      label: "공매도 명목액",
       value: money(detail.short_notional),
-      sub: "shares short x price",
+      sub: "공매도 주식 수 x 현재가",
     },
     {
-      label: "Short / market cap",
+      label: "시총 대비 공매도",
       value: `${num(detail.short_notional_to_market_cap_pct)}%`,
       sub: `${money(detail.short_notional)} / ${money(detail.market_cap)}`,
     },
     {
-      label: "Daily short volume",
+      label: "일별 공매도성 거래",
       value: detail.daily_short_volume_ratio === null || detail.daily_short_volume_ratio === undefined ? "--" : `${num(detail.daily_short_volume_ratio * 100, 1)}%`,
-      sub: `${detail.daily_short_volume_date || "--"} | 5D ${detail.average_short_volume_ratio_5d === null || detail.average_short_volume_ratio_5d === undefined ? "--" : `${num(detail.average_short_volume_ratio_5d * 100, 1)}%`}`,
+      sub: `${detail.daily_short_volume_date || "--"} | 5일 평균 ${detail.average_short_volume_ratio_5d === null || detail.average_short_volume_ratio_5d === undefined ? "--" : `${num(detail.average_short_volume_ratio_5d * 100, 1)}%`}`,
     },
   ].map((item) => `
     <article class="short-metric">
@@ -213,27 +254,27 @@ function renderShortDeepDive(market) {
       label: item.settlement_date,
       time: new Date(item.settlement_date).getTime(),
       value: item.shares_short,
-      extra: `DTC ${num(item.days_to_cover)}`,
+      extra: `커버 소요일 ${num(item.days_to_cover)}`,
     })),
-    { aria: "SPCE short interest shares", color: "#2f6fb0", formatter: compact, minZero: false },
+    { aria: "SPCE 공매도 잔고", color: "#2f6fb0", formatter: compact, minZero: false },
   );
   $("short-volume-chart").innerHTML = shortSeriesChart(
     (volume.history || []).map((item) => ({
       label: item.trade_date,
       time: new Date(item.trade_date).getTime(),
       value: item.short_volume_ratio,
-      extra: `${compact(item.short_volume)} short vol`,
+      extra: `공매도성 거래량 ${compact(item.short_volume)}`,
     })),
-    { aria: "SPCE daily short volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 0)}%`, minZero: true },
+    { aria: "SPCE 일별 공매도성 거래 비율", color: "#b77a18", formatter: (value) => `${num(value * 100, 0)}%`, minZero: true },
   );
   $("short-caveat").textContent = detail.caveat || "";
 }
 
 function renderShortExposureContext(context) {
   if (!context) {
-    setText("exposure-status", "no data");
+    setText("exposure-status", "데이터 없음");
     $("exposure-grid").innerHTML = "";
-    $("exposure-top-list").innerHTML = `<div class="empty-state">No short exposure rank data yet</div>`;
+    $("exposure-top-list").innerHTML = `<div class="empty-state">공매도 노출 순위 데이터가 아직 없습니다</div>`;
     $("exposure-notes").innerHTML = "";
     return;
   }
@@ -242,38 +283,38 @@ function renderShortExposureContext(context) {
   const top = context.top_short_float || [];
   const rank = spce.rank_in_top100_short_float ? `#${spce.rank_in_top100_short_float}` : ">100";
   const cutoff = benchmarks.top100_cutoff_short_float_pct;
-  setText("exposure-status", context.status === "ok" ? "top-100 context" : context.status || "--");
-  $("exposure-method").textContent = context.methodology || "SPCE short exposure versus current high-short-interest stocks";
+  setText("exposure-status", context.status === "ok" ? "상위 100개 기준" : koStatus(context.status));
+  $("exposure-method").textContent = "SPCE 공매도 노출을 현재 고공매도 종목군과 비교합니다.";
   $("exposure-grid").innerHTML = [
     {
-      label: "SPCE short / mkt cap",
+      label: "SPCE 시총 대비 공매도",
       value: `${num(spce.short_notional_to_market_cap_pct)}%`,
       sub: `${money(spce.short_notional)} / ${money(spce.market_cap)}`,
     },
     {
-      label: "SPCE short / float",
+      label: "SPCE 유통주식 대비",
       value: `${num(spce.short_percent_float)}%`,
-      sub: `${num(spce.high_threshold_multiple, 1)}x vs 10% high threshold`,
+      sub: `10% 고공매도 기준의 ${num(spce.high_threshold_multiple, 1)}배`,
     },
     {
-      label: "Top-100 rank",
+      label: "상위 100위 내 순위",
       value: rank,
-      sub: spce.rank_in_top100_short_float ? "in current public list" : `${spce.top100_count_above_spce ?? "--"} names above SPCE in top list`,
+      sub: spce.rank_in_top100_short_float ? "현재 공개 리스트 포함" : `상위 리스트에 SPCE보다 높은 종목 ${spce.top100_count_above_spce ?? "--"}개`,
     },
     {
-      label: "Top-100 cutoff",
+      label: "상위 100위 컷",
       value: `${num(cutoff)}%`,
-      sub: `SPCE is ${num(spce.top100_cutoff_ratio_pct, 1)}% of cutoff`,
+      sub: `SPCE는 컷의 ${num(spce.top100_cutoff_ratio_pct, 1)}% 수준`,
     },
     {
-      label: "Highest observed",
+      label: "현재 관측 최고치",
       value: `${num(benchmarks.top_observed_short_float_pct)}%`,
       sub: benchmarks.top_observed_symbol || "--",
     },
     {
-      label: "GME 2021 proxy",
+      label: "GME 2021 대리값",
       value: `${num(benchmarks.gme_2021_short_market_cap_proxy_pct)}%+`,
-      sub: `${num(benchmarks.gme_2021_short_float_pct)}% short / float`,
+      sub: `유통주식 대비 ${num(benchmarks.gme_2021_short_float_pct)}%`,
     },
   ].map((item) => `
     <article class="exposure-card">
@@ -289,12 +330,12 @@ function renderShortExposureContext(context) {
       <em>${num(item.short_percent_float)}%</em>
       <small>${esc(item.company)} · ${esc(item.market_cap || "--")}</small>
     </div>
-  `).join("") : `<div class="empty-state">${esc(context.note || "No top short-float list parsed")}</div>`;
+  `).join("") : `<div class="empty-state">${esc(context.note || "상위 공매도 리스트를 파싱하지 못했습니다")}</div>`;
   $("exposure-notes").innerHTML = [
-    ["Read", spce.classification || "--"],
-    ["High threshold", `Short float above ${num(benchmarks.high_short_float_threshold_pct)}% is commonly treated as high; SPCE is ${num(spce.short_percent_float)}%.`],
-    ["Top-list caveat", spce.rank_in_top100_short_float ? "SPCE is currently inside the external top-100 short-float list." : "SPCE is below the current top-100 short-float cutoff, so this source cannot give an exact full-universe percentile."],
-    ["Source", context.source || "--"],
+    ["해석", koClassification(spce.classification)],
+    ["고공매도 기준", `유통주식 대비 공매도 비율이 ${num(benchmarks.high_short_float_threshold_pct)}%를 넘으면 보통 높은 편으로 봅니다. SPCE는 ${num(spce.short_percent_float)}%입니다.`],
+    ["상위 리스트 주의", spce.rank_in_top100_short_float ? "SPCE는 현재 외부 상위 100개 공매도 리스트 안에 있습니다." : "SPCE는 현재 상위 100개 공매도 컷보다 낮아서 전체 시장의 정확한 백분위는 계산하지 않았습니다."],
+    ["출처", context.source || "--"],
   ].map(([label, value]) => `
     <div class="benchmark-row">
       <span>${label}</span>
@@ -305,14 +346,14 @@ function renderShortExposureContext(context) {
 
 function renderGme2021Case(caseData) {
   if (!caseData) {
-    setText("gme-case-chip", "no data");
-    $("gme-case-chart").innerHTML = `<div class="empty-state">No GME baseline data yet</div>`;
+    setText("gme-case-chip", "데이터 없음");
+    $("gme-case-chart").innerHTML = `<div class="empty-state">GME 기준 데이터가 아직 없습니다</div>`;
     $("gme-case-grid").innerHTML = "";
     $("gme-social-benchmark").innerHTML = "";
     return;
   }
   setText("gme-case-chip", caseData.window || "2021");
-  $("gme-case-method").textContent = caseData.methodology_note || "Historical baseline for the meme squeeze regime";
+  $("gme-case-method").textContent = caseData.methodology_note || "밈 숏스퀴즈 국면의 과거 기준선";
   const peak = caseData.peak || {};
   const base = caseData.base || {};
   const social = caseData.social_benchmark || {};
@@ -320,47 +361,47 @@ function renderGme2021Case(caseData) {
   const shortFlowPeak = caseData.daily_short_sale_volume_peak || {};
   $("gme-case-grid").innerHTML = [
     {
-      label: "Short / float peak",
+      label: "유통주식 대비 공매도 피크",
       value: `${num(caseData.short_interest_peak_percent_float)}%`,
-      sub: "SEC January 2021",
+      sub: "SEC 2021년 1월",
     },
     {
-      label: "Short / mkt cap proxy",
+      label: "시총 대비 공매도 대리값",
       value: `${num(caseData.short_notional_to_market_cap_pct)}%+`,
-      sub: "SEC shares outstanding",
+      sub: "SEC 발행주식 기준",
     },
     {
-      label: "SI shares peak",
+      label: "공매도 잔고 피크",
       value: compact(shortInterestPeak.shares_short),
       sub: shortInterestPeak.settlement_date || "--",
     },
     {
-      label: "Short volume peak",
+      label: "일별 공매도성 거래 피크",
       value: compact(shortFlowPeak.short_volume),
-      sub: `${shortFlowPeak.trade_date || "--"} | ratio ${shortFlowPeak.short_volume_ratio === null || shortFlowPeak.short_volume_ratio === undefined ? "--" : `${num(shortFlowPeak.short_volume_ratio * 100, 1)}%`}`,
+      sub: `${shortFlowPeak.trade_date || "--"} | 비율 ${shortFlowPeak.short_volume_ratio === null || shortFlowPeak.short_volume_ratio === undefined ? "--" : `${num(shortFlowPeak.short_volume_ratio * 100, 1)}%`}`,
     },
     {
-      label: "January gain",
+      label: "1월 상승률",
       value: `+${num(caseData.jan_2021_gain_pct, 0)}%`,
-      sub: "CNBC recap",
+      sub: "CNBC 리캡",
     },
     {
-      label: "COVID low to peak",
+      label: "1월 저점 대비 피크",
       value: peak.normalized ? `${num(peak.normalized, 1)}x` : "--",
       sub: base.date && peak.date ? `${base.date} -> ${peak.date}` : peak.date || "--",
     },
     {
-      label: "Reddit mentions",
+      label: "레딧 언급량",
       value: compact(social.reddit_mentions),
       sub: social.window || "--",
     },
     {
-      label: "Tweets",
+      label: "X/트윗",
       value: compact(social.tweets),
       sub: social.window || "--",
     },
     {
-      label: "YouTube videos",
+      label: "유튜브 영상",
       value: compact(social.youtube_videos),
       sub: social.window || "--",
     },
@@ -377,26 +418,26 @@ function renderGme2021Case(caseData) {
       label: item.settlement_date,
       time: new Date(item.settlement_date).getTime(),
       value: item.shares_short,
-      extra: `DTC ${num(item.days_to_cover)} | change ${item.change_percent === null || item.change_percent === undefined ? "--" : `${num(item.change_percent, 1)}%`}`,
+      extra: `커버 소요일 ${num(item.days_to_cover)} | 변화율 ${item.change_percent === null || item.change_percent === undefined ? "--" : `${num(item.change_percent, 1)}%`}`,
     })),
-    { aria: "GME 2021 FINRA short interest shares", color: "#7a3e8e", formatter: compact, minZero: false },
+    { aria: "GME 2021 FINRA 공매도 잔고", color: "#7a3e8e", formatter: compact, minZero: false },
   );
   $("gme-short-flow-chart").innerHTML = shortSeriesChart(
     (caseData.daily_short_sale_volume_history || []).map((item) => ({
       label: item.trade_date,
       time: new Date(item.trade_date).getTime(),
       value: item.short_volume_ratio,
-      extra: `${compact(item.short_volume)} short / ${compact(item.total_volume)} total`,
+      extra: `공매도성 ${compact(item.short_volume)} / 전체 ${compact(item.total_volume)}`,
     })),
-    { aria: "GME 2021 daily short-sale volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 1)}%`, minZero: true },
+    { aria: "GME 2021 일별 공매도성 거래 비율", color: "#b77a18", formatter: (value) => `${num(value * 100, 1)}%`, minZero: true },
   );
   $("gme-social-benchmark").innerHTML = [
-    ["Source", social.source || "--"],
-    ["Window", social.window || "--"],
-    ["GME short-cap note", caseData.short_market_cap_note || "--"],
-    ["GME short data", `${caseData.short_interest_history_source || "FINRA short interest"}; ${caseData.daily_short_sale_volume_source || "FINRA daily short-sale files"}`],
-    ["Current metric caveat", social.note || "--"],
-    ["SEC volume note", caseData.sec_volume_note || "--"],
+    ["출처", social.source || "--"],
+    ["기간", social.window || "--"],
+    ["GME 시총 대비 공매도 참고", caseData.short_market_cap_note || "--"],
+    ["GME 공매도 데이터", `${caseData.short_interest_history_source || "FINRA 공매도 잔고"}; ${caseData.daily_short_sale_volume_source || "FINRA 일별 공매도성 거래 파일"}`],
+    ["현재 지표 주의", social.note || "--"],
+    ["SEC 거래량 참고", caseData.sec_volume_note || "--"],
   ].map(([label, value]) => `
     <div class="benchmark-row">
       <span>${label}</span>
@@ -418,7 +459,7 @@ function gmeCaseChart(series, milestones) {
   const height = 300;
   const pad = { top: 22, right: 28, bottom: 46, left: 58 };
   if (!points.length) {
-    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="No GME 2021 price data"><text x="58" y="150" fill="#69736f">No GME 2021 price data yet</text></svg>`;
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="GME 2021 가격 데이터 없음"><text x="58" y="150" fill="#69736f">GME 2021 가격 데이터가 아직 없습니다</text></svg>`;
   }
   const minX = Math.min(...points.map((point) => point.time));
   const maxX = Math.max(...points.map((point) => point.time));
@@ -448,22 +489,20 @@ function gmeCaseChart(series, milestones) {
   const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
   const hitMarkers = points.map((point) => {
     const original = series.find((item) => item.date === point.date) || {};
+    const tooltip = `날짜: ${point.date}\n정규화 가격: ${num(point.value, 1)}배\n종가: ${num(point.close)}\n거래량: ${compact(original.volume)}`;
     return `
-      <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="7" fill="transparent" stroke="transparent">
-        <title>${point.date} | ${num(point.value, 1)}x | close ${num(point.close)} | volume ${compact(original.volume)}</title>
-      </circle>
+      <circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="7" fill="transparent" stroke="transparent"></circle>
     `;
   }).join("");
+  const peakTooltip = `피크 날짜: ${peak.date}\n정규화 가격: ${num(peak.value, 1)}배\n종가: ${num(peak.close)}`;
   return `
-    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="GME 2021 normalized price trend">
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="GME 2021 정규화 가격 추이">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
       ${grid}
       ${labels}
       <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
       <path d="${path}" fill="none" stroke="#b54242" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
-      <circle cx="${x(peak.time)}" cy="${y(peak.value)}" r="6" fill="#b54242">
-        <title>${peak.date} | peak ${num(peak.value, 1)}x | close ${num(peak.close)}</title>
-      </circle>
+      <circle class="chart-hit-target" ${tooltipAttr(peakTooltip)} cx="${x(peak.time)}" cy="${y(peak.value)}" r="6" fill="#b54242"></circle>
       ${hitMarkers}
       <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${points[0].date}</text>
       <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${points[points.length - 1].date}</text>
@@ -477,7 +516,7 @@ function shortSeriesChart(points, options) {
   const height = 240;
   const pad = { top: 18, right: 20, bottom: 42, left: 58 };
   if (!filtered.length) {
-    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}"><text x="58" y="120" fill="#69736f">No data yet</text></svg>`;
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}"><text x="58" y="120" fill="#69736f">데이터가 아직 없습니다</text></svg>`;
   }
   const values = filtered.map((point) => Number(point.value));
   const minX = Math.min(...filtered.map((point) => point.time));
@@ -496,11 +535,10 @@ function shortSeriesChart(points, options) {
     <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
     <text x="8" y="${y(tick) + 4}" fill="#69736f" font-size="12">${options.formatter(tick)}</text>
   `).join("");
-  const markers = filtered.map((point) => `
-    <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}">
-      <title>${point.label} | ${options.formatter(point.value)} | ${point.extra || ""}</title>
-    </circle>
-  `).join("");
+  const markers = filtered.map((point) => {
+    const tooltip = `날짜: ${point.label}\n수치: ${options.formatter(point.value)}${point.extra ? `\n추가: ${point.extra}` : ""}`;
+    return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}"></circle>`;
+  }).join("");
   return `
     <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
@@ -516,16 +554,16 @@ function shortSeriesChart(points, options) {
 
 function renderWsbTrending(wsb) {
   if (!wsb || !Array.isArray(wsb.items) || !wsb.items.length) {
-    setText("wsb-status", "no data");
-    $("wsb-method").textContent = "WSB data unavailable";
-    $("wsb-chart").innerHTML = `<div class="empty-state">No WSB ranking data yet</div>`;
+    setText("wsb-status", "데이터 없음");
+    $("wsb-method").textContent = "WSB 데이터를 불러오지 못했습니다";
+    $("wsb-chart").innerHTML = `<div class="empty-state">WSB 순위 데이터가 아직 없습니다</div>`;
     $("wsb-table").innerHTML = "";
     return;
   }
 
-  const sourceLabel = wsb.sentiment_source === "reddit_oauth_bow_sample" ? "BoW sentiment sample" : "mentions only";
-  setText("wsb-status", `${wsb.window_hours || 24}h · ${sourceLabel}`);
-  $("wsb-method").textContent = "ApeWisdom WSB 24h mention ranking; Reddit BoW sentiment when keys exist.";
+  const sourceLabel = wsb.sentiment_source === "reddit_oauth_bow_sample" ? "감성 샘플 포함" : "언급량만";
+  setText("wsb-status", `${wsb.window_hours || 24}시간 · ${sourceLabel}`);
+  $("wsb-method").textContent = "ApeWisdom의 WSB 24시간 티커 언급 순위입니다. Reddit 키가 있으면 간단한 감성 샘플도 같이 계산합니다.";
   $("wsb-method").title = wsb.methodology || "";
   $("wsb-chart").innerHTML = stackedMentionChart(wsb.items.slice(0, 12));
   $("wsb-table").innerHTML = wsb.items.slice(0, 10).map((item) => {
@@ -564,7 +602,7 @@ function renderWsbMentionHistory() {
   const latestPoint = points[points.length - 1];
   setText(
     "wsb-history-latest",
-    latestPoint ? `latest ${compact(latestPoint.value)} · rank #${latestPoint.rank || "--"}` : "--",
+    latestPoint ? `최신 ${compact(latestPoint.value)} · 순위 #${latestPoint.rank || "--"}` : "--",
   );
   $("wsb-history-chart").innerHTML = mentionHistoryChart(points);
 }
@@ -574,7 +612,7 @@ function mentionHistoryChart(points) {
   const height = 280;
   const pad = { top: 22, right: 28, bottom: 44, left: 58 };
   if (!points.length) {
-    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="No WSB mention history"><text x="58" y="140" fill="#69736f">No SPCE mention history yet</text></svg>`;
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="SPCE WSB 언급량 히스토리 없음"><text x="58" y="140" fill="#69736f">SPCE 언급량 히스토리가 아직 없습니다</text></svg>`;
   }
   const values = points.map((point) => Number(point.value) || 0);
   const minX = Math.min(...points.map((point) => point.time));
@@ -594,15 +632,14 @@ function mentionHistoryChart(points) {
     <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
     <text x="10" y="${y(tick) + 4}" fill="#69736f" font-size="12">${compact(tick)}</text>
   `).join("");
-  const markers = points.map((point) => `
-    <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="#2f6fb0">
-      <title>${new Date(point.time).toLocaleString()} | ${point.value} mentions | rank #${point.rank || "--"}</title>
-    </circle>
-  `).join("");
+  const markers = points.map((point) => {
+    const tooltip = `날짜: ${new Date(point.time).toLocaleString("ko-KR")}\n언급량: ${compact(point.value)}\n순위: #${point.rank || "--"}`;
+    return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="#2f6fb0"></circle>`;
+  }).join("");
   const firstLabel = localTime(new Date(points[0].time).toISOString());
   const lastLabel = localTime(new Date(points[points.length - 1].time).toISOString());
   return `
-    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="SPCE WallStreetBets mention history">
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="SPCE WallStreetBets 언급량 히스토리">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
       ${grid}
       <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
@@ -641,9 +678,9 @@ function stackedMentionChart(items) {
     const neuH = (neutral / maxMentions) * innerH;
     const base = pad.top + innerH;
     const highlight = item.ticker === "SPCE" ? `<rect x="${x - 4}" y="${y(total) - 8}" width="${barW + 8}" height="${(total / maxMentions) * innerH + 12}" rx="7" fill="none" stroke="#2f6fb0" stroke-width="2"/>` : "";
+    const tooltip = `티커: ${item.ticker}\n언급량: ${compact(total)}\n긍정: ${compact(positive)}\n부정: ${compact(negative)}\n중립: ${compact(neutral)}\n순위: #${item.rank || "--"}`;
     return `
-      <g class="chart-hit-target">
-        <title>${item.ticker} | mentions ${compact(total)} | positive ${compact(positive)} | negative ${compact(negative)} | neutral ${compact(neutral)} | rank #${item.rank || "--"}</title>
+      <g class="chart-hit-target" ${tooltipAttr(tooltip)}>
         ${highlight}
         <rect x="${x}" y="${base - posH}" width="${barW}" height="${posH}" fill="#0f8a5f"/>
         <rect x="${x}" y="${base - posH - negH}" width="${barW}" height="${negH}" fill="#b54242"/>
@@ -654,12 +691,12 @@ function stackedMentionChart(items) {
     `;
   }).join("");
   return `
-    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="WallStreetBets trending stock mentions">
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="WallStreetBets 인기 종목 언급량">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
-      <text x="${pad.left}" y="18" fill="#69736f" font-size="13">Company mentions</text>
-      <circle cx="${width - 280}" cy="15" r="7" fill="#0f8a5f"/><text x="${width - 267}" y="19" fill="#18201d" font-size="13">Positive</text>
-      <circle cx="${width - 190}" cy="15" r="7" fill="#b54242"/><text x="${width - 177}" y="19" fill="#18201d" font-size="13">Negative</text>
-      <circle cx="${width - 96}" cy="15" r="7" fill="#7b7d86"/><text x="${width - 83}" y="19" fill="#18201d" font-size="13">Neutral</text>
+      <text x="${pad.left}" y="18" fill="#69736f" font-size="13">종목 언급량</text>
+      <circle cx="${width - 280}" cy="15" r="7" fill="#0f8a5f"/><text x="${width - 267}" y="19" fill="#18201d" font-size="13">긍정</text>
+      <circle cx="${width - 190}" cy="15" r="7" fill="#b54242"/><text x="${width - 177}" y="19" fill="#18201d" font-size="13">부정</text>
+      <circle cx="${width - 96}" cy="15" r="7" fill="#7b7d86"/><text x="${width - 83}" y="19" fill="#18201d" font-size="13">중립</text>
       ${grid}
       <line x1="${pad.left}" x2="${width - pad.right}" y1="${pad.top + innerH}" y2="${pad.top + innerH}" stroke="#aeb9b2"/>
       ${bars}
@@ -670,11 +707,11 @@ function stackedMentionChart(items) {
 function renderComparison(spce, baseline) {
   const shortDetail = spce.market.short_deep_dive || {};
   const rows = [
-    ["Short float", `${num(spce.market.short_percent_float)}%`, `${num(baseline.short_percent_float)}%`],
-    ["Short / market cap", `${num(shortDetail.short_notional_to_market_cap_pct)}%`, `${num(baseline.short_notional_to_market_cap_pct)}%+`],
-    ["Short ratio", num(spce.market.short_ratio), "n/a"],
-    ["5D move", pct(spce.market.price_change_5d_pct), "n/a"],
-    ["Volume / 20D", `${num(spce.market.volume_ratio_20d)}x`, "n/a"],
+    ["유통주식 대비 공매도", `${num(spce.market.short_percent_float)}%`, `${num(baseline.short_percent_float)}%`],
+    ["시총 대비 공매도", `${num(shortDetail.short_notional_to_market_cap_pct)}%`, `${num(baseline.short_notional_to_market_cap_pct)}%+`],
+    ["커버 소요일", num(spce.market.short_ratio), "해당 없음"],
+    ["5일 주가 변화", pct(spce.market.price_change_5d_pct), "해당 없음"],
+    ["거래량 / 20일 평균", `${num(spce.market.volume_ratio_20d)}x`, "해당 없음"],
   ];
   $("comparison-table").innerHTML = rows
     .map(([metric, current, base]) => `<tr><td>${metric}</td><td>${current}</td><td>${base}</td></tr>`)
@@ -683,10 +720,10 @@ function renderComparison(spce, baseline) {
 
 function renderGme(gme) {
   const items = [
-    ["Price", `$${num(gme.market.price)}`],
-    ["5D move", `${num(gme.market.price_change_5d_pct)}%`],
-    ["Short float", `${num(gme.market.short_percent_float)}%`],
-    ["Volume / 20D", `${num(gme.market.volume_ratio_20d)}x`],
+    ["현재가", `$${num(gme.market.price)}`],
+    ["5일 변화", `${num(gme.market.price_change_5d_pct)}%`],
+    ["유통주식 대비 공매도", `${num(gme.market.short_percent_float)}%`],
+    ["거래량 / 20일 평균", `${num(gme.market.volume_ratio_20d)}x`],
   ];
   $("gme-strip").innerHTML = items
     .map(([label, value]) => `<div class="strip-item"><span>${label}</span><strong>${value}</strong></div>`)
@@ -716,6 +753,17 @@ function initTabs() {
   const initial = location.hash === "#gme-compare" || location.hash === "#gme" ? "gme" : "main";
   activateTab(initial, false);
 }
+
+document.addEventListener("pointermove", (event) => {
+  const target = event.target.closest?.("[data-tooltip]");
+  if (target) showChartTooltip(event, target);
+});
+document.addEventListener("pointerout", (event) => {
+  const from = event.target.closest?.("[data-tooltip]");
+  const to = event.relatedTarget?.closest?.("[data-tooltip]");
+  if (from && from !== to) hideChartTooltip();
+});
+document.addEventListener("scroll", hideChartTooltip, true);
 
 initTabs();
 $("refresh-button").addEventListener("click", loadData);

@@ -31,7 +31,7 @@ BASELINE = {
     "short_notional_to_market_cap_pct": 109.26,
     "source": "SEC Staff Report on Equity and Options Market Structure Conditions in Early 2021",
     "source_url": "https://www.sec.gov/files/staff-report-equity-options-market-struction-conditions-early-2021.pdf",
-    "short_market_cap_note": "Short notional / market cap is approximated as shares sold short / shares outstanding when measured at the same share price. SEC staff reported GME short interest exceeded shares outstanding in January 2021, with a cited 109.26% high on December 31, 2020; SEC also reported 122.97% of float in January 2021.",
+    "short_market_cap_note": "시총 대비 공매도는 같은 주가 기준에서 공매도 주식 수 / 발행주식 수로 근사했습니다. SEC 스태프 보고서는 2021년 1월 GME 공매도 잔고가 발행주식 수를 넘었고, 2020년 12월 31일 고점으로 109.26%를 인용했습니다. SEC는 2021년 1월 유통주식 대비 122.97%도 보고했습니다.",
 }
 
 GME_2021_SOCIAL_BENCHMARK = {
@@ -39,9 +39,9 @@ GME_2021_SOCIAL_BENCHMARK = {
     "reddit_mentions": 82000,
     "tweets": 1582000,
     "youtube_videos": 1465,
-    "source": "Sprout Social social-listening recap",
+    "source": "Sprout Social 소셜 리스닝 리캡",
     "source_url": "https://sproutsocial.com/insights/gamestop-stock-social-media/",
-    "note": "External social-listening benchmark, not the same methodology as the current ApeWisdom 24h WSB ranking.",
+    "note": "외부 소셜 리스닝 벤치마크입니다. 현재 ApeWisdom 24시간 WSB 순위와는 산식이 다릅니다.",
 }
 
 SYMBOLS = {
@@ -388,7 +388,7 @@ def collect_finra_short_interest_history(symbol: str, start_date: str, end_date:
     return {
         "status": "ok" if rows else "empty",
         "note": "",
-        "source": "FINRA Consolidated Short Interest",
+        "source": "FINRA 통합 공매도 잔고",
         "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
         "latest": latest,
         "history": rows,
@@ -463,7 +463,7 @@ def collect_finra_daily_short_volume_files(symbol: str, start_date: str, end_dat
     return {
         "status": "ok" if rows else "empty",
         "note": "; ".join(errors[:5]),
-        "source": "FINRA Reg SHO Daily Short Sale Volume Files",
+        "source": "FINRA Reg SHO 일별 공매도성 거래 파일",
         "source_url": "https://www.finra.org/finra-data/browse-catalog/short-sale-volume-data/daily-short-sale-volume-files",
         "file_url_pattern": "https://cdn.finra.org/equity/regsho/daily/CNMSshvolYYYYMMDD.txt",
         "latest": rows[-1] if rows else None,
@@ -478,7 +478,7 @@ def collect_gme_2021_case() -> dict[str, Any]:
     try:
         import yfinance as yf
 
-        hist = yf.Ticker("GME").history(start="2020-04-01", end="2021-02-16", interval="1d", auto_adjust=False)
+        hist = yf.Ticker("GME").history(start="2021-01-01", end="2021-02-16", interval="1d", auto_adjust=False)
         if hist is not None and not hist.empty:
             for index, (dt, row) in enumerate(hist.iterrows()):
                 close = safe_float(row.get("Close"))
@@ -495,7 +495,7 @@ def collect_gme_2021_case() -> dict[str, Any]:
                 )
         else:
             status = "empty"
-            note = "No GME price history returned by yfinance."
+            note = "yfinance에서 GME 가격 히스토리를 받지 못했습니다."
     except Exception as exc:  # noqa: BLE001
         status = "error"
         note = str(exc)
@@ -519,33 +519,32 @@ def collect_gme_2021_case() -> dict[str, Any]:
     short_flow_ratio_peak = max(short_flow_history, key=lambda item: item.get("short_volume_ratio") or 0) if short_flow_history else None
 
     milestones = [
-        {"date": "2020-08-31", "label": "Ryan Cohen stake disclosed"},
-        {"date": "2021-01-11", "label": "Ryan Cohen board catalyst"},
-        {"date": "2021-01-22", "label": "Retail/WSB acceleration"},
-        {"date": "2021-01-27", "label": "Social volume peak week"},
-        {"date": "2021-01-28", "label": "Broker restrictions / volatility peak"},
+        {"date": "2021-01-11", "label": "라이언 코언 이사회 합류"},
+        {"date": "2021-01-22", "label": "개인/WSB 매수세 가속"},
+        {"date": "2021-01-27", "label": "소셜 관심 피크 주간"},
+        {"date": "2021-01-28", "label": "브로커 거래 제한"},
     ]
     if base:
-        milestones.insert(0, {"date": base["date"], "label": "COVID-era closing low"})
+        milestones.insert(0, {"date": base["date"], "label": "1월 구간 저점"})
 
     return {
         "status": status,
         "note": note,
-        "price_source": "yfinance GME daily close, split-adjusted by Yahoo where applicable; normalized to the COVID-era closing low in this window",
-        "window": "2020-04-01 to 2021-02-15",
+        "price_source": "Yahoo Finance GME 일별 종가입니다. 적용 가능한 경우 분할 조정값을 쓰고, 2021년 1월 숏스퀴즈 구간 최저 종가를 1배로 정규화했습니다.",
+        "window": "2021-01-01 to 2021-02-15",
         "start": start,
         "base": base,
         "peak": peak,
         "peak_return_pct": peak_return_pct,
         "jan_2021_gain_pct": 1625,
-        "jan_2021_gain_source": "CNBC recap of January 2021 GME move",
+        "jan_2021_gain_source": "CNBC 2021년 1월 GME 급등 리캡",
         "jan_2021_gain_source_url": "https://www.cnbc.com/2021/01/30/gamestop-reddit-and-robinhood-a-full-recap-of-the-historic-retail-trading-mania-on-wall-street.html",
         "short_interest_peak_percent_float": BASELINE["short_percent_float"],
         "short_interest_peak_percent_shares_outstanding": BASELINE["short_percent_shares_outstanding"],
         "short_notional_to_market_cap_pct": BASELINE["short_notional_to_market_cap_pct"],
         "short_market_cap_note": BASELINE["short_market_cap_note"],
         "short_interest_source": BASELINE["source_url"],
-        "sec_volume_note": "SEC staff described Jan. 13-29, 2021 average GME trading volume as roughly 100 million shares per day, more than 1,400% above the 2020 average.",
+        "sec_volume_note": "SEC 스태프는 2021년 1월 13~29일 GME 평균 거래량을 하루 약 1억 주로 설명했습니다. 이는 2020년 평균보다 1,400% 이상 높았습니다.",
         "social_benchmark": GME_2021_SOCIAL_BENCHMARK,
         "short_interest_history": short_interest_history,
         "short_interest_history_status": short_interest.get("status"),
@@ -560,7 +559,7 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "daily_short_sale_ratio_peak": short_flow_ratio_peak,
         "series": series,
         "milestones": milestones,
-        "methodology_note": "Price is normalized to GME's COVID-era closing low in this window. FINRA short interest is settlement-date based; daily short-sale volume is trade flow, not open short inventory. The historical social benchmark is not directly comparable to the current ApeWisdom WSB 24h count.",
+        "methodology_note": "가격 그래프는 2021년 1월 숏스퀴즈 구간의 최저 종가를 1배로 정규화했습니다. FINRA 공매도 잔고는 결제일 기준 잔고이고, 일별 공매도성 거래량은 당일 거래 흐름이지 누적 잔고가 아닙니다. 과거 소셜 벤치마크는 현재 ApeWisdom 24시간 WSB 집계와 산식이 다릅니다.",
     }
 
 
@@ -613,8 +612,8 @@ def collect_most_shorted_stocks() -> dict[str, Any]:
     items = sorted(items, key=lambda item: item.get("rank") or 9999)
     return {
         "status": "ok" if items else "empty",
-        "note": "" if items else "No rows parsed from StockAnalysis most-shorted list.",
-        "source": "StockAnalysis Most Shorted Stocks",
+        "note": "" if items else "StockAnalysis 고공매도 리스트에서 행을 파싱하지 못했습니다.",
+        "source": "StockAnalysis 고공매도 종목 리스트",
         "source_url": MOST_SHORTED_SOURCE_URL,
         "universe": "Top 100 stocks by short percent of float from StockAnalysis.",
         "items": items[:100],
@@ -642,13 +641,13 @@ def collect_short_exposure_context(spce_market: dict[str, Any], baseline: dict[s
         high_threshold_multiple = short_float_pct / HIGH_SHORT_FLOAT_THRESHOLD_PCT
 
     if rank:
-        classification = "Top-100 extreme short-float bucket."
+        classification = "현재 상위 100개 고공매도 구간입니다."
     elif short_float_pct is not None and top100_cutoff is not None and short_float_pct < top100_cutoff:
-        classification = "High short interest, but below the current top-100 extreme short-float bucket."
+        classification = "높은 공매도 비율이지만 현재 상위 100개 고공매도 구간보다는 낮습니다."
     elif short_float_pct is not None and short_float_pct >= HIGH_SHORT_FLOAT_THRESHOLD_PCT:
-        classification = "High short interest versus the common 10% short-float threshold."
+        classification = "일반적인 10% 기준으로는 높은 공매도 비율입니다."
     else:
-        classification = "Not high versus the common 10% short-float threshold."
+        classification = "일반적인 10% 기준으로는 높은 공매도 비율이 아닙니다."
 
     return {
         "status": top_data.get("status"),
@@ -678,7 +677,7 @@ def collect_short_exposure_context(spce_market: dict[str, Any], baseline: dict[s
         "top_short_float": top_items[:12],
         "source": top_data.get("source"),
         "source_url": top_data.get("source_url"),
-        "methodology": "SPCE short / market cap uses FINRA shares short divided by shares outstanding proxy. External high-short list uses short percent of float, so it is directional context rather than the same denominator.",
+        "methodology": "SPCE 시총 대비 공매도는 FINRA 공매도 주식 수를 발행주식 수 대리값으로 나눠 계산했습니다. 외부 고공매도 리스트는 유통주식 대비 공매도 비율을 쓰므로, 같은 분모의 정밀 비교라기보다 방향성 참고 지표입니다.",
     }
 
 
@@ -743,7 +742,7 @@ def collect_finra_short_volume(symbol: str) -> dict[str, Any]:
     return {
         "status": "ok" if rows else "empty",
         "note": "",
-        "source": "FINRA Reg SHO Daily Short Sale Volume",
+        "source": "FINRA Reg SHO 일별 공매도성 거래",
         "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
         "latest": latest,
         "average_short_volume_ratio_5d": avg_ratio_5d,
@@ -802,7 +801,7 @@ def enrich_short_deep_dive(market: dict[str, Any]) -> None:
         "daily_short_exempt_volume": safe_float(latest_volume.get("short_exempt_volume")),
         "daily_short_exempt_ratio": safe_float(latest_volume.get("short_exempt_ratio")),
         "average_short_volume_ratio_5d": safe_float(finra_volume.get("average_short_volume_ratio_5d")),
-        "caveat": "Short Interest Shares is the open short-position stock reported on FINRA settlement dates. Daily Short Sale Volume Ratio is same-day reported short-sale flow, not accumulated open short interest. Short / Market Cap is short shares times price divided by market cap.",
+        "caveat": "공매도 주식 수는 FINRA 결제일 기준으로 보고된 미청산 공매도 잔고입니다. 일별 공매도성 거래 비율은 당일 공매도성 거래로 보고된 흐름이며 누적 미청산 잔고가 아닙니다. 시총 대비 공매도는 공매도 주식 수에 현재가를 곱한 뒤 시총으로 나눈 값입니다.",
     }
 
 
@@ -1229,7 +1228,7 @@ def collect_wsb_trending(window_hours: int) -> dict[str, Any]:
     return {
         "status": "ok" if ape_rows and not errors else ("partial" if ape_rows else "error"),
         "note": "; ".join(errors[:4]) if errors else "",
-        "source": "ApeWisdom wallstreetbets ranking + local Reddit BoW sentiment split",
+        "source": "ApeWisdom WSB 순위 + 로컬 Reddit 단어 기반 감성 분리",
         "source_url": "https://apewisdom.io/api/v1.0/filter/wallstreetbets",
         "methodology": "Rank by 24h r/wallstreetbets mention volume. Sentiment split uses a local rules-based bag-of-words classifier on recent WSB posts/comments when Reddit OAuth credentials are available; otherwise mentions are shown as neutral.",
         "window_hours": 24,

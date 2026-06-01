@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE 데이터 모니터</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-tooltips-ko2" />
+    <link rel="stylesheet" href="styles.css?v=20260601-google-trends" />
   </head>
   <body>
     <div class="app-shell">
@@ -141,6 +141,16 @@
               <div id="gme-short-flow-chart" class="case-chart"></div>
             </div>
           </div>
+          <div class="case-layout google-layout">
+            <div>
+              <div class="chart-title">GME Google Trends, 2021년 1월-2월</div>
+              <div id="gme-google-trends-chart" class="case-chart"></div>
+            </div>
+            <div>
+              <div class="chart-title">검색 관심도 해석</div>
+              <div id="gme-google-trends-notes" class="benchmark-list"></div>
+            </div>
+          </div>
         </section>
 
         <section class="panel trend-panel" data-tab-panel="main">
@@ -176,6 +186,26 @@
               <span id="wsb-history-latest" class="status-chip">--</span>
             </div>
             <div id="wsb-history-chart" class="mention-history-chart"></div>
+          </div>
+        </section>
+
+        <section class="panel google-panel" data-tab-panel="main">
+          <div class="panel-heading">
+            <div>
+              <h2>SPCE Google Trends</h2>
+              <p id="spce-google-trends-method" class="panel-subtitle">미국 기준 최근 90일 검색 관심도</p>
+            </div>
+            <span id="spce-google-trends-chip" class="status-chip">--</span>
+          </div>
+          <div class="case-layout google-layout">
+            <div>
+              <div class="chart-title">SPCE 검색 관심도</div>
+              <div id="spce-google-trends-chart" class="mention-history-chart"></div>
+            </div>
+            <div>
+              <div class="chart-title">현재 검색 관심도 해석</div>
+              <div id="spce-google-trends-notes" class="benchmark-list"></div>
+            </div>
           </div>
         </section>
 
@@ -239,6 +269,6 @@
     </div>
 
     <div id="chart-tooltip" class="chart-tooltip" hidden></div>
-    <script src="app.js?v=20260601-tooltips-ko2"></script>
+    <script src="app.js?v=20260601-google-trends"></script>
   </body>
 </html>

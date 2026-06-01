@@ -11,6 +11,7 @@ from collections import Counter
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote_plus
 
 import requests
 
@@ -23,6 +24,8 @@ HISTORY_PATH = DATA_DIR / "history.json"
 
 USER_AGENT = "spce-data-monitor/0.1"
 REDDIT_TOKEN: tuple[str, float] | None = None
+GOOGLE_TRENDS_SESSION: requests.Session | None = None
+PREVIOUS_LATEST: dict[str, Any] | None = None
 
 BASELINE = {
     "name": "GME January 2021",
@@ -394,6 +397,162 @@ def percent_value(value: Any) -> float | None:
     return number * 100 if abs(number) <= 1 else number
 
 
+def load_previous_latest() -> dict[str, Any]:
+    global PREVIOUS_LATEST
+    if PREVIOUS_LATEST is not None:
+        return PREVIOUS_LATEST
+    if not LATEST_PATH.exists():
+        PREVIOUS_LATEST = {}
+        return PREVIOUS_LATEST
+    try:
+        payload = json.loads(LATEST_PATH.read_text(encoding="utf-8"))
+        PREVIOUS_LATEST = payload if isinstance(payload, dict) else {}
+    except Exception:
+        PREVIOUS_LATEST = {}
+    return PREVIOUS_LATEST
+
+
+def nested_get(payload: dict[str, Any], path: list[str]) -> Any:
+    current: Any = payload
+    for key in path:
+        if not isinstance(current, dict):
+            return None
+        current = current.get(key)
+    return current
+
+
+def google_json_payload(text: str) -> dict[str, Any]:
+    start = text.find("{")
+    if start < 0:
+        raise ValueError("Google Trends JSON payload not found")
+    return json.loads(text[start:])
+
+
+def google_trends_session() -> requests.Session:
+    global GOOGLE_TRENDS_SESSION
+    if GOOGLE_TRENDS_SESSION is not None:
+        return GOOGLE_TRENDS_SESSION
+    session = requests.Session()
+    session.headers.update(
+        {
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Referer": "https://trends.google.com/trends/",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36",
+        }
+    )
+    session.get("https://trends.google.com/trends/", timeout=20)
+    GOOGLE_TRENDS_SESSION = session
+    return session
+
+
+def collect_google_trends(keyword: str, start_date: str, end_date: str, geo: str = "US") -> dict[str, Any]:
+    timeframe = f"{start_date} {end_date}"
+    source_url = f"https://trends.google.com/trends/explore?date={quote_plus(timeframe)}&geo={quote_plus(geo)}&q={quote_plus(keyword)}"
+    base = {
+        "status": "error",
+        "keyword": keyword,
+        "geo": geo,
+        "window": timeframe,
+        "scale": "0-100, 해당 조회 기간 내 최대 검색 관심도를 100으로 정규화",
+        "source": "Google Trends",
+        "source_url": source_url,
+        "note": "",
+        "history": [],
+        "peak": None,
+        "latest": None,
+    }
+    explore_req = {
+        "comparisonItem": [{"keyword": keyword, "geo": geo, "time": timeframe}],
+        "category": 0,
+        "property": "",
+    }
+    global GOOGLE_TRENDS_SESSION
+    last_error = ""
+    for attempt in range(2):
+        try:
+            session = google_trends_session()
+            explore = session.get(
+                "https://trends.google.com/trends/api/explore",
+                params={"hl": "en-US", "tz": "0", "req": json.dumps(explore_req, separators=(",", ":"))},
+                timeout=25,
+            )
+            if explore.status_code == 429 and attempt == 0:
+                GOOGLE_TRENDS_SESSION = None
+                time.sleep(2)
+                continue
+            if not explore.ok:
+                last_error = f"Google Trends explore HTTP {explore.status_code}: {explore.text[:160]}"
+                break
+            explore_payload = google_json_payload(explore.text)
+            widget = next((item for item in explore_payload.get("widgets", []) if item.get("id") == "TIMESERIES"), None)
+            if not widget:
+                last_error = "Google Trends time-series widget not found"
+                break
+            timeline = session.get(
+                "https://trends.google.com/trends/api/widgetdata/multiline",
+                params={
+                    "hl": "en-US",
+                    "tz": "0",
+                    "req": json.dumps(widget.get("request") or {}, separators=(",", ":")),
+                    "token": widget.get("token"),
+                },
+                timeout=25,
+            )
+            if timeline.status_code == 429 and attempt == 0:
+                GOOGLE_TRENDS_SESSION = None
+                time.sleep(2)
+                continue
+            if not timeline.ok:
+                last_error = f"Google Trends timeline HTTP {timeline.status_code}: {timeline.text[:160]}"
+                break
+            timeline_payload = google_json_payload(timeline.text)
+            rows = []
+            for row in ((timeline_payload.get("default") or {}).get("timelineData") or []):
+                values = row.get("value") or []
+                interest = safe_float(values[0] if values else None)
+                timestamp = safe_float(row.get("time"))
+                if interest is None or timestamp is None:
+                    continue
+                rows.append(
+                    {
+                        "date": datetime.fromtimestamp(timestamp, timezone.utc).date().isoformat(),
+                        "interest": interest,
+                        "formatted_value": (row.get("formattedValue") or [str(int(interest))])[0],
+                    }
+                )
+            if not rows:
+                return {**base, "status": "empty", "note": "Google Trends 시계열 데이터가 비어 있습니다."}
+            peak = max(rows, key=lambda item: item.get("interest") or 0)
+            return {**base, "status": "ok", "history": rows, "peak": peak, "latest": rows[-1]}
+        except Exception as exc:  # noqa: BLE001
+            last_error = str(exc)
+            GOOGLE_TRENDS_SESSION = None
+            if attempt == 0:
+                time.sleep(2)
+                continue
+    return {**base, "note": last_error or "Google Trends 데이터를 불러오지 못했습니다."}
+
+
+def google_trends_with_fallback(result: dict[str, Any], previous_path: list[str]) -> dict[str, Any]:
+    if result.get("history"):
+        return result
+    previous = nested_get(load_previous_latest(), previous_path)
+    if isinstance(previous, dict) and previous.get("history"):
+        fallback = dict(previous)
+        fallback["status"] = "fallback"
+        fallback["note"] = f"새 Google Trends 데이터를 불러오지 못해 이전 스냅샷을 재사용합니다. 최근 오류: {result.get('note') or result.get('status')}"
+        return fallback
+    return result
+
+
+def collect_current_google_trends(symbol: str, days: int = 90) -> dict[str, Any]:
+    end_date = utc_now().date()
+    start_date = end_date - timedelta(days=days)
+    result = collect_google_trends(f"{symbol} stock", start_date.isoformat(), end_date.isoformat())
+    return google_trends_with_fallback(result, ["symbols", symbol, "google_trends"])
+
+
 def pct_change(values: list[float], periods: int) -> float | None:
     if len(values) <= periods:
         return None
@@ -624,10 +783,16 @@ def collect_gme_2021_case() -> dict[str, Any]:
     short_flow_history = short_flow.get("history") or []
     short_flow_volume_peak = max(short_flow_history, key=lambda item: item.get("short_volume") or 0) if short_flow_history else None
     short_flow_ratio_peak = max(short_flow_history, key=lambda item: item.get("short_volume_ratio") or 0) if short_flow_history else None
+    trend_end_date = series[-1]["date"] if series else "2021-02-12"
+    google_trends = google_trends_with_fallback(
+        collect_google_trends("GME stock", "2021-01-01", trend_end_date),
+        ["gme_2021_case", "google_trends"],
+    )
 
     milestones = [
         {"date": "2021-01-11", "label": "라이언 코언 이사회 합류"},
         {"date": "2021-01-22", "label": "개인/WSB 매수세 가속"},
+        {"date": "2021-01-28", "label": "Google Trends 피크"},
         {"date": "2021-01-27", "label": "소셜 관심 피크 주간"},
         {"date": "2021-01-28", "label": "브로커 거래 제한"},
     ]
@@ -638,7 +803,7 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "status": status,
         "note": note,
         "price_source": "Yahoo Finance GME 일별 종가입니다. 적용 가능한 경우 분할 조정값을 쓰고, 2021년 1월 숏스퀴즈 구간 최저 종가를 1배로 정규화했습니다.",
-        "window": "2021-01-01 to 2021-02-15",
+        "window": f"2021-01-01 to {trend_end_date}",
         "start": start,
         "base": base,
         "peak": peak,
@@ -664,9 +829,10 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "daily_short_sale_volume_source_url": short_flow.get("source_url"),
         "daily_short_sale_volume_peak": short_flow_volume_peak,
         "daily_short_sale_ratio_peak": short_flow_ratio_peak,
+        "google_trends": google_trends,
         "series": series,
         "milestones": milestones,
-        "methodology_note": "가격 그래프는 2021년 1월 숏스퀴즈 구간의 최저 종가를 1배로 정규화했습니다. FINRA 공매도 잔고는 결제일 기준 잔고이고, 일별 공매도성 거래량은 당일 거래 흐름이지 누적 잔고가 아닙니다. 과거 소셜 벤치마크는 현재 ApeWisdom 24시간 WSB 집계와 산식이 다릅니다.",
+        "methodology_note": "가격 그래프는 2021년 1월 숏스퀴즈 구간의 최저 종가를 1배로 정규화했습니다. FINRA 공매도 잔고는 결제일 기준 잔고이고, 일별 공매도성 거래량은 당일 거래 흐름이지 누적 잔고가 아닙니다. Google Trends는 검색 관심도 대리 지표이며, 과거 WSB 일자별 언급량 원자료와는 다릅니다.",
     }
 
 
@@ -1443,6 +1609,9 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
         market = data.get("market") or {}
         score = data.get("score") or {}
         short_deep_dive = market.get("short_deep_dive") or {}
+        google_trends = data.get("google_trends") or {}
+        google_latest = google_trends.get("latest") or {}
+        google_peak = google_trends.get("peak") or {}
         symbols[symbol] = {
             "price": market.get("price"),
             "price_change_5d_pct": market.get("price_change_5d_pct"),
@@ -1458,6 +1627,11 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
                 source: (payload or {}).get("mention_count")
                 for source, payload in (data.get("social") or {}).items()
             },
+            "google_trends": {
+                "latest_interest": google_latest.get("interest"),
+                "peak_interest": google_peak.get("interest"),
+                "peak_date": google_peak.get("date"),
+            } if google_trends else None,
         }
     wsb_spce = next(
         (item for item in ((snapshot.get("wsb_trending") or {}).get("items") or []) if item.get("ticker") == "SPCE"),
@@ -1502,6 +1676,8 @@ def build_snapshot(window_hours: int) -> dict[str, Any]:
                 "youtube": collect_youtube(symbol, window_hours),
             },
         }
+        if symbol == "SPCE":
+            data["google_trends"] = collect_current_google_trends(symbol)
         data["score"] = score_symbol(data, window_hours)
         snapshot["symbols"][symbol] = data
     snapshot["short_exposure_context"] = collect_short_exposure_context(

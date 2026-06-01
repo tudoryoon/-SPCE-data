@@ -164,6 +164,7 @@ function render() {
   renderGme2021Case(latest.gme_2021_case);
   renderWsbTrending(latest.wsb_trending);
   renderWsbMentionHistory();
+  renderSpceGoogleTrends(spce.google_trends);
   renderComparison(spce, latest.baseline);
   renderGme(gme);
 }
@@ -351,6 +352,8 @@ function renderGme2021Case(caseData) {
     $("gme-case-chart").innerHTML = `<div class="empty-state">GME 기준 데이터가 아직 없습니다</div>`;
     $("gme-case-grid").innerHTML = "";
     $("gme-social-benchmark").innerHTML = "";
+    $("gme-google-trends-chart").innerHTML = "";
+    $("gme-google-trends-notes").innerHTML = "";
     return;
   }
   setText("gme-case-chip", caseData.window || "2021");
@@ -358,6 +361,7 @@ function renderGme2021Case(caseData) {
   const peak = caseData.peak || {};
   const base = caseData.base || {};
   const social = caseData.social_benchmark || {};
+  const googleTrends = caseData.google_trends || {};
   const shortInterestPeak = caseData.short_interest_peak || {};
   const shortFlowPeak = caseData.daily_short_sale_volume_peak || {};
   $("gme-case-grid").innerHTML = [
@@ -406,6 +410,16 @@ function renderGme2021Case(caseData) {
       value: compact(social.youtube_videos),
       sub: social.window || "--",
     },
+    {
+      label: "Google Trends 피크",
+      value: googleTrends.peak ? `${num(googleTrends.peak.interest, 0)}/100` : "--",
+      sub: googleTrends.peak?.date || "--",
+    },
+    {
+      label: "그래프 끝일 검색 관심도",
+      value: googleTrends.latest ? `${num(googleTrends.latest.interest, 0)}/100` : "--",
+      sub: googleTrends.latest?.date || "--",
+    },
   ].map((item) => `
     <article class="case-card">
       <span>${item.label}</span>
@@ -437,7 +451,7 @@ function renderGme2021Case(caseData) {
     ["기간", social.window || "--"],
     ["GME 시총 대비 공매도 참고", caseData.short_market_cap_note || "--"],
     ["GME 공매도 데이터", `${caseData.short_interest_history_source || "FINRA 공매도 잔고"}; ${caseData.daily_short_sale_volume_source || "FINRA 일별 공매도성 거래 파일"}`],
-    ["현재 지표 주의", social.note || "--"],
+    ["과거 WSB 언급량 주의", "현재 공개 API만으로 2021년 1월 WSB 일자별 언급량을 안정적으로 재수집하기 어렵습니다. 그래서 Google Trends를 공개 대리 지표로 같이 봅니다."],
     ["SEC 거래량 참고", caseData.sec_volume_note || "--"],
   ].map(([label, value]) => `
     <div class="benchmark-row">
@@ -445,6 +459,20 @@ function renderGme2021Case(caseData) {
       <strong>${esc(value)}</strong>
     </div>
   `).join("");
+  $("gme-google-trends-chart").innerHTML = googleTrendChart(
+    googleTrends.history || [],
+    {
+      aria: "GME 2021 Google Trends 검색 관심도",
+      color: "#0f8a5f",
+      emptyText: "GME Google Trends 데이터가 아직 없습니다",
+      keyword: googleTrends.keyword || "GME stock",
+    },
+  );
+  $("gme-google-trends-notes").innerHTML = googleTrendNotes(googleTrends, [
+    ["해석", "GME 검색 관심도는 2021년 1월 28일 전후에 100까지 치솟은 뒤, 현재 가격 그래프 끝일인 2021년 2월 12일에는 크게 낮아진 상태로 표시됩니다."],
+    ["척도", googleTrends.scale || "0-100 정규화 지표"],
+    ["출처", googleTrends.source_url || "Google Trends"],
+  ]);
 }
 
 function gmeCaseChart(series, milestones) {
@@ -606,6 +634,94 @@ function renderWsbMentionHistory() {
     latestPoint ? `최신 ${compact(latestPoint.value)} · 순위 #${latestPoint.rank || "--"}` : "--",
   );
   $("wsb-history-chart").innerHTML = mentionHistoryChart(points);
+}
+
+function renderSpceGoogleTrends(trends) {
+  if (!trends) {
+    setText("spce-google-trends-chip", "데이터 없음");
+    $("spce-google-trends-chart").innerHTML = `<div class="empty-state">SPCE Google Trends 데이터가 아직 없습니다</div>`;
+    $("spce-google-trends-notes").innerHTML = "";
+    return;
+  }
+  const latest = trends.latest || {};
+  const peak = trends.peak || {};
+  setText(
+    "spce-google-trends-chip",
+    latest.date ? `최신 ${num(latest.interest, 0)}/100 · ${latest.date}` : koStatus(trends.status),
+  );
+  $("spce-google-trends-method").textContent = `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · ${trends.window || "최근 90일"}`;
+  $("spce-google-trends-chart").innerHTML = googleTrendChart(
+    trends.history || [],
+    {
+      aria: "SPCE Google Trends 검색 관심도",
+      color: "#137f8f",
+      emptyText: "SPCE Google Trends 데이터가 아직 없습니다",
+      keyword: trends.keyword || "SPCE stock",
+    },
+  );
+  $("spce-google-trends-notes").innerHTML = googleTrendNotes(trends, [
+    ["최신 관심도", latest.date ? `${latest.date} 기준 ${num(latest.interest, 0)}/100` : "--"],
+    ["기간 내 피크", peak.date ? `${peak.date} · ${num(peak.interest, 0)}/100` : "--"],
+    ["주의", "Google Trends는 절대 검색량이 아니라 해당 기간 내 최대 검색 관심도를 100으로 둔 정규화 지표입니다."],
+  ]);
+}
+
+function googleTrendNotes(trends, rows) {
+  const statusRow = ["상태", trends.status === "ok" ? "정상" : koStatus(trends.status)];
+  const noteRow = trends.note ? [["메모", trends.note]] : [];
+  return [statusRow, ...rows, ...noteRow].map(([label, value]) => `
+    <div class="benchmark-row">
+      <span>${label}</span>
+      <strong>${esc(value || "--")}</strong>
+    </div>
+  `).join("");
+}
+
+function googleTrendChart(history, options) {
+  const points = history
+    .map((item) => ({
+      date: item.date,
+      time: new Date(`${item.date}T00:00:00Z`).getTime(),
+      value: Number(item.interest),
+      formatted: item.formatted_value,
+    }))
+    .filter((item) => Number.isFinite(item.time) && Number.isFinite(item.value));
+  const width = 940;
+  const height = 280;
+  const pad = { top: 22, right: 28, bottom: 44, left: 58 };
+  if (!points.length) {
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}"><text x="58" y="140" fill="#69736f">${esc(options.emptyText || "Google Trends 데이터가 아직 없습니다")}</text></svg>`;
+  }
+  const minX = Math.min(...points.map((point) => point.time));
+  const maxX = Math.max(...points.map((point) => point.time));
+  const xSpan = Math.max(1, maxX - minX);
+  const x = (value) => pad.left + ((value - minX) / xSpan) * (width - pad.left - pad.right);
+  const y = (value) => height - pad.bottom - (value / 100) * (height - pad.top - pad.bottom);
+  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${x(point.time).toFixed(2)} ${y(point.value).toFixed(2)}`).join(" ");
+  const areaPath = `${path} L ${x(points[points.length - 1].time).toFixed(2)} ${height - pad.bottom} L ${x(points[0].time).toFixed(2)} ${height - pad.bottom} Z`;
+  const grid = [0, 25, 50, 75, 100].map((tick) => `
+    <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
+    <text x="14" y="${y(tick) + 4}" fill="#69736f" font-size="12">${tick}</text>
+  `).join("");
+  const markers = points.map((point) => {
+    const tooltip = `날짜: ${point.date}\n검색 관심도: ${point.formatted || num(point.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+    return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}"></circle>`;
+  }).join("");
+  const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
+  const peakTooltip = `피크 날짜: ${peak.date}\n검색 관심도: ${peak.formatted || num(peak.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+      ${grid}
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
+      <path d="${areaPath}" fill="${options.color}" opacity="0.10"></path>
+      <path d="${path}" fill="none" stroke="${options.color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle class="chart-hit-target" ${tooltipAttr(peakTooltip)} cx="${x(peak.time)}" cy="${y(peak.value)}" r="7" fill="#b54242"></circle>
+      ${markers}
+      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${points[0].date}</text>
+      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${points[points.length - 1].date}</text>
+    </svg>
+  `;
 }
 
 function mentionHistoryChart(points) {

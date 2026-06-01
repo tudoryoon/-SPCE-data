@@ -421,6 +421,10 @@ h2 {
   margin-top: 18px;
 }
 
+.google-layout {
+  margin-top: 18px;
+}
+
 .case-chart {
   min-height: 300px;
   overflow-x: auto;
@@ -506,6 +510,10 @@ h2 {
 }
 
 .trend-panel {
+  margin-bottom: 18px;
+}
+
+.google-panel {
   margin-bottom: 18px;
 }
 

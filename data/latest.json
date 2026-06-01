@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-01T06:54:27Z",
+  "generated_at_utc": "2026-06-01T07:08:11Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -14,7 +14,7 @@
     "status": "ok",
     "note": "",
     "price_source": "Yahoo Finance GME 일별 종가입니다. 적용 가능한 경우 분할 조정값을 쓰고, 2021년 1월 숏스퀴즈 구간 최저 종가를 1배로 정규화했습니다.",
-    "window": "2021-01-01 to 2021-02-15",
+    "window": "2021-01-01 to 2021-02-12",
     "start": {
       "date": "2021-01-04",
       "close": 4.3125,
@@ -449,6 +449,243 @@
       "short_exempt_ratio": 0.0038735352677739137,
       "market": "B,Q,N"
     },
+    "google_trends": {
+      "status": "ok",
+      "keyword": "GME stock",
+      "geo": "US",
+      "window": "2021-01-01 2021-02-12",
+      "scale": "0-100, 해당 조회 기간 내 최대 검색 관심도를 100으로 정규화",
+      "source": "Google Trends",
+      "source_url": "https://trends.google.com/trends/explore?date=2021-01-01+2021-02-12&geo=US&q=GME+stock",
+      "note": "",
+      "history": [
+        {
+          "date": "2021-01-01",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-02",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-03",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-04",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-05",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-06",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-07",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-08",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-09",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-10",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-11",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-12",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-13",
+          "interest": 2.0,
+          "formatted_value": "2"
+        },
+        {
+          "date": "2021-01-14",
+          "interest": 3.0,
+          "formatted_value": "3"
+        },
+        {
+          "date": "2021-01-15",
+          "interest": 2.0,
+          "formatted_value": "2"
+        },
+        {
+          "date": "2021-01-16",
+          "interest": 1.0,
+          "formatted_value": "1"
+        },
+        {
+          "date": "2021-01-17",
+          "interest": 0.0,
+          "formatted_value": "<1"
+        },
+        {
+          "date": "2021-01-18",
+          "interest": 1.0,
+          "formatted_value": "1"
+        },
+        {
+          "date": "2021-01-19",
+          "interest": 3.0,
+          "formatted_value": "3"
+        },
+        {
+          "date": "2021-01-20",
+          "interest": 3.0,
+          "formatted_value": "3"
+        },
+        {
+          "date": "2021-01-21",
+          "interest": 2.0,
+          "formatted_value": "2"
+        },
+        {
+          "date": "2021-01-22",
+          "interest": 6.0,
+          "formatted_value": "6"
+        },
+        {
+          "date": "2021-01-23",
+          "interest": 3.0,
+          "formatted_value": "3"
+        },
+        {
+          "date": "2021-01-24",
+          "interest": 1.0,
+          "formatted_value": "1"
+        },
+        {
+          "date": "2021-01-25",
+          "interest": 15.0,
+          "formatted_value": "15"
+        },
+        {
+          "date": "2021-01-26",
+          "interest": 21.0,
+          "formatted_value": "21"
+        },
+        {
+          "date": "2021-01-27",
+          "interest": 51.0,
+          "formatted_value": "51"
+        },
+        {
+          "date": "2021-01-28",
+          "interest": 100.0,
+          "formatted_value": "100"
+        },
+        {
+          "date": "2021-01-29",
+          "interest": 86.0,
+          "formatted_value": "86"
+        },
+        {
+          "date": "2021-01-30",
+          "interest": 24.0,
+          "formatted_value": "24"
+        },
+        {
+          "date": "2021-01-31",
+          "interest": 11.0,
+          "formatted_value": "11"
+        },
+        {
+          "date": "2021-02-01",
+          "interest": 52.0,
+          "formatted_value": "52"
+        },
+        {
+          "date": "2021-02-02",
+          "interest": 54.0,
+          "formatted_value": "54"
+        },
+        {
+          "date": "2021-02-03",
+          "interest": 41.0,
+          "formatted_value": "41"
+        },
+        {
+          "date": "2021-02-04",
+          "interest": 32.0,
+          "formatted_value": "32"
+        },
+        {
+          "date": "2021-02-05",
+          "interest": 28.0,
+          "formatted_value": "28"
+        },
+        {
+          "date": "2021-02-06",
+          "interest": 7.0,
+          "formatted_value": "7"
+        },
+        {
+          "date": "2021-02-07",
+          "interest": 4.0,
+          "formatted_value": "4"
+        },
+        {
+          "date": "2021-02-08",
+          "interest": 14.0,
+          "formatted_value": "14"
+        },
+        {
+          "date": "2021-02-09",
+          "interest": 12.0,
+          "formatted_value": "12"
+        },
+        {
+          "date": "2021-02-10",
+          "interest": 10.0,
+          "formatted_value": "10"
+        },
+        {
+          "date": "2021-02-11",
+          "interest": 7.0,
+          "formatted_value": "7"
+        },
+        {
+          "date": "2021-02-12",
+          "interest": 6.0,
+          "formatted_value": "6"
+        }
+      ],
+      "peak": {
+        "date": "2021-01-28",
+        "interest": 100.0,
+        "formatted_value": "100"
+      },
+      "latest": {
+        "date": "2021-02-12",
+        "interest": 6.0,
+        "formatted_value": "6"
+      }
+    },
     "series": [
       {
         "date": "2021-01-04",
@@ -639,6 +876,10 @@
         "label": "개인/WSB 매수세 가속"
       },
       {
+        "date": "2021-01-28",
+        "label": "Google Trends 피크"
+      },
+      {
         "date": "2021-01-27",
         "label": "소셜 관심 피크 주간"
       },
@@ -647,7 +888,7 @@
         "label": "브로커 거래 제한"
       }
     ],
-    "methodology_note": "가격 그래프는 2021년 1월 숏스퀴즈 구간의 최저 종가를 1배로 정규화했습니다. FINRA 공매도 잔고는 결제일 기준 잔고이고, 일별 공매도성 거래량은 당일 거래 흐름이지 누적 잔고가 아닙니다. 과거 소셜 벤치마크는 현재 ApeWisdom 24시간 WSB 집계와 산식이 다릅니다."
+    "methodology_note": "가격 그래프는 2021년 1월 숏스퀴즈 구간의 최저 종가를 1배로 정규화했습니다. FINRA 공매도 잔고는 결제일 기준 잔고이고, 일별 공매도성 거래량은 당일 거래 흐름이지 누적 잔고가 아닙니다. Google Trends는 검색 관심도 대리 지표이며, 과거 WSB 일자별 언급량 원자료와는 다릅니다."
   },
   "symbols": {
     "SPCE": {
@@ -1424,6 +1665,483 @@
           "status": "skipped",
           "note": "Missing YOUTUBE_API_KEY",
           "mention_count": null
+        }
+      },
+      "google_trends": {
+        "status": "ok",
+        "keyword": "SPCE stock",
+        "geo": "US",
+        "window": "2026-03-03 2026-06-01",
+        "scale": "0-100, 해당 조회 기간 내 최대 검색 관심도를 100으로 정규화",
+        "source": "Google Trends",
+        "source_url": "https://trends.google.com/trends/explore?date=2026-03-03+2026-06-01&geo=US&q=SPCE+stock",
+        "note": "",
+        "history": [
+          {
+            "date": "2026-03-03",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-04",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-05",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-03-06",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-03-07",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-08",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-09",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-10",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-03-11",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-12",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-13",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-14",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-15",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-16",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-03-17",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-18",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-03-19",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-20",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-21",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-22",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-23",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-03-24",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-25",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-26",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-27",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-28",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-29",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-03-30",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-03-31",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-04-01",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-04-02",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-04-03",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-04",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-05",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-04-06",
+            "interest": 12.0,
+            "formatted_value": "12"
+          },
+          {
+            "date": "2026-04-07",
+            "interest": 8.0,
+            "formatted_value": "8"
+          },
+          {
+            "date": "2026-04-08",
+            "interest": 8.0,
+            "formatted_value": "8"
+          },
+          {
+            "date": "2026-04-09",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-04-10",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-04-11",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-12",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-13",
+            "interest": 4.0,
+            "formatted_value": "4"
+          },
+          {
+            "date": "2026-04-14",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-04-15",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-16",
+            "interest": 6.0,
+            "formatted_value": "6"
+          },
+          {
+            "date": "2026-04-17",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-04-18",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-19",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-20",
+            "interest": 4.0,
+            "formatted_value": "4"
+          },
+          {
+            "date": "2026-04-21",
+            "interest": 4.0,
+            "formatted_value": "4"
+          },
+          {
+            "date": "2026-04-22",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-04-23",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-24",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-04-25",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-26",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-27",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-04-28",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-04-29",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-04-30",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-01",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-05-02",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-03",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-04",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-05",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-06",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-05-07",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-08",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-09",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-10",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-11",
+            "interest": 4.0,
+            "formatted_value": "4"
+          },
+          {
+            "date": "2026-05-12",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-05-13",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-05-14",
+            "interest": 4.0,
+            "formatted_value": "4"
+          },
+          {
+            "date": "2026-05-15",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-16",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-17",
+            "interest": 0.0,
+            "formatted_value": "0"
+          },
+          {
+            "date": "2026-05-18",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-19",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-20",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-21",
+            "interest": 5.0,
+            "formatted_value": "5"
+          },
+          {
+            "date": "2026-05-22",
+            "interest": 7.0,
+            "formatted_value": "7"
+          },
+          {
+            "date": "2026-05-23",
+            "interest": 3.0,
+            "formatted_value": "3"
+          },
+          {
+            "date": "2026-05-24",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-05-25",
+            "interest": 2.0,
+            "formatted_value": "2"
+          },
+          {
+            "date": "2026-05-26",
+            "interest": 11.0,
+            "formatted_value": "11"
+          },
+          {
+            "date": "2026-05-27",
+            "interest": 13.0,
+            "formatted_value": "13"
+          },
+          {
+            "date": "2026-05-28",
+            "interest": 27.0,
+            "formatted_value": "27"
+          },
+          {
+            "date": "2026-05-29",
+            "interest": 100.0,
+            "formatted_value": "100"
+          },
+          {
+            "date": "2026-05-30",
+            "interest": 49.0,
+            "formatted_value": "49"
+          },
+          {
+            "date": "2026-05-31",
+            "interest": 34.0,
+            "formatted_value": "34"
+          },
+          {
+            "date": "2026-06-01",
+            "interest": 43.0,
+            "formatted_value": "43"
+          }
+        ],
+        "peak": {
+          "date": "2026-05-29",
+          "interest": 100.0,
+          "formatted_value": "100"
+        },
+        "latest": {
+          "date": "2026-06-01",
+          "interest": 43.0,
+          "formatted_value": "43"
         }
       },
       "score": {
@@ -2245,13 +2963,13 @@
         "rank": 1,
         "ticker": "SPCE",
         "name": "Virgin Galactic",
-        "mentions": 934,
-        "upvotes": 12495,
+        "mentions": 936,
+        "upvotes": 12642,
         "rank_24h_ago": 1,
-        "mentions_24h_ago": 804,
+        "mentions_24h_ago": 809,
         "positive": 0,
         "negative": 0,
-        "neutral": 934,
+        "neutral": 936,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2259,13 +2977,13 @@
         "rank": 2,
         "ticker": "MU",
         "name": "Micron Technology",
-        "mentions": 306,
-        "upvotes": 2405,
+        "mentions": 309,
+        "upvotes": 2428,
         "rank_24h_ago": 4,
         "mentions_24h_ago": 72,
         "positive": 0,
         "negative": 0,
-        "neutral": 306,
+        "neutral": 309,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2273,13 +2991,13 @@
         "rank": 3,
         "ticker": "NOW",
         "name": "ServiceNow",
-        "mentions": 181,
-        "upvotes": 954,
-        "rank_24h_ago": 7,
+        "mentions": 184,
+        "upvotes": 966,
+        "rank_24h_ago": 6,
         "mentions_24h_ago": 31,
         "positive": 0,
         "negative": 0,
-        "neutral": 181,
+        "neutral": 184,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2288,7 +3006,7 @@
         "ticker": "MSFT",
         "name": "Microsoft",
         "mentions": 124,
-        "upvotes": 1370,
+        "upvotes": 1368,
         "rank_24h_ago": 10,
         "mentions_24h_ago": 29,
         "positive": 0,
@@ -2301,13 +3019,13 @@
         "rank": 5,
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "mentions": 109,
-        "upvotes": 1372,
+        "mentions": 112,
+        "upvotes": 1394,
         "rank_24h_ago": 5,
         "mentions_24h_ago": 46,
         "positive": 0,
         "negative": 0,
-        "neutral": 109,
+        "neutral": 112,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2316,7 +3034,7 @@
         "ticker": "IBM",
         "name": "IBM",
         "mentions": 85,
-        "upvotes": 1502,
+        "upvotes": 1521,
         "rank_24h_ago": 16,
         "mentions_24h_ago": 16,
         "positive": 0,
@@ -2329,13 +3047,13 @@
         "rank": 7,
         "ticker": "HPE",
         "name": "Hewlett Packard Enterprise",
-        "mentions": 75,
-        "upvotes": 401,
-        "rank_24h_ago": 30,
+        "mentions": 76,
+        "upvotes": 403,
+        "rank_24h_ago": 23,
         "mentions_24h_ago": 10,
         "positive": 0,
         "negative": 0,
-        "neutral": 75,
+        "neutral": 76,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2343,13 +3061,13 @@
         "rank": 8,
         "ticker": "SPY",
         "name": "SPDR S&amp;P 500 ETF Trust",
-        "mentions": 73,
-        "upvotes": 323,
-        "rank_24h_ago": 9,
+        "mentions": 72,
+        "upvotes": 300,
+        "rank_24h_ago": 7,
         "mentions_24h_ago": 33,
         "positive": 0,
         "negative": 0,
-        "neutral": 73,
+        "neutral": 72,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2357,13 +3075,13 @@
         "rank": 9,
         "ticker": "SPCX",
         "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
-        "mentions": 57,
-        "upvotes": 637,
+        "mentions": 59,
+        "upvotes": 647,
         "rank_24h_ago": 2,
         "mentions_24h_ago": 120,
         "positive": 0,
         "negative": 0,
-        "neutral": 57,
+        "neutral": 59,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2371,13 +3089,13 @@
         "rank": 10,
         "ticker": "ASTS",
         "name": "AST SpaceMobile",
-        "mentions": 57,
-        "upvotes": 308,
+        "mentions": 58,
+        "upvotes": 320,
         "rank_24h_ago": 3,
-        "mentions_24h_ago": 54,
+        "mentions_24h_ago": 52,
         "positive": 0,
         "negative": 0,
-        "neutral": 57,
+        "neutral": 58,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2386,8 +3104,8 @@
         "ticker": "RKLB",
         "name": "Rocket Lab USA",
         "mentions": 53,
-        "upvotes": 222,
-        "rank_24h_ago": 6,
+        "upvotes": 223,
+        "rank_24h_ago": 9,
         "mentions_24h_ago": 30,
         "positive": 0,
         "negative": 0,
@@ -2400,7 +3118,7 @@
         "ticker": "AMD",
         "name": "AMD",
         "mentions": 47,
-        "upvotes": 759,
+        "upvotes": 776,
         "rank_24h_ago": 8,
         "mentions_24h_ago": 28,
         "positive": 0,
@@ -2413,41 +3131,41 @@
         "rank": 13,
         "ticker": "TSLA",
         "name": "Tesla",
-        "mentions": 39,
+        "mentions": 40,
         "upvotes": 164,
         "rank_24h_ago": 15,
         "mentions_24h_ago": 16,
         "positive": 0,
         "negative": 0,
-        "neutral": 39,
+        "neutral": 40,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 14,
-        "ticker": "HOOD",
-        "name": "Robinhood",
-        "mentions": 39,
-        "upvotes": 124,
+        "ticker": "DELL",
+        "name": "Dell",
+        "mentions": 40,
+        "upvotes": 768,
         "rank_24h_ago": 26,
-        "mentions_24h_ago": 17,
+        "mentions_24h_ago": 11,
         "positive": 0,
         "negative": 0,
-        "neutral": 39,
+        "neutral": 40,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 15,
-        "ticker": "DELL",
-        "name": "Dell",
-        "mentions": 38,
-        "upvotes": 745,
-        "rank_24h_ago": 23,
-        "mentions_24h_ago": 11,
+        "ticker": "HOOD",
+        "name": "Robinhood",
+        "mentions": 39,
+        "upvotes": 124,
+        "rank_24h_ago": 22,
+        "mentions_24h_ago": 17,
         "positive": 0,
         "negative": 0,
-        "neutral": 38,
+        "neutral": 39,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       }
@@ -2462,7 +3180,7 @@
   "short_exposure_context": {
     "status": "ok",
     "note": "",
-    "generated_at_utc": "2026-06-01T06:54:50Z",
+    "generated_at_utc": "2026-06-01T07:08:19Z",
     "spce": {
       "short_percent_float": 22.59848880581121,
       "short_notional_to_market_cap_pct": 21.73936969588713,

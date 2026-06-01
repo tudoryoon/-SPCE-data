@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import html as html_lib
 import json
 import math
 import os
@@ -82,6 +83,8 @@ SOCIAL_THRESHOLDS_24H = {
 
 WSB_TOP_LIMIT = 15
 WSB_SAMPLE_PAGES = 4
+MOST_SHORTED_SOURCE_URL = "https://stockanalysis.com/list/most-shorted-stocks/"
+HIGH_SHORT_FLOAT_THRESHOLD_PCT = 10.0
 TICKER_DENYLIST = {
     "A",
     "AI",
@@ -274,6 +277,17 @@ def safe_float(value: Any) -> float | None:
     return result
 
 
+def parse_percent_text(value: str) -> float | None:
+    cleaned = re.sub(r"[^0-9.+-]", "", value or "")
+    return safe_float(cleaned)
+
+
+def clean_cell_html(value: str) -> str:
+    value = re.sub(r"<!--.*?-->", "", value, flags=re.DOTALL)
+    value = re.sub(r"<[^>]+>", "", value)
+    return re.sub(r"\s+", " ", html_lib.unescape(value)).strip()
+
+
 def percent_value(value: Any) -> float | None:
     number = safe_float(value)
     if number is None:
@@ -451,6 +465,124 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "series": series,
         "milestones": milestones,
         "methodology_note": "Price is normalized to GME's COVID-era closing low in this window. The historical social benchmark is not directly comparable to the current ApeWisdom WSB 24h count; it shows order-of-magnitude attention during the GME event.",
+    }
+
+
+def collect_most_shorted_stocks() -> dict[str, Any]:
+    try:
+        response = requests.get(
+            MOST_SHORTED_SOURCE_URL,
+            headers={
+                "Accept": "text/html",
+                "User-Agent": os.environ.get("REDDIT_USER_AGENT") or USER_AGENT,
+            },
+            timeout=30,
+        )
+        if not response.ok:
+            return {
+                "status": "error",
+                "note": f"HTTP {response.status_code}: {response.text[:160]}",
+                "items": [],
+            }
+        html_text = response.text
+    except Exception as exc:  # noqa: BLE001
+        return {"status": "error", "note": str(exc), "items": []}
+
+    items: list[dict[str, Any]] = []
+    for row_html in re.findall(r"<tr[^>]*>(.*?)</tr>", html_text, flags=re.DOTALL | re.IGNORECASE):
+        cells = re.findall(r"<td[^>]*>(.*?)</td>", row_html, flags=re.DOTALL | re.IGNORECASE)
+        if len(cells) < 7:
+            continue
+        rank = safe_float(clean_cell_html(cells[0]))
+        symbol = clean_cell_html(cells[1]).upper()
+        company = clean_cell_html(cells[2])
+        short_float = parse_percent_text(clean_cell_html(cells[3]))
+        price = safe_float(clean_cell_html(cells[4]).replace(",", ""))
+        change_pct = parse_percent_text(clean_cell_html(cells[5]))
+        market_cap = clean_cell_html(cells[6])
+        if not symbol or short_float is None:
+            continue
+        items.append(
+            {
+                "rank": int(rank) if rank is not None else len(items) + 1,
+                "symbol": symbol,
+                "company": company,
+                "short_percent_float": short_float,
+                "price": price,
+                "change_pct": change_pct,
+                "market_cap": market_cap,
+            }
+        )
+
+    items = sorted(items, key=lambda item: item.get("rank") or 9999)
+    return {
+        "status": "ok" if items else "empty",
+        "note": "" if items else "No rows parsed from StockAnalysis most-shorted list.",
+        "source": "StockAnalysis Most Shorted Stocks",
+        "source_url": MOST_SHORTED_SOURCE_URL,
+        "universe": "Top 100 stocks by short percent of float from StockAnalysis.",
+        "items": items[:100],
+    }
+
+
+def collect_short_exposure_context(spce_market: dict[str, Any], baseline: dict[str, Any]) -> dict[str, Any]:
+    detail = spce_market.get("short_deep_dive") or {}
+    short_float_pct = safe_float(detail.get("short_percent_float")) or safe_float(spce_market.get("short_percent_float"))
+    short_mcap_pct = safe_float(detail.get("short_notional_to_market_cap_pct"))
+    top_data = collect_most_shorted_stocks()
+    top_items = top_data.get("items") or []
+    top_observed = top_items[0] if top_items else None
+    top100_cutoff = top_items[-1].get("short_percent_float") if len(top_items) >= 100 else None
+    spce_entry = next((item for item in top_items if item.get("symbol") == "SPCE"), None)
+    rank = spce_entry.get("rank") if spce_entry else None
+    above_count = None
+    if short_float_pct is not None and top_items:
+        above_count = sum(1 for item in top_items if safe_float(item.get("short_percent_float")) is not None and item["short_percent_float"] > short_float_pct)
+    top100_cutoff_ratio = None
+    if short_float_pct is not None and top100_cutoff not in (None, 0):
+        top100_cutoff_ratio = short_float_pct / top100_cutoff * 100
+    high_threshold_multiple = None
+    if short_float_pct is not None:
+        high_threshold_multiple = short_float_pct / HIGH_SHORT_FLOAT_THRESHOLD_PCT
+
+    if rank:
+        classification = "Top-100 extreme short-float bucket."
+    elif short_float_pct is not None and top100_cutoff is not None and short_float_pct < top100_cutoff:
+        classification = "High short interest, but below the current top-100 extreme short-float bucket."
+    elif short_float_pct is not None and short_float_pct >= HIGH_SHORT_FLOAT_THRESHOLD_PCT:
+        classification = "High short interest versus the common 10% short-float threshold."
+    else:
+        classification = "Not high versus the common 10% short-float threshold."
+
+    return {
+        "status": top_data.get("status"),
+        "note": top_data.get("note"),
+        "generated_at_utc": iso_z(utc_now()),
+        "spce": {
+            "short_percent_float": short_float_pct,
+            "short_notional_to_market_cap_pct": short_mcap_pct,
+            "shares_short": detail.get("shares_short"),
+            "market_cap": detail.get("market_cap"),
+            "short_notional": detail.get("short_notional"),
+            "settlement_date": detail.get("official_settlement_date"),
+            "rank_in_top100_short_float": rank,
+            "top100_count_above_spce": above_count,
+            "top100_cutoff_ratio_pct": top100_cutoff_ratio,
+            "high_threshold_multiple": high_threshold_multiple,
+            "classification": classification,
+        },
+        "benchmarks": {
+            "high_short_float_threshold_pct": HIGH_SHORT_FLOAT_THRESHOLD_PCT,
+            "top_observed_short_float_pct": top_observed.get("short_percent_float") if top_observed else None,
+            "top_observed_symbol": top_observed.get("symbol") if top_observed else None,
+            "top100_cutoff_short_float_pct": top100_cutoff,
+            "gme_2021_short_float_pct": baseline.get("short_percent_float"),
+            "gme_2021_short_market_cap_proxy_pct": baseline.get("short_notional_to_market_cap_pct"),
+        },
+        "top_short_float": top_items[:12],
+        "source": top_data.get("source"),
+        "source_url": top_data.get("source_url"),
+        "methodology": "SPCE short / market cap uses FINRA shares short divided by shares outstanding proxy. External high-short list uses short percent of float, so it is directional context rather than the same denominator.",
     }
 
 
@@ -1170,6 +1302,10 @@ def build_snapshot(window_hours: int) -> dict[str, Any]:
         }
         data["score"] = score_symbol(data, window_hours)
         snapshot["symbols"][symbol] = data
+    snapshot["short_exposure_context"] = collect_short_exposure_context(
+        snapshot["symbols"]["SPCE"]["market"],
+        snapshot["baseline"],
+    )
     snapshot["comparison"] = {
         "target": "SPCE",
         "baseline": "GME",

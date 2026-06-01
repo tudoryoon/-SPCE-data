@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-short-mktcap" />
+    <link rel="stylesheet" href="styles.css?v=20260601-short-rank" />
   </head>
   <body>
     <div class="app-shell">
@@ -84,6 +84,27 @@
             </article>
           </div>
           <p id="short-caveat" class="panel-subtitle caveat"></p>
+        </section>
+
+        <section class="panel exposure-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Short Exposure Rank</h2>
+              <p id="exposure-method" class="panel-subtitle">SPCE short exposure versus current high-short-interest stocks</p>
+            </div>
+            <span id="exposure-status" class="status-chip">--</span>
+          </div>
+          <div id="exposure-grid" class="exposure-grid"></div>
+          <div class="exposure-layout">
+            <div>
+              <div class="chart-title">Highest Short % Float Now</div>
+              <div id="exposure-top-list" class="rank-list"></div>
+            </div>
+            <div>
+              <div class="chart-title">SPCE Read</div>
+              <div id="exposure-notes" class="benchmark-list"></div>
+            </div>
+          </div>
         </section>
 
         <section class="panel gme-case-panel">
@@ -202,6 +223,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-short-mktcap"></script>
+    <script src="app.js?v=20260601-short-rank"></script>
   </body>
 </html>

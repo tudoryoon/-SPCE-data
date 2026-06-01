@@ -822,7 +822,7 @@
     }
   },
   {
-    "generated_at_utc": "2026-06-01T07:08:11Z",
+    "generated_at_utc": "2026-06-01T11:22:55Z",
     "symbols": {
       "SPCE": {
         "price": 6.179999828338623,
@@ -841,7 +841,7 @@
           "youtube": null
         },
         "google_trends": {
-          "latest_interest": 43.0,
+          "latest_interest": 45.0,
           "peak_interest": 100.0,
           "peak_date": "2026-05-29"
         }
@@ -866,7 +866,7 @@
       }
     },
     "wsb": {
-      "spce_mentions": 936,
+      "spce_mentions": 1111,
       "spce_rank": 1,
       "spce_net_sentiment": 0.0
     }

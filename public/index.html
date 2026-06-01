@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-wsb-history" />
+    <link rel="stylesheet" href="styles.css?v=20260601-short-depth" />
   </head>
   <body>
     <div class="app-shell">
@@ -57,6 +57,28 @@
             <strong id="metric-leader">--</strong>
             <small>작성자 집중도</small>
           </article>
+        </section>
+
+        <section class="panel short-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>공매도 상세</h2>
+              <p class="panel-subtitle">FINRA short interest and short sale flow</p>
+            </div>
+            <span id="short-source-chip" class="status-chip">--</span>
+          </div>
+          <div id="short-metric-grid" class="short-metric-grid"></div>
+          <div class="short-chart-grid">
+            <div>
+              <div class="chart-title">Short Interest Shares</div>
+              <div id="short-interest-chart" class="mini-chart"></div>
+            </div>
+            <div>
+              <div class="chart-title">Daily Short Volume Ratio</div>
+              <div id="short-volume-chart" class="mini-chart"></div>
+            </div>
+          </div>
+          <p id="short-caveat" class="panel-subtitle caveat"></p>
         </section>
 
         <section class="panel trend-panel">
@@ -164,6 +186,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-wsb-history"></script>
+    <script src="app.js?v=20260601-short-depth"></script>
   </body>
 </html>

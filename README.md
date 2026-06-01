@@ -27,6 +27,15 @@ WallStreetBets Top Trending Stocks 패널은 ApeWisdom의 공개 r/wallstreetbet
 
 Reddit 키가 없으면 mention ranking은 표시하되 감성 split은 neutral로 둡니다.
 
+## 공매도 지표
+
+공매도 상세 패널은 두 종류의 FINRA 데이터를 분리해 표시합니다.
+
+- Short interest: FINRA Consolidated Short Interest의 격주 settlement-date 기준 open short position
+- Short sale volume: FINRA Reg SHO Daily Short Sale Volume의 일별 short sale 거래 흐름
+
+Daily short sale volume은 당일 short sale로 보고된 거래량이지 아직 열려 있는 공매도 잔고가 아닙니다. 그래서 사이트에서는 short interest와 short volume ratio를 별도 차트로 분리합니다.
+
 ## GitHub Secrets
 
 레포의 `Settings -> Secrets and variables -> Actions`에 아래 값을 넣으면 소셜 수집이 켜집니다.

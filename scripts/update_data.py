@@ -199,6 +199,30 @@ def http_get_json(
         return None, str(exc)
 
 
+def http_post_json(
+    url: str,
+    body: dict[str, Any],
+    headers: dict[str, str] | None = None,
+    timeout: int = 30,
+) -> tuple[list[dict[str, Any]] | dict[str, Any] | None, str | None]:
+    merged_headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": os.environ.get("REDDIT_USER_AGENT") or USER_AGENT,
+    }
+    if headers:
+        merged_headers.update(headers)
+    try:
+        response = requests.post(url, headers=merged_headers, json=body, timeout=timeout)
+        if response.status_code == 204:
+            return [], None
+        if not response.ok:
+            return None, f"HTTP {response.status_code}: {response.text[:220]}"
+        return response.json(), None
+    except Exception as exc:  # noqa: BLE001
+        return None, str(exc)
+
+
 def reddit_headers() -> tuple[dict[str, str] | None, str | None]:
     global REDDIT_TOKEN
     client_id = os.environ.get("REDDIT_CLIENT_ID")
@@ -254,6 +278,14 @@ def pct_change(values: list[float], periods: int) -> float | None:
     return (latest / prior - 1) * 100
 
 
+def ratio(numerator: Any, denominator: Any) -> float | None:
+    num = safe_float(numerator)
+    den = safe_float(denominator)
+    if num is None or den in (None, 0):
+        return None
+    return num / den
+
+
 def bounded_score(value: float | None, high: float) -> float | None:
     if value is None:
         return None
@@ -279,6 +311,167 @@ def mention_pattern(symbol: str, aliases: list[str]) -> re.Pattern[str]:
     terms = [rf"(?<![A-Za-z0-9])\$?{re.escape(symbol)}(?![A-Za-z0-9])"]
     terms.extend(re.escape(alias) for alias in aliases)
     return re.compile("|".join(terms), re.IGNORECASE)
+
+
+def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
+    start_date = (utc_now() - timedelta(days=370)).date().isoformat()
+    body = {
+        "limit": 60,
+        "compareFilters": [
+            {"compareType": "EQUAL", "fieldName": "symbolCode", "fieldValue": symbol},
+            {"compareType": "GREATER", "fieldName": "settlementDate", "fieldValue": start_date},
+        ],
+        "fields": [
+            "settlementDate",
+            "symbolCode",
+            "issueName",
+            "marketClassCode",
+            "currentShortPositionQuantity",
+            "previousShortPositionQuantity",
+            "changePreviousNumber",
+            "changePercent",
+            "averageDailyVolumeQuantity",
+            "daysToCoverQuantity",
+            "revisionFlag",
+            "stockSplitFlag",
+        ],
+    }
+    payload, err = http_post_json("https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest", body)
+    if err:
+        return {"status": "error", "note": err, "history": []}
+    rows = []
+    for item in payload or []:
+        rows.append(
+            {
+                "settlement_date": item.get("settlementDate"),
+                "shares_short": safe_float(item.get("currentShortPositionQuantity")),
+                "previous_shares_short": safe_float(item.get("previousShortPositionQuantity")),
+                "change_shares": safe_float(item.get("changePreviousNumber")),
+                "change_percent": safe_float(item.get("changePercent")),
+                "average_daily_volume": safe_float(item.get("averageDailyVolumeQuantity")),
+                "days_to_cover": safe_float(item.get("daysToCoverQuantity")),
+                "market_class": item.get("marketClassCode"),
+                "revision_flag": item.get("revisionFlag"),
+                "stock_split_flag": item.get("stockSplitFlag"),
+            }
+        )
+    rows = sorted([row for row in rows if row.get("settlement_date")], key=lambda row: row["settlement_date"])
+    latest = rows[-1] if rows else None
+    return {
+        "status": "ok" if rows else "empty",
+        "note": "",
+        "source": "FINRA Consolidated Short Interest",
+        "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
+        "latest": latest,
+        "history": rows[-26:],
+    }
+
+
+def collect_finra_short_volume(symbol: str) -> dict[str, Any]:
+    start_date = (utc_now() - timedelta(days=45)).date().isoformat()
+    body = {
+        "limit": 500,
+        "compareFilters": [
+            {
+                "compareType": "EQUAL",
+                "fieldName": "securitiesInformationProcessorSymbolIdentifier",
+                "fieldValue": symbol,
+            },
+            {"compareType": "GREATER", "fieldName": "tradeReportDate", "fieldValue": start_date},
+        ],
+        "fields": [
+            "tradeReportDate",
+            "securitiesInformationProcessorSymbolIdentifier",
+            "shortParQuantity",
+            "shortExemptParQuantity",
+            "totalParQuantity",
+            "marketCode",
+            "reportingFacilityCode",
+        ],
+    }
+    payload, err = http_post_json("https://api.finra.org/data/group/OTCMarket/name/regShoDaily", body)
+    if err:
+        return {"status": "error", "note": err, "history": []}
+
+    grouped: dict[str, dict[str, Any]] = {}
+    for item in payload or []:
+        date = item.get("tradeReportDate")
+        if not date:
+            continue
+        bucket = grouped.setdefault(
+            date,
+            {
+                "trade_date": date,
+                "short_volume": 0.0,
+                "short_exempt_volume": 0.0,
+                "total_volume": 0.0,
+                "facilities": set(),
+            },
+        )
+        bucket["short_volume"] += safe_float(item.get("shortParQuantity")) or 0.0
+        bucket["short_exempt_volume"] += safe_float(item.get("shortExemptParQuantity")) or 0.0
+        bucket["total_volume"] += safe_float(item.get("totalParQuantity")) or 0.0
+        if item.get("reportingFacilityCode"):
+            bucket["facilities"].add(item.get("reportingFacilityCode"))
+
+    rows = []
+    for row in grouped.values():
+        row["short_volume_ratio"] = ratio(row["short_volume"], row["total_volume"])
+        row["short_exempt_ratio"] = ratio(row["short_exempt_volume"], row["total_volume"])
+        row["facilities"] = sorted(row["facilities"])
+        rows.append(row)
+    rows = sorted(rows, key=lambda row: row["trade_date"])
+    latest = rows[-1] if rows else None
+    last_five = rows[-5:]
+    ratios = [row["short_volume_ratio"] for row in last_five if row.get("short_volume_ratio") is not None]
+    avg_ratio_5d = sum(ratios) / len(ratios) if ratios else None
+    return {
+        "status": "ok" if rows else "empty",
+        "note": "",
+        "source": "FINRA Reg SHO Daily Short Sale Volume",
+        "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
+        "latest": latest,
+        "average_short_volume_ratio_5d": avg_ratio_5d,
+        "history": rows[-30:],
+    }
+
+
+def enrich_short_deep_dive(market: dict[str, Any]) -> None:
+    finra_interest = market.get("finra_short_interest") or {}
+    finra_volume = market.get("finra_short_volume") or {}
+    latest_interest = finra_interest.get("latest") or {}
+    latest_volume = finra_volume.get("latest") or {}
+
+    official_shares_short = safe_float(latest_interest.get("shares_short"))
+    shares_short = official_shares_short if official_shares_short is not None else safe_float(market.get("shares_short"))
+    price = safe_float(market.get("price"))
+    float_shares = safe_float(market.get("float_shares"))
+
+    short_percent_float_calc = None
+    if shares_short is not None and float_shares not in (None, 0):
+        short_percent_float_calc = shares_short / float_shares * 100
+
+    market["short_deep_dive"] = {
+        "shares_short": shares_short,
+        "shares_short_source": "FINRA" if official_shares_short is not None else "yfinance",
+        "short_notional": shares_short * price if shares_short is not None and price is not None else None,
+        "short_percent_float": short_percent_float_calc or safe_float(market.get("short_percent_float")),
+        "reported_short_percent_float": safe_float(market.get("short_percent_float")),
+        "float_shares": float_shares,
+        "official_settlement_date": latest_interest.get("settlement_date"),
+        "official_days_to_cover": safe_float(latest_interest.get("days_to_cover")),
+        "official_average_daily_volume": safe_float(latest_interest.get("average_daily_volume")),
+        "short_interest_change_shares": safe_float(latest_interest.get("change_shares")),
+        "short_interest_change_percent": safe_float(latest_interest.get("change_percent")),
+        "daily_short_volume_date": latest_volume.get("trade_date"),
+        "daily_short_volume": safe_float(latest_volume.get("short_volume")),
+        "daily_total_reported_volume": safe_float(latest_volume.get("total_volume")),
+        "daily_short_volume_ratio": safe_float(latest_volume.get("short_volume_ratio")),
+        "daily_short_exempt_volume": safe_float(latest_volume.get("short_exempt_volume")),
+        "daily_short_exempt_ratio": safe_float(latest_volume.get("short_exempt_ratio")),
+        "average_short_volume_ratio_5d": safe_float(finra_volume.get("average_short_volume_ratio_5d")),
+        "caveat": "FINRA daily short sale volume is trade-flow data, not open short interest. Exchange-reported short interest is settlement-date based and delayed.",
+    }
 
 
 def collect_market(symbol: str) -> dict[str, Any]:
@@ -319,6 +512,9 @@ def collect_market(symbol: str) -> dict[str, Any]:
                 "beta": safe_float(info.get("beta")),
             }
         )
+        result["finra_short_interest"] = collect_finra_short_interest(symbol)
+        result["finra_short_volume"] = collect_finra_short_volume(symbol)
+        enrich_short_deep_dive(result)
     except Exception as exc:  # noqa: BLE001
         result["status"] = "error"
         result["note"] = str(exc)
@@ -808,11 +1004,16 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
     for symbol, data in snapshot["symbols"].items():
         market = data.get("market") or {}
         score = data.get("score") or {}
+        short_deep_dive = market.get("short_deep_dive") or {}
         symbols[symbol] = {
             "price": market.get("price"),
             "price_change_5d_pct": market.get("price_change_5d_pct"),
             "volume_ratio_20d": market.get("volume_ratio_20d"),
             "short_percent_float": market.get("short_percent_float"),
+            "official_short_percent_float": short_deep_dive.get("short_percent_float"),
+            "official_shares_short": short_deep_dive.get("shares_short"),
+            "official_days_to_cover": short_deep_dive.get("official_days_to_cover"),
+            "short_volume_ratio": short_deep_dive.get("daily_short_volume_ratio"),
             "score": score.get("score"),
             "confidence": score.get("confidence"),
             "social_mentions": {

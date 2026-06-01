@@ -227,6 +227,85 @@ h2 {
   line-height: 1.45;
 }
 
+.exposure-panel {
+  margin-bottom: 18px;
+}
+
+.exposure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.exposure-card {
+  display: grid;
+  min-height: 118px;
+  gap: 8px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f7f7fb;
+}
+
+.exposure-card span,
+.rank-row span {
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.exposure-card strong {
+  align-self: end;
+  font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+
+.exposure-card small {
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.exposure-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.46fr);
+  gap: 18px;
+}
+
+.rank-list {
+  display: grid;
+  gap: 8px;
+}
+
+.rank-row {
+  display: grid;
+  grid-template-columns: 44px 72px 86px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+}
+
+.rank-row strong,
+.rank-row em {
+  color: var(--ink);
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-row small {
+  min-width: 0;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .chart-title {
   margin-bottom: 8px;
   color: var(--muted);
@@ -553,6 +632,7 @@ tr:last-child td {
   .trend-layout,
   .short-chart-grid,
   .short-explainer-grid,
+  .exposure-layout,
   .case-layout {
     grid-template-columns: 1fr;
   }
@@ -560,6 +640,7 @@ tr:last-child td {
   .metric-grid,
   .strip,
   .short-metric-grid,
+  .exposure-grid,
   .case-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -588,8 +669,13 @@ tr:last-child td {
   .metric-grid,
   .strip,
   .short-metric-grid,
+  .exposure-grid,
   .case-grid {
     grid-template-columns: 1fr;
+  }
+
+  .rank-row {
+    grid-template-columns: 38px 62px 78px minmax(0, 1fr);
   }
 
   .timestamp {

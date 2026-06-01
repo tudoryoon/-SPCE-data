@@ -118,6 +118,7 @@ function render() {
   renderComponents(components);
   renderSocial(spce.social);
   renderShortDeepDive(spce.market);
+  renderShortExposureContext(latest.short_exposure_context);
   renderGme2021Case(latest.gme_2021_case);
   renderWsbTrending(latest.wsb_trending);
   renderWsbMentionHistory();
@@ -226,6 +227,80 @@ function renderShortDeepDive(market) {
     { aria: "SPCE daily short volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 0)}%`, minZero: true },
   );
   $("short-caveat").textContent = detail.caveat || "";
+}
+
+function renderShortExposureContext(context) {
+  if (!context) {
+    setText("exposure-status", "no data");
+    $("exposure-grid").innerHTML = "";
+    $("exposure-top-list").innerHTML = `<div class="empty-state">No short exposure rank data yet</div>`;
+    $("exposure-notes").innerHTML = "";
+    return;
+  }
+  const spce = context.spce || {};
+  const benchmarks = context.benchmarks || {};
+  const top = context.top_short_float || [];
+  const rank = spce.rank_in_top100_short_float ? `#${spce.rank_in_top100_short_float}` : ">100";
+  const cutoff = benchmarks.top100_cutoff_short_float_pct;
+  setText("exposure-status", context.status === "ok" ? "top-100 context" : context.status || "--");
+  $("exposure-method").textContent = context.methodology || "SPCE short exposure versus current high-short-interest stocks";
+  $("exposure-grid").innerHTML = [
+    {
+      label: "SPCE short / mkt cap",
+      value: `${num(spce.short_notional_to_market_cap_pct)}%`,
+      sub: `${money(spce.short_notional)} / ${money(spce.market_cap)}`,
+    },
+    {
+      label: "SPCE short / float",
+      value: `${num(spce.short_percent_float)}%`,
+      sub: `${num(spce.high_threshold_multiple, 1)}x vs 10% high threshold`,
+    },
+    {
+      label: "Top-100 rank",
+      value: rank,
+      sub: spce.rank_in_top100_short_float ? "in current public list" : `${spce.top100_count_above_spce ?? "--"} names above SPCE in top list`,
+    },
+    {
+      label: "Top-100 cutoff",
+      value: `${num(cutoff)}%`,
+      sub: `SPCE is ${num(spce.top100_cutoff_ratio_pct, 1)}% of cutoff`,
+    },
+    {
+      label: "Highest observed",
+      value: `${num(benchmarks.top_observed_short_float_pct)}%`,
+      sub: benchmarks.top_observed_symbol || "--",
+    },
+    {
+      label: "GME 2021 proxy",
+      value: `${num(benchmarks.gme_2021_short_market_cap_proxy_pct)}%+`,
+      sub: `${num(benchmarks.gme_2021_short_float_pct)}% short / float`,
+    },
+  ].map((item) => `
+    <article class="exposure-card">
+      <span>${item.label}</span>
+      <strong>${item.value}</strong>
+      <small>${item.sub}</small>
+    </article>
+  `).join("");
+  $("exposure-top-list").innerHTML = top.length ? top.map((item) => `
+    <div class="rank-row">
+      <span>#${item.rank}</span>
+      <strong>${esc(item.symbol)}</strong>
+      <em>${num(item.short_percent_float)}%</em>
+      <small>${esc(item.company)} · ${esc(item.market_cap || "--")}</small>
+    </div>
+  `).join("") : `<div class="empty-state">${esc(context.note || "No top short-float list parsed")}</div>`;
+  $("exposure-notes").innerHTML = [
+    ["Read", spce.classification || "--"],
+    ["High threshold", `Short float above ${num(benchmarks.high_short_float_threshold_pct)}% is commonly treated as high; SPCE is ${num(spce.short_percent_float)}%.`],
+    ["Top-list caveat", spce.rank_in_top100_short_float ? "SPCE is currently inside the external top-100 short-float list." : "SPCE is below the current top-100 short-float cutoff, so this source cannot give an exact full-universe percentile."],
+    ["Source", context.source || "--"],
+  ].map(([label, value]) => `
+    <div class="benchmark-row">
+      <span>${label}</span>
+      <strong>${esc(value)}</strong>
+    </div>
+  `).join("");
 }
 
 function renderGme2021Case(caseData) {

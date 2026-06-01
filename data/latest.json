@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-01T03:58:38Z",
+  "generated_at_utc": "2026-06-01T04:09:00Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -33,7 +33,735 @@
         "shares_outstanding": 104451974.0,
         "market_cap": 645513216.0,
         "average_volume": 12046819.0,
-        "beta": null
+        "beta": null,
+        "finra_short_interest": {
+          "status": "ok",
+          "note": "",
+          "source": "FINRA Consolidated Short Interest",
+          "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
+          "latest": {
+            "settlement_date": "2026-05-15",
+            "shares_short": 22707202.0,
+            "previous_shares_short": 21875750.0,
+            "change_shares": 831452.0,
+            "change_percent": 3.8,
+            "average_daily_volume": 9152826.0,
+            "days_to_cover": 2.48,
+            "market_class": "NYSE",
+            "revision_flag": null,
+            "stock_split_flag": null
+          },
+          "history": [
+            {
+              "settlement_date": "2025-05-30",
+              "shares_short": 11942941.0,
+              "previous_shares_short": 11711744.0,
+              "change_shares": 231197.0,
+              "change_percent": 1.97,
+              "average_daily_volume": 17778165.0,
+              "days_to_cover": 1.0,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-06-13",
+              "shares_short": 12858056.0,
+              "previous_shares_short": 11942941.0,
+              "change_shares": 915115.0,
+              "change_percent": 7.66,
+              "average_daily_volume": 5385917.0,
+              "days_to_cover": 2.39,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-06-30",
+              "shares_short": 11435647.0,
+              "previous_shares_short": 12858056.0,
+              "change_shares": -1422409.0,
+              "change_percent": -11.06,
+              "average_daily_volume": 2484426.0,
+              "days_to_cover": 4.6,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-07-15",
+              "shares_short": 11536028.0,
+              "previous_shares_short": 11435647.0,
+              "change_shares": 100381.0,
+              "change_percent": 0.88,
+              "average_daily_volume": 2395889.0,
+              "days_to_cover": 4.81,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-07-31",
+              "shares_short": 9565214.0,
+              "previous_shares_short": 11536028.0,
+              "change_shares": -1970814.0,
+              "change_percent": -17.08,
+              "average_daily_volume": 5824194.0,
+              "days_to_cover": 1.64,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-08-15",
+              "shares_short": 10632787.0,
+              "previous_shares_short": 9565214.0,
+              "change_shares": 1067573.0,
+              "change_percent": 11.16,
+              "average_daily_volume": 3373882.0,
+              "days_to_cover": 3.15,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-08-29",
+              "shares_short": 11430983.0,
+              "previous_shares_short": 10632787.0,
+              "change_shares": 798196.0,
+              "change_percent": 7.51,
+              "average_daily_volume": 2316507.0,
+              "days_to_cover": 4.93,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-09-15",
+              "shares_short": 10792832.0,
+              "previous_shares_short": 11430983.0,
+              "change_shares": -638151.0,
+              "change_percent": -5.58,
+              "average_daily_volume": 2056920.0,
+              "days_to_cover": 5.25,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-09-30",
+              "shares_short": 9845598.0,
+              "previous_shares_short": 10792832.0,
+              "change_shares": -947234.0,
+              "change_percent": -8.78,
+              "average_daily_volume": 4693419.0,
+              "days_to_cover": 2.1,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-10-15",
+              "shares_short": 10443300.0,
+              "previous_shares_short": 9845598.0,
+              "change_shares": 597702.0,
+              "change_percent": 6.07,
+              "average_daily_volume": 6201241.0,
+              "days_to_cover": 1.68,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-10-31",
+              "shares_short": 10952523.0,
+              "previous_shares_short": 10443300.0,
+              "change_shares": 509223.0,
+              "change_percent": 4.88,
+              "average_daily_volume": 4730342.0,
+              "days_to_cover": 2.32,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-11-14",
+              "shares_short": 12584478.0,
+              "previous_shares_short": 10952523.0,
+              "change_shares": 1631955.0,
+              "change_percent": 14.9,
+              "average_daily_volume": 3059524.0,
+              "days_to_cover": 4.11,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-11-28",
+              "shares_short": 13924872.0,
+              "previous_shares_short": 12584478.0,
+              "change_shares": 1340394.0,
+              "change_percent": 10.65,
+              "average_daily_volume": 2380057.0,
+              "days_to_cover": 5.85,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-12-15",
+              "shares_short": 14603301.0,
+              "previous_shares_short": 13924872.0,
+              "change_shares": 678429.0,
+              "change_percent": 4.87,
+              "average_daily_volume": 5335164.0,
+              "days_to_cover": 2.74,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-12-31",
+              "shares_short": 15066343.0,
+              "previous_shares_short": 14603301.0,
+              "change_shares": 463042.0,
+              "change_percent": 3.17,
+              "average_daily_volume": 5991973.0,
+              "days_to_cover": 2.51,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-01-15",
+              "shares_short": 15961960.0,
+              "previous_shares_short": 15066343.0,
+              "change_shares": 895617.0,
+              "change_percent": 5.94,
+              "average_daily_volume": 4283133.0,
+              "days_to_cover": 3.73,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-01-30",
+              "shares_short": 16180151.0,
+              "previous_shares_short": 15961960.0,
+              "change_shares": 218191.0,
+              "change_percent": 1.37,
+              "average_daily_volume": 5196126.0,
+              "days_to_cover": 3.11,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-02-13",
+              "shares_short": 17027748.0,
+              "previous_shares_short": 16180151.0,
+              "change_shares": 847597.0,
+              "change_percent": 5.24,
+              "average_daily_volume": 3350225.0,
+              "days_to_cover": 5.08,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-02-27",
+              "shares_short": 15401473.0,
+              "previous_shares_short": 17027748.0,
+              "change_shares": -1626275.0,
+              "change_percent": -9.55,
+              "average_daily_volume": 1641656.0,
+              "days_to_cover": 9.38,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-03-13",
+              "shares_short": 16942702.0,
+              "previous_shares_short": 15401473.0,
+              "change_shares": 1541229.0,
+              "change_percent": 10.01,
+              "average_daily_volume": 1607286.0,
+              "days_to_cover": 10.54,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-03-31",
+              "shares_short": 18235492.0,
+              "previous_shares_short": 16942702.0,
+              "change_shares": 1292790.0,
+              "change_percent": 7.63,
+              "average_daily_volume": 4130324.0,
+              "days_to_cover": 4.42,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-04-15",
+              "shares_short": 19619706.0,
+              "previous_shares_short": 18235492.0,
+              "change_shares": 1384214.0,
+              "change_percent": 7.59,
+              "average_daily_volume": 12690412.0,
+              "days_to_cover": 1.55,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-04-30",
+              "shares_short": 21875750.0,
+              "previous_shares_short": 19619706.0,
+              "change_shares": 2256044.0,
+              "change_percent": 11.5,
+              "average_daily_volume": 8213517.0,
+              "days_to_cover": 2.66,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-05-15",
+              "shares_short": 22707202.0,
+              "previous_shares_short": 21875750.0,
+              "change_shares": 831452.0,
+              "change_percent": 3.8,
+              "average_daily_volume": 9152826.0,
+              "days_to_cover": 2.48,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            }
+          ]
+        },
+        "finra_short_volume": {
+          "status": "ok",
+          "note": "",
+          "source": "FINRA Reg SHO Daily Short Sale Volume",
+          "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
+          "latest": {
+            "trade_date": "2026-05-29",
+            "short_volume": 51953630.640034,
+            "short_exempt_volume": 622738.0,
+            "total_volume": 93588767.33946499,
+            "facilities": [
+              "NCTRF",
+              "NQTRF",
+              "NYTRF"
+            ],
+            "short_volume_ratio": 0.5551267755412131,
+            "short_exempt_ratio": 0.006653982285515162
+          },
+          "average_short_volume_ratio_5d": 0.4035509697200781,
+          "history": [
+            {
+              "trade_date": "2026-04-20",
+              "short_volume": 3713889.205519,
+              "short_exempt_volume": 2348.0,
+              "total_volume": 5883066.210805,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6312846179935847,
+              "short_exempt_ratio": 0.00039911160538829213
+            },
+            {
+              "trade_date": "2026-04-21",
+              "short_volume": 3522375.3642760003,
+              "short_exempt_volume": 968.0,
+              "total_volume": 8350474.32554,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.4218173994623017,
+              "short_exempt_ratio": 0.00011592155873581497
+            },
+            {
+              "trade_date": "2026-04-22",
+              "short_volume": 4063551.238021,
+              "short_exempt_volume": 29126.0,
+              "total_volume": 6608729.546688,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6148763100855701,
+              "short_exempt_ratio": 0.004407201080667108
+            },
+            {
+              "trade_date": "2026-04-23",
+              "short_volume": 2934075.6845400003,
+              "short_exempt_volume": 82839.0,
+              "total_volume": 4491128.262664,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6533048073758634,
+              "short_exempt_ratio": 0.018445030993361665
+            },
+            {
+              "trade_date": "2026-04-24",
+              "short_volume": 5086813.227806,
+              "short_exempt_volume": 13561.0,
+              "total_volume": 7595995.543981,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6696703807095762,
+              "short_exempt_ratio": 0.0017852827745200059
+            },
+            {
+              "trade_date": "2026-04-27",
+              "short_volume": 1695268.789145,
+              "short_exempt_volume": 48019.0,
+              "total_volume": 2732041.080466,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6205136523261359,
+              "short_exempt_ratio": 0.017576236442172925
+            },
+            {
+              "trade_date": "2026-04-28",
+              "short_volume": 2467529.611196,
+              "short_exempt_volume": 10374.0,
+              "total_volume": 3780632.337711,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6526764283802261,
+              "short_exempt_ratio": 0.002743985416545684
+            },
+            {
+              "trade_date": "2026-04-29",
+              "short_volume": 2677786.1935670003,
+              "short_exempt_volume": 12904.0,
+              "total_volume": 4400854.456558,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6084696097087819,
+              "short_exempt_ratio": 0.0029321578632919587
+            },
+            {
+              "trade_date": "2026-04-30",
+              "short_volume": 930161.352876,
+              "short_exempt_volume": 0.0,
+              "total_volume": 1859960.086731,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5000974803232572,
+              "short_exempt_ratio": 0.0
+            },
+            {
+              "trade_date": "2026-05-01",
+              "short_volume": 5205761.203714,
+              "short_exempt_volume": 57006.0,
+              "total_volume": 8943671.59303,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5820608627636735,
+              "short_exempt_ratio": 0.006373892355844777
+            },
+            {
+              "trade_date": "2026-05-04",
+              "short_volume": 1601870.309744,
+              "short_exempt_volume": 771.0,
+              "total_volume": 2772188.187818,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5778360635050676,
+              "short_exempt_ratio": 0.00027811964692298075
+            },
+            {
+              "trade_date": "2026-05-05",
+              "short_volume": 1491400.398403,
+              "short_exempt_volume": 5309.0,
+              "total_volume": 2510561.92961,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5940504318229185,
+              "short_exempt_ratio": 0.002114666018545386
+            },
+            {
+              "trade_date": "2026-05-06",
+              "short_volume": 1247372.279303,
+              "short_exempt_volume": 350.0,
+              "total_volume": 2748302.730225,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.453870043348856,
+              "short_exempt_ratio": 0.000127351327112114
+            },
+            {
+              "trade_date": "2026-05-07",
+              "short_volume": 1705406.7921189999,
+              "short_exempt_volume": 704.0,
+              "total_volume": 2695861.6237010006,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6326017541574483,
+              "short_exempt_ratio": 0.0002611409998980278
+            },
+            {
+              "trade_date": "2026-05-08",
+              "short_volume": 4307114.9058220005,
+              "short_exempt_volume": 2051.0,
+              "total_volume": 8530787.573027,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5048906527036748,
+              "short_exempt_ratio": 0.00024042328828875512
+            },
+            {
+              "trade_date": "2026-05-11",
+              "short_volume": 3072114.088899,
+              "short_exempt_volume": 5594.0,
+              "total_volume": 5667185.329446999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5420881637549649,
+              "short_exempt_ratio": 0.000987086123852925
+            },
+            {
+              "trade_date": "2026-05-12",
+              "short_volume": 2779230.452492,
+              "short_exempt_volume": 7783.0,
+              "total_volume": 4411682.726807,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6299706086306656,
+              "short_exempt_ratio": 0.0017641794485146543
+            },
+            {
+              "trade_date": "2026-05-13",
+              "short_volume": 3620720.096475,
+              "short_exempt_volume": 19272.0,
+              "total_volume": 6068109.744162999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5966800616877146,
+              "short_exempt_ratio": 0.003175947834255636
+            },
+            {
+              "trade_date": "2026-05-14",
+              "short_volume": 3574651.423396,
+              "short_exempt_volume": 6754.0,
+              "total_volume": 6656253.440784,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5370365559540599,
+              "short_exempt_ratio": 0.0010146849214930866
+            },
+            {
+              "trade_date": "2026-05-15",
+              "short_volume": 2844427.7029040004,
+              "short_exempt_volume": 14331.0,
+              "total_volume": 6961931.067345001,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.4085687829122316,
+              "short_exempt_ratio": 0.0020584805941586642
+            },
+            {
+              "trade_date": "2026-05-18",
+              "short_volume": 4826357.644526,
+              "short_exempt_volume": 474.0,
+              "total_volume": 7332584.430377001,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6582068969477731,
+              "short_exempt_ratio": 6.464296517832657e-05
+            },
+            {
+              "trade_date": "2026-05-19",
+              "short_volume": 2968272.11975,
+              "short_exempt_volume": 9172.0,
+              "total_volume": 4426032.9058179995,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6706394152307861,
+              "short_exempt_ratio": 0.0020722846384498067
+            },
+            {
+              "trade_date": "2026-05-20",
+              "short_volume": 3064107.2710100003,
+              "short_exempt_volume": 0.0,
+              "total_volume": 4391265.186903,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6977732249349768,
+              "short_exempt_ratio": 0.0
+            },
+            {
+              "trade_date": "2026-05-21",
+              "short_volume": 4433441.747133,
+              "short_exempt_volume": 17449.0,
+              "total_volume": 8292737.810440999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5346173782982817,
+              "short_exempt_ratio": 0.002104130191844577
+            },
+            {
+              "trade_date": "2026-05-22",
+              "short_volume": 6249329.725376,
+              "short_exempt_volume": 25624.86792,
+              "total_volume": 20146172.388347,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.31019935722334796,
+              "short_exempt_ratio": 0.0012719472178656628
+            },
+            {
+              "trade_date": "2026-05-26",
+              "short_volume": 6854154.21222,
+              "short_exempt_volume": 130380.0,
+              "total_volume": 20413510.579461,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.33576557964097997,
+              "short_exempt_ratio": 0.006386946502537466
+            },
+            {
+              "trade_date": "2026-05-27",
+              "short_volume": 7040665.555050001,
+              "short_exempt_volume": 30451.0,
+              "total_volume": 16078842.120916,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.43788386639428606,
+              "short_exempt_ratio": 0.001893855277077951
+            },
+            {
+              "trade_date": "2026-05-28",
+              "short_volume": 7077589.262382,
+              "short_exempt_volume": 134703.0,
+              "total_volume": 18685260.326175,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.3787792698005632,
+              "short_exempt_ratio": 0.007209051286874665
+            },
+            {
+              "trade_date": "2026-05-29",
+              "short_volume": 51953630.640034,
+              "short_exempt_volume": 622738.0,
+              "total_volume": 93588767.33946499,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5551267755412131,
+              "short_exempt_ratio": 0.006653982285515162
+            }
+          ]
+        },
+        "short_deep_dive": {
+          "shares_short": 22707202.0,
+          "shares_short_source": "FINRA",
+          "short_notional": 140330504.46205044,
+          "short_percent_float": 22.59848880581121,
+          "reported_short_percent_float": 22.58,
+          "float_shares": 100481064.0,
+          "official_settlement_date": "2026-05-15",
+          "official_days_to_cover": 2.48,
+          "official_average_daily_volume": 9152826.0,
+          "short_interest_change_shares": 831452.0,
+          "short_interest_change_percent": 3.8,
+          "daily_short_volume_date": "2026-05-29",
+          "daily_short_volume": 51953630.640034,
+          "daily_total_reported_volume": 93588767.33946499,
+          "daily_short_volume_ratio": 0.5551267755412131,
+          "daily_short_exempt_volume": 622738.0,
+          "daily_short_exempt_ratio": 0.006653982285515162,
+          "average_short_volume_ratio_5d": 0.4035509697200781,
+          "caveat": "FINRA daily short sale volume is trade-flow data, not open short interest. Exchange-reported short interest is settlement-date based and delayed."
+        }
       },
       "social": {
         "reddit": {
@@ -91,7 +819,735 @@
         "shares_outstanding": 448691227.0,
         "market_cap": 9503280128.0,
         "average_volume": 7389809.0,
-        "beta": 1.833
+        "beta": 1.833,
+        "finra_short_interest": {
+          "status": "ok",
+          "note": "",
+          "source": "FINRA Consolidated Short Interest",
+          "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
+          "latest": {
+            "settlement_date": "2026-05-15",
+            "shares_short": 57937281.0,
+            "previous_shares_short": 59374474.0,
+            "change_shares": -1437193.0,
+            "change_percent": -2.42,
+            "average_daily_volume": 13910930.0,
+            "days_to_cover": 4.16,
+            "market_class": "NYSE",
+            "revision_flag": null,
+            "stock_split_flag": null
+          },
+          "history": [
+            {
+              "settlement_date": "2025-05-30",
+              "shares_short": 47491887.0,
+              "previous_shares_short": 49516766.0,
+              "change_shares": -2024879.0,
+              "change_percent": -4.09,
+              "average_daily_volume": 18084761.0,
+              "days_to_cover": 2.63,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-06-13",
+              "shares_short": 79508504.0,
+              "previous_shares_short": 47491887.0,
+              "change_shares": 32016617.0,
+              "change_percent": 67.41,
+              "average_daily_volume": 29959147.0,
+              "days_to_cover": 2.65,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-06-30",
+              "shares_short": 77185174.0,
+              "previous_shares_short": 79508504.0,
+              "change_shares": -2323330.0,
+              "change_percent": -2.92,
+              "average_daily_volume": 15550351.0,
+              "days_to_cover": 4.96,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-07-15",
+              "shares_short": 68173557.0,
+              "previous_shares_short": 77185174.0,
+              "change_shares": -9011617.0,
+              "change_percent": -11.68,
+              "average_daily_volume": 8821780.0,
+              "days_to_cover": 7.73,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-07-31",
+              "shares_short": 67893588.0,
+              "previous_shares_short": 68173557.0,
+              "change_shares": -279969.0,
+              "change_percent": -0.41,
+              "average_daily_volume": 9366638.0,
+              "days_to_cover": 7.25,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-08-15",
+              "shares_short": 67843378.0,
+              "previous_shares_short": 67893588.0,
+              "change_shares": -50210.0,
+              "change_percent": -0.07,
+              "average_daily_volume": 5202607.0,
+              "days_to_cover": 13.04,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-08-29",
+              "shares_short": 66182520.0,
+              "previous_shares_short": 67843378.0,
+              "change_shares": -1660858.0,
+              "change_percent": -2.45,
+              "average_daily_volume": 5508505.0,
+              "days_to_cover": 12.01,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-09-15",
+              "shares_short": 66822071.0,
+              "previous_shares_short": 66182520.0,
+              "change_shares": 639551.0,
+              "change_percent": 0.97,
+              "average_daily_volume": 14226993.0,
+              "days_to_cover": 4.7,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-09-30",
+              "shares_short": 71953849.0,
+              "previous_shares_short": 66822071.0,
+              "change_shares": 5131778.0,
+              "change_percent": 7.68,
+              "average_daily_volume": 8051634.0,
+              "days_to_cover": 8.94,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-10-15",
+              "shares_short": 70110569.0,
+              "previous_shares_short": 71953849.0,
+              "change_shares": -1843280.0,
+              "change_percent": -2.56,
+              "average_daily_volume": 9151162.0,
+              "days_to_cover": 7.66,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-10-31",
+              "shares_short": 66295361.0,
+              "previous_shares_short": 70110569.0,
+              "change_shares": -3815208.0,
+              "change_percent": -5.44,
+              "average_daily_volume": 7127371.0,
+              "days_to_cover": 9.3,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-11-14",
+              "shares_short": 69080228.0,
+              "previous_shares_short": 66295361.0,
+              "change_shares": 2784867.0,
+              "change_percent": 4.2,
+              "average_daily_volume": 5279457.0,
+              "days_to_cover": 13.08,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-11-28",
+              "shares_short": 66756082.0,
+              "previous_shares_short": 69080228.0,
+              "change_shares": -2324146.0,
+              "change_percent": -3.36,
+              "average_daily_volume": 5471637.0,
+              "days_to_cover": 12.2,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-12-15",
+              "shares_short": 68009329.0,
+              "previous_shares_short": 66756082.0,
+              "change_shares": 1253247.0,
+              "change_percent": 1.88,
+              "average_daily_volume": 7637142.0,
+              "days_to_cover": 8.91,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2025-12-31",
+              "shares_short": 65777475.0,
+              "previous_shares_short": 68009329.0,
+              "change_shares": -2231854.0,
+              "change_percent": -3.28,
+              "average_daily_volume": 5044375.0,
+              "days_to_cover": 13.04,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-01-15",
+              "shares_short": 65750329.0,
+              "previous_shares_short": 65777475.0,
+              "change_shares": -27146.0,
+              "change_percent": -0.04,
+              "average_daily_volume": 5226419.0,
+              "days_to_cover": 12.58,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-01-30",
+              "shares_short": 64503357.0,
+              "previous_shares_short": 65750329.0,
+              "change_shares": -1246972.0,
+              "change_percent": -1.9,
+              "average_daily_volume": 13184484.0,
+              "days_to_cover": 4.89,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-02-13",
+              "shares_short": 66882712.0,
+              "previous_shares_short": 64503357.0,
+              "change_shares": 2379355.0,
+              "change_percent": 3.69,
+              "average_daily_volume": 9923959.0,
+              "days_to_cover": 6.74,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-02-27",
+              "shares_short": 65618475.0,
+              "previous_shares_short": 66882712.0,
+              "change_shares": -1264237.0,
+              "change_percent": -1.89,
+              "average_daily_volume": 4694949.0,
+              "days_to_cover": 13.98,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-03-13",
+              "shares_short": 64227044.0,
+              "previous_shares_short": 65618475.0,
+              "change_shares": -1391431.0,
+              "change_percent": -2.12,
+              "average_daily_volume": 5246169.0,
+              "days_to_cover": 12.24,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-03-31",
+              "shares_short": 62823134.0,
+              "previous_shares_short": 64227044.0,
+              "change_shares": -1403910.0,
+              "change_percent": -2.19,
+              "average_daily_volume": 6066043.0,
+              "days_to_cover": 10.36,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-04-15",
+              "shares_short": 61907606.0,
+              "previous_shares_short": 62823134.0,
+              "change_shares": -915528.0,
+              "change_percent": -1.46,
+              "average_daily_volume": 6610420.0,
+              "days_to_cover": 9.37,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-04-30",
+              "shares_short": 59374474.0,
+              "previous_shares_short": 61907606.0,
+              "change_shares": -2533132.0,
+              "change_percent": -4.09,
+              "average_daily_volume": 7005031.0,
+              "days_to_cover": 8.48,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            },
+            {
+              "settlement_date": "2026-05-15",
+              "shares_short": 57937281.0,
+              "previous_shares_short": 59374474.0,
+              "change_shares": -1437193.0,
+              "change_percent": -2.42,
+              "average_daily_volume": 13910930.0,
+              "days_to_cover": 4.16,
+              "market_class": "NYSE",
+              "revision_flag": null,
+              "stock_split_flag": null
+            }
+          ]
+        },
+        "finra_short_volume": {
+          "status": "ok",
+          "note": "",
+          "source": "FINRA Reg SHO Daily Short Sale Volume",
+          "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
+          "latest": {
+            "trade_date": "2026-05-29",
+            "short_volume": 1568664.153549,
+            "short_exempt_volume": 3765.0,
+            "total_volume": 2564147.6524449997,
+            "facilities": [
+              "NCTRF",
+              "NQTRF",
+              "NYTRF"
+            ],
+            "short_volume_ratio": 0.6117682622735188,
+            "short_exempt_ratio": 0.001468324180321655
+          },
+          "average_short_volume_ratio_5d": 0.609568492419908,
+          "history": [
+            {
+              "trade_date": "2026-04-20",
+              "short_volume": 1500091.585919,
+              "short_exempt_volume": 2901.0,
+              "total_volume": 2428345.4082950004,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6177422621982966,
+              "short_exempt_ratio": 0.0011946405935870802
+            },
+            {
+              "trade_date": "2026-04-21",
+              "short_volume": 1434233.914109,
+              "short_exempt_volume": 6413.0,
+              "total_volume": 2815213.779923,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5094582600928546,
+              "short_exempt_ratio": 0.0022779797561858356
+            },
+            {
+              "trade_date": "2026-04-22",
+              "short_volume": 2396741.0991220004,
+              "short_exempt_volume": 18396.0,
+              "total_volume": 4522896.377005,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5299128919484752,
+              "short_exempt_ratio": 0.004067305210335502
+            },
+            {
+              "trade_date": "2026-04-23",
+              "short_volume": 2911163.440668,
+              "short_exempt_volume": 27430.996866,
+              "total_volume": 4500343.990422,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6468757603560474,
+              "short_exempt_ratio": 0.006095311141632927
+            },
+            {
+              "trade_date": "2026-04-24",
+              "short_volume": 1740832.154169,
+              "short_exempt_volume": 8731.0,
+              "total_volume": 2790613.5029160003,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6238170038057759,
+              "short_exempt_ratio": 0.003128702699559327
+            },
+            {
+              "trade_date": "2026-04-27",
+              "short_volume": 2032848.663631,
+              "short_exempt_volume": 10597.0,
+              "total_volume": 3394591.662137,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5988492478507,
+              "short_exempt_ratio": 0.0031217304037472545
+            },
+            {
+              "trade_date": "2026-04-28",
+              "short_volume": 1394881.965025,
+              "short_exempt_volume": 1510.0,
+              "total_volume": 2033372.4719429999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6859943194234911,
+              "short_exempt_ratio": 0.0007426086567194998
+            },
+            {
+              "trade_date": "2026-04-29",
+              "short_volume": 2406582.438495,
+              "short_exempt_volume": 16770.0,
+              "total_volume": 3483812.439094,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6907898977250496,
+              "short_exempt_ratio": 0.0048136919806053636
+            },
+            {
+              "trade_date": "2026-04-30",
+              "short_volume": 1363455.927013,
+              "short_exempt_volume": 4789.0,
+              "total_volume": 2194903.9103880003,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.621191625091222,
+              "short_exempt_ratio": 0.0021818722803010693
+            },
+            {
+              "trade_date": "2026-05-01",
+              "short_volume": 5725199.218944999,
+              "short_exempt_volume": 34265.0,
+              "total_volume": 8217621.375236999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.696697859090628,
+              "short_exempt_ratio": 0.004169698071421766
+            },
+            {
+              "trade_date": "2026-05-04",
+              "short_volume": 13741131.133919,
+              "short_exempt_volume": 323272.8632,
+              "total_volume": 19570932.982428,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.7021193698970122,
+              "short_exempt_ratio": 0.01651800982049525
+            },
+            {
+              "trade_date": "2026-05-05",
+              "short_volume": 5419529.924647001,
+              "short_exempt_volume": 532599.7760899999,
+              "total_volume": 10088286.699143,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5372101414512129,
+              "short_exempt_ratio": 0.05279387788763421
+            },
+            {
+              "trade_date": "2026-05-06",
+              "short_volume": 2624157.39261,
+              "short_exempt_volume": 15213.0,
+              "total_volume": 5191635.496505999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5054587122643863,
+              "short_exempt_ratio": 0.0029302904663161423
+            },
+            {
+              "trade_date": "2026-05-07",
+              "short_volume": 1800275.161972,
+              "short_exempt_volume": 963.0,
+              "total_volume": 3515187.437699,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5121420105980007,
+              "short_exempt_ratio": 0.00027395409692018257
+            },
+            {
+              "trade_date": "2026-05-08",
+              "short_volume": 1595465.755467,
+              "short_exempt_volume": 9925.0,
+              "total_volume": 2913878.757506,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5475401992471935,
+              "short_exempt_ratio": 0.0034061128914282097
+            },
+            {
+              "trade_date": "2026-05-11",
+              "short_volume": 3298764.485548,
+              "short_exempt_volume": 34941.0,
+              "total_volume": 5277377.788106999,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6250764334101747,
+              "short_exempt_ratio": 0.00662090178170348
+            },
+            {
+              "trade_date": "2026-05-12",
+              "short_volume": 3173557.395707,
+              "short_exempt_volume": 5131.0,
+              "total_volume": 5737896.248528,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5530872741941167,
+              "short_exempt_ratio": 0.0008942301808465614
+            },
+            {
+              "trade_date": "2026-05-13",
+              "short_volume": 2027553.691119,
+              "short_exempt_volume": 2187.0,
+              "total_volume": 3523437.969979,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5754475340262865,
+              "short_exempt_ratio": 0.0006207005823953912
+            },
+            {
+              "trade_date": "2026-05-14",
+              "short_volume": 1338762.0396480002,
+              "short_exempt_volume": 7913.0,
+              "total_volume": 2741494.0317510003,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.48833301263578854,
+              "short_exempt_ratio": 0.00288638235515178
+            },
+            {
+              "trade_date": "2026-05-15",
+              "short_volume": 1544093.4033509998,
+              "short_exempt_volume": 3647.0,
+              "total_volume": 2569999.110722,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6008147617285408,
+              "short_exempt_ratio": 0.001419066638889005
+            },
+            {
+              "trade_date": "2026-05-18",
+              "short_volume": 1189449.876155,
+              "short_exempt_volume": 159.0,
+              "total_volume": 2394711.9568519997,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.49669851639217893,
+              "short_exempt_ratio": 6.639629436227293e-05
+            },
+            {
+              "trade_date": "2026-05-19",
+              "short_volume": 1347946.8305580001,
+              "short_exempt_volume": 6572.0,
+              "total_volume": 2071890.221927,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6505879589046553,
+              "short_exempt_ratio": 0.003171982728837626
+            },
+            {
+              "trade_date": "2026-05-20",
+              "short_volume": 2975570.4701549998,
+              "short_exempt_volume": 5859.0,
+              "total_volume": 3801455.3301440002,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.7827450835894169,
+              "short_exempt_ratio": 0.0015412518341437567
+            },
+            {
+              "trade_date": "2026-05-21",
+              "short_volume": 914710.028552,
+              "short_exempt_volume": 2348.0,
+              "total_volume": 1571155.053328,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5821895341357132,
+              "short_exempt_ratio": 0.001494441936221697
+            },
+            {
+              "trade_date": "2026-05-22",
+              "short_volume": 1020196.302718,
+              "short_exempt_volume": 5632.0,
+              "total_volume": 2163451.336864,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.4715596257398657,
+              "short_exempt_ratio": 0.0026032478309236133
+            },
+            {
+              "trade_date": "2026-05-26",
+              "short_volume": 2141072.839968,
+              "short_exempt_volume": 1728.0,
+              "total_volume": 3109952.302464,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6884584172791456,
+              "short_exempt_ratio": 0.0005556355313330413
+            },
+            {
+              "trade_date": "2026-05-27",
+              "short_volume": 1373810.421765,
+              "short_exempt_volume": 1778.0,
+              "total_volume": 2070427.5245909998,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6635394890417079,
+              "short_exempt_ratio": 0.0008587598352911353
+            },
+            {
+              "trade_date": "2026-05-28",
+              "short_volume": 987849.305249,
+              "short_exempt_volume": 3039.0,
+              "total_volume": 1612771.304417,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6125166677653018,
+              "short_exempt_ratio": 0.001884334122064856
+            },
+            {
+              "trade_date": "2026-05-29",
+              "short_volume": 1568664.153549,
+              "short_exempt_volume": 3765.0,
+              "total_volume": 2564147.6524449997,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.6117682622735188,
+              "short_exempt_ratio": 0.001468324180321655
+            }
+          ]
+        },
+        "short_deep_dive": {
+          "shares_short": 57937281.0,
+          "shares_short_source": "FINRA",
+          "short_notional": 1227111629.261055,
+          "short_percent_float": 14.193018828484016,
+          "reported_short_percent_float": 14.149999999999999,
+          "float_shares": 408209710.0,
+          "official_settlement_date": "2026-05-15",
+          "official_days_to_cover": 4.16,
+          "official_average_daily_volume": 13910930.0,
+          "short_interest_change_shares": -1437193.0,
+          "short_interest_change_percent": -2.42,
+          "daily_short_volume_date": "2026-05-29",
+          "daily_short_volume": 1568664.153549,
+          "daily_total_reported_volume": 2564147.6524449997,
+          "daily_short_volume_ratio": 0.6117682622735188,
+          "daily_short_exempt_volume": 3765.0,
+          "daily_short_exempt_ratio": 0.001468324180321655,
+          "average_short_volume_ratio_5d": 0.609568492419908,
+          "caveat": "FINRA daily short sale volume is trade-flow data, not open short interest. Exchange-reported short interest is settlement-date based and delayed."
+        }
       },
       "social": {
         "reddit": {
@@ -139,13 +1595,13 @@
         "rank": 1,
         "ticker": "SPCE",
         "name": "Virgin Galactic",
-        "mentions": 912,
-        "upvotes": 12159,
+        "mentions": 922,
+        "upvotes": 12218,
         "rank_24h_ago": 1,
-        "mentions_24h_ago": 736,
+        "mentions_24h_ago": 738,
         "positive": 0,
         "negative": 0,
-        "neutral": 912,
+        "neutral": 922,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -153,13 +1609,13 @@
         "rank": 2,
         "ticker": "MU",
         "name": "Micron Technology",
-        "mentions": 288,
-        "upvotes": 3773,
+        "mentions": 292,
+        "upvotes": 3859,
         "rank_24h_ago": 4,
-        "mentions_24h_ago": 64,
+        "mentions_24h_ago": 63,
         "positive": 0,
         "negative": 0,
-        "neutral": 288,
+        "neutral": 292,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -167,13 +1623,13 @@
         "rank": 3,
         "ticker": "NOW",
         "name": "ServiceNow",
-        "mentions": 163,
-        "upvotes": 899,
+        "mentions": 165,
+        "upvotes": 914,
         "rank_24h_ago": 9,
         "mentions_24h_ago": 33,
         "positive": 0,
         "negative": 0,
-        "neutral": 163,
+        "neutral": 165,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -181,13 +1637,13 @@
         "rank": 4,
         "ticker": "MSFT",
         "name": "Microsoft",
-        "mentions": 102,
-        "upvotes": 663,
-        "rank_24h_ago": 6,
+        "mentions": 103,
+        "upvotes": 927,
+        "rank_24h_ago": 8,
         "mentions_24h_ago": 29,
         "positive": 0,
         "negative": 0,
-        "neutral": 102,
+        "neutral": 103,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -196,8 +1652,8 @@
         "ticker": "IBM",
         "name": "IBM",
         "mentions": 82,
-        "upvotes": 832,
-        "rank_24h_ago": 16,
+        "upvotes": 1087,
+        "rank_24h_ago": 14,
         "mentions_24h_ago": 16,
         "positive": 0,
         "negative": 0,
@@ -209,41 +1665,41 @@
         "rank": 6,
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "mentions": 73,
-        "upvotes": 605,
+        "mentions": 79,
+        "upvotes": 883,
         "rank_24h_ago": 5,
         "mentions_24h_ago": 46,
         "positive": 0,
         "negative": 0,
-        "neutral": 73,
+        "neutral": 79,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 7,
-        "ticker": "SPY",
-        "name": "SPDR S&amp;P 500 ETF Trust",
-        "mentions": 65,
-        "upvotes": 302,
-        "rank_24h_ago": 7,
-        "mentions_24h_ago": 32,
+        "ticker": "HPE",
+        "name": "Hewlett Packard Enterprise",
+        "mentions": 66,
+        "upvotes": 279,
+        "rank_24h_ago": 28,
+        "mentions_24h_ago": 12,
         "positive": 0,
         "negative": 0,
-        "neutral": 65,
+        "neutral": 66,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 8,
-        "ticker": "HPE",
-        "name": "Hewlett Packard Enterprise",
-        "mentions": 64,
-        "upvotes": 264,
-        "rank_24h_ago": 22,
-        "mentions_24h_ago": 12,
+        "ticker": "SPY",
+        "name": "SPDR S&amp;P 500 ETF Trust",
+        "mentions": 66,
+        "upvotes": 309,
+        "rank_24h_ago": 7,
+        "mentions_24h_ago": 32,
         "positive": 0,
         "negative": 0,
-        "neutral": 64,
+        "neutral": 66,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -252,7 +1708,7 @@
         "ticker": "SPCX",
         "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
         "mentions": 61,
-        "upvotes": 783,
+        "upvotes": 798,
         "rank_24h_ago": 2,
         "mentions_24h_ago": 116,
         "positive": 0,
@@ -268,7 +1724,7 @@
         "mentions": 50,
         "upvotes": 270,
         "rank_24h_ago": 3,
-        "mentions_24h_ago": 79,
+        "mentions_24h_ago": 76,
         "positive": 0,
         "negative": 0,
         "neutral": 50,
@@ -279,13 +1735,13 @@
         "rank": 11,
         "ticker": "RKLB",
         "name": "Rocket Lab USA",
-        "mentions": 49,
-        "upvotes": 195,
-        "rank_24h_ago": 8,
-        "mentions_24h_ago": 32,
+        "mentions": 50,
+        "upvotes": 202,
+        "rank_24h_ago": 6,
+        "mentions_24h_ago": 31,
         "positive": 0,
         "negative": 0,
-        "neutral": 49,
+        "neutral": 50,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -293,13 +1749,13 @@
         "rank": 12,
         "ticker": "HOOD",
         "name": "Robinhood",
-        "mentions": 42,
-        "upvotes": 113,
-        "rank_24h_ago": 31,
+        "mentions": 43,
+        "upvotes": 116,
+        "rank_24h_ago": 30,
         "mentions_24h_ago": 13,
         "positive": 0,
         "negative": 0,
-        "neutral": 42,
+        "neutral": 43,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -307,13 +1763,13 @@
         "rank": 13,
         "ticker": "TSLA",
         "name": "Tesla",
-        "mentions": 36,
-        "upvotes": 173,
-        "rank_24h_ago": 14,
+        "mentions": 37,
+        "upvotes": 174,
+        "rank_24h_ago": 15,
         "mentions_24h_ago": 16,
         "positive": 0,
         "negative": 0,
-        "neutral": 36,
+        "neutral": 37,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -321,13 +1777,13 @@
         "rank": 14,
         "ticker": "AMD",
         "name": "AMD",
-        "mentions": 36,
-        "upvotes": 129,
-        "rank_24h_ago": 11,
+        "mentions": 37,
+        "upvotes": 387,
+        "rank_24h_ago": 10,
         "mentions_24h_ago": 31,
         "positive": 0,
         "negative": 0,
-        "neutral": 36,
+        "neutral": 37,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -335,13 +1791,13 @@
         "rank": 15,
         "ticker": "DELL",
         "name": "Dell",
-        "mentions": 36,
-        "upvotes": 160,
-        "rank_24h_ago": 32,
+        "mentions": 37,
+        "upvotes": 419,
+        "rank_24h_ago": 29,
         "mentions_24h_ago": 11,
         "positive": 0,
         "negative": 0,
-        "neutral": 36,
+        "neutral": 37,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       }

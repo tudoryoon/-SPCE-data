@@ -26,6 +26,16 @@ function compact(value) {
   return Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(Number(value));
 }
 
+function money(value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+  return Intl.NumberFormat("en-US", {
+    currency: "USD",
+    maximumFractionDigits: 1,
+    notation: "compact",
+    style: "currency",
+  }).format(Number(value));
+}
+
 function esc(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
@@ -40,6 +50,20 @@ function pct(value) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
   const cls = Number(value) >= 0 ? "positive" : "negative";
   return `<span class="${cls}">${num(value)}%</span>`;
+}
+
+function signedCompact(value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+  const sign = Number(value) > 0 ? "+" : "";
+  const cls = Number(value) >= 0 ? "negative" : "positive";
+  return `<span class="${cls}">${sign}${compact(value)}</span>`;
+}
+
+function signedPct(value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "--";
+  const sign = Number(value) > 0 ? "+" : "";
+  const cls = Number(value) >= 0 ? "negative" : "positive";
+  return `<span class="${cls}">${sign}${num(value, 1)}%</span>`;
 }
 
 function localTime(iso) {
@@ -106,6 +130,7 @@ function render() {
 
   renderComponents(components);
   renderSocial(spce.social);
+  renderShortDeepDive(spce.market);
   renderWsbTrending(latest.wsb_trending);
   renderWsbMentionHistory();
   renderComparison(spce, latest.baseline);
@@ -143,6 +168,114 @@ function renderSocial(social) {
     `;
   });
   $("social-table").innerHTML = rows.join("");
+}
+
+function renderShortDeepDive(market) {
+  const detail = market.short_deep_dive || {};
+  const interest = market.finra_short_interest || {};
+  const volume = market.finra_short_volume || {};
+  const settlement = detail.official_settlement_date || "--";
+  setText("short-source-chip", settlement === "--" ? "FINRA" : `FINRA · ${settlement}`);
+  $("short-metric-grid").innerHTML = [
+    {
+      label: "Shares short",
+      value: compact(detail.shares_short),
+      sub: `${detail.shares_short_source || "--"} source`,
+    },
+    {
+      label: "Short / float",
+      value: `${num(detail.short_percent_float)}%`,
+      sub: `${compact(detail.float_shares)} float shares`,
+    },
+    {
+      label: "Days to cover",
+      value: num(detail.official_days_to_cover),
+      sub: `${compact(detail.official_average_daily_volume)} avg vol`,
+    },
+    {
+      label: "Change vs prior",
+      value: signedPct(detail.short_interest_change_percent),
+      sub: signedCompact(detail.short_interest_change_shares),
+    },
+    {
+      label: "Short notional",
+      value: money(detail.short_notional),
+      sub: "shares short x price",
+    },
+    {
+      label: "Daily short volume",
+      value: detail.daily_short_volume_ratio === null || detail.daily_short_volume_ratio === undefined ? "--" : `${num(detail.daily_short_volume_ratio * 100, 1)}%`,
+      sub: `${detail.daily_short_volume_date || "--"} · 5D ${detail.average_short_volume_ratio_5d === null || detail.average_short_volume_ratio_5d === undefined ? "--" : `${num(detail.average_short_volume_ratio_5d * 100, 1)}%`}`,
+    },
+  ].map((item) => `
+    <article class="short-metric">
+      <span>${item.label}</span>
+      <strong>${item.value}</strong>
+      <small>${item.sub}</small>
+    </article>
+  `).join("");
+  $("short-interest-chart").innerHTML = shortSeriesChart(
+    (interest.history || []).map((item) => ({
+      label: item.settlement_date,
+      time: new Date(item.settlement_date).getTime(),
+      value: item.shares_short,
+      extra: `DTC ${num(item.days_to_cover)}`,
+    })),
+    { aria: "SPCE short interest shares", color: "#2f6fb0", formatter: compact, minZero: false },
+  );
+  $("short-volume-chart").innerHTML = shortSeriesChart(
+    (volume.history || []).map((item) => ({
+      label: item.trade_date,
+      time: new Date(item.trade_date).getTime(),
+      value: item.short_volume_ratio,
+      extra: `${compact(item.short_volume)} short vol`,
+    })),
+    { aria: "SPCE daily short volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 0)}%`, minZero: true },
+  );
+  $("short-caveat").textContent = detail.caveat || "";
+}
+
+function shortSeriesChart(points, options) {
+  const filtered = points.filter((point) => Number.isFinite(point.time) && point.value !== null && point.value !== undefined);
+  const width = 760;
+  const height = 240;
+  const pad = { top: 18, right: 20, bottom: 42, left: 58 };
+  if (!filtered.length) {
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}"><text x="58" y="120" fill="#69736f">No data yet</text></svg>`;
+  }
+  const values = filtered.map((point) => Number(point.value));
+  const minX = Math.min(...filtered.map((point) => point.time));
+  const maxX = Math.max(...filtered.map((point) => point.time));
+  const xSpan = Math.max(1, maxX - minX);
+  const rawMin = options.minZero ? 0 : Math.min(...values);
+  const rawMax = Math.max(...values);
+  const padding = Math.max((rawMax - rawMin) * 0.18, options.minZero ? rawMax * 0.08 : rawMax * 0.02);
+  const minY = options.minZero ? 0 : Math.max(0, rawMin - padding);
+  const maxY = Math.max(minY + 0.01, rawMax + padding);
+  const x = (value) => pad.left + ((value - minX) / xSpan) * (width - pad.left - pad.right);
+  const y = (value) => height - pad.bottom - ((value - minY) / (maxY - minY)) * (height - pad.top - pad.bottom);
+  const path = filtered.map((point, index) => `${index === 0 ? "M" : "L"} ${x(point.time).toFixed(2)} ${y(point.value).toFixed(2)}`).join(" ");
+  const ticks = [0, 0.5, 1].map((ratio) => minY + (maxY - minY) * ratio);
+  const grid = ticks.map((tick) => `
+    <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
+    <text x="8" y="${y(tick) + 4}" fill="#69736f" font-size="12">${options.formatter(tick)}</text>
+  `).join("");
+  const markers = filtered.map((point) => `
+    <circle cx="${x(point.time)}" cy="${y(point.value)}" r="4" fill="${options.color}">
+      <title>${point.label} · ${options.formatter(point.value)} · ${point.extra || ""}</title>
+    </circle>
+  `).join("");
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+      ${grid}
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
+      <path d="${path}" fill="none" stroke="${options.color}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      ${markers}
+      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${filtered[0].label}</text>
+      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${filtered[filtered.length - 1].label}</text>
+    </svg>
+  `;
 }
 
 function renderWsbTrending(wsb) {

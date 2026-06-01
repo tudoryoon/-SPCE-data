@@ -645,27 +645,68 @@ function renderSpceGoogleTrends(trends) {
   }
   const latest = trends.latest || {};
   const peak = trends.peak || {};
-  const latestLabel = trendPointLabel(latest);
+  const trackedPoints = spceTrackedGoogleTrendPoints(trends);
+  const trackedLatest = trackedPoints[trackedPoints.length - 1] || null;
+  const trackedPeak = trackedPoints.reduce((best, point) => (!best || point.interest > best.interest ? point : best), null);
+  const latestLabel = trackedLatest ? trendPointLabel(trackedLatest) : trendPointLabel(latest);
   const peakLabel = trendPointLabel(peak);
   setText(
     "spce-google-trends-chip",
-    latestLabel ? `최신 ${num(latest.interest, 0)}/100 · ${latestLabel}` : koStatus(trends.status),
+    trackedLatest ? `최신 ${num(trackedLatest.interest, 0)}/100 · ${latestLabel}` : latestLabel ? `최신 ${num(latest.interest, 0)}/100 · ${latestLabel}` : koStatus(trends.status),
   );
-  $("spce-google-trends-method").textContent = `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · ${trends.window || "최근 7일 시간 단위"}`;
+  $("spce-google-trends-method").textContent = trackedPoints.length
+    ? `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 추적 스냅샷 ${trackedPoints.length}개`
+    : `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 추적 스냅샷 대기`;
   $("spce-google-trends-chart").innerHTML = googleTrendChart(
-    trends.history || [],
+    trackedPoints,
     {
       aria: "SPCE Google Trends 검색 관심도",
       color: "#137f8f",
-      emptyText: "SPCE Google Trends 데이터가 아직 없습니다",
+      emptyText: "SPCE Google Trends 추적 데이터가 아직 없습니다",
       keyword: trends.keyword || "SPCE stock",
+      timeLabel: "수집시각",
     },
   );
   $("spce-google-trends-notes").innerHTML = googleTrendNotes(trends, [
-    ["최신 관심도", latestLabel ? `${latestLabel} 기준 ${num(latest.interest, 0)}/100` : "--"],
-    ["기간 내 피크", peakLabel ? `${peakLabel} · ${num(peak.interest, 0)}/100` : "--"],
-    ["주의", "Google Trends는 절대 검색량이 아니라 해당 기간 내 최대 검색 관심도를 100으로 둔 정규화 지표입니다. 최근 7일 조회는 시간 단위 포인트로 표시합니다."],
+    ["최신 추적값", trackedLatest ? `${latestLabel} 수집 · ${num(trackedLatest.interest, 0)}/100` : "--"],
+    ["추적 후 피크", trackedPeak ? `${trendPointLabel(trackedPeak)} · ${num(trackedPeak.interest, 0)}/100` : "--"],
+    ["Google 원자료 피크", peakLabel ? `${peakLabel} · ${num(peak.interest, 0)}/100` : "--"],
+    ["주의", "그래프는 Google이 되돌려준 7일 백필 시계열이 아니라, 우리가 액션으로 저장하기 시작한 시점부터의 스냅샷만 이어 붙입니다. 추적 시작 전 0값은 제외했습니다."],
   ]);
+}
+
+function spceTrackedGoogleTrendPoints(trends) {
+  const points = state.history
+    .map((item) => {
+      const google = item.symbols?.SPCE?.google_trends;
+      const generatedAt = item.generated_at_utc;
+      if (!google?.latest_datetime_utc || google.latest_interest === null || google.latest_interest === undefined || !generatedAt) return null;
+      return {
+        date: generatedAt.slice(0, 10),
+        datetime_utc: generatedAt,
+        label: localTime(generatedAt),
+        interest: Number(google.latest_interest),
+        formatted_value: num(google.latest_interest, 0),
+        source_datetime_utc: google.latest_datetime_utc,
+        source_label: trendPointLabel({ datetime_utc: google.latest_datetime_utc, label: google.latest_label }),
+      };
+    })
+    .filter((item) => item && Number.isFinite(new Date(item.datetime_utc).getTime()) && Number.isFinite(item.interest));
+
+  const latest = trends?.latest || {};
+  const generatedAt = state.latest?.generated_at_utc;
+  if (latest.datetime_utc && latest.interest !== null && latest.interest !== undefined && generatedAt && !points.some((item) => item.datetime_utc === generatedAt)) {
+    points.push({
+      date: generatedAt.slice(0, 10),
+      datetime_utc: generatedAt,
+      label: localTime(generatedAt),
+      interest: Number(latest.interest),
+      formatted_value: latest.formatted_value || num(latest.interest, 0),
+      source_datetime_utc: latest.datetime_utc,
+      source_label: trendPointLabel(latest),
+    });
+  }
+  return points.sort((a, b) => new Date(a.datetime_utc) - new Date(b.datetime_utc));
 }
 
 function googleTrendNotes(trends, rows) {
@@ -691,7 +732,7 @@ function trendPointLabel(point) {
       });
     }
   }
-  return point.date || rawLabel || point.datetime_utc || "";
+  return rawLabel || point.date || point.datetime_utc || "";
 }
 
 function googleTrendChart(history, options) {
@@ -700,6 +741,7 @@ function googleTrendChart(history, options) {
       date: item.date,
       datetime: item.datetime_utc || `${item.date}T00:00:00Z`,
       label: trendPointLabel(item),
+      sourceLabel: item.source_label,
       time: new Date(item.datetime_utc || `${item.date}T00:00:00Z`).getTime(),
       value: Number(item.interest),
       formatted: item.formatted_value,
@@ -723,11 +765,13 @@ function googleTrendChart(history, options) {
     <text x="14" y="${y(tick) + 4}" fill="#69736f" font-size="12">${tick}</text>
   `).join("");
   const markers = points.map((point) => {
-    const tooltip = `시각: ${point.label}\n검색 관심도: ${point.formatted || num(point.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+    const sourceLine = point.sourceLabel ? `\nGoogle 기준시각: ${point.sourceLabel}` : "";
+    const tooltip = `${options.timeLabel || "시각"}: ${point.label}${sourceLine}\n검색 관심도: ${point.formatted || num(point.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
     return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}"></circle>`;
   }).join("");
   const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
-  const peakTooltip = `피크 시각: ${peak.label}\n검색 관심도: ${peak.formatted || num(peak.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+  const peakSourceLine = peak.sourceLabel ? `\nGoogle 기준시각: ${peak.sourceLabel}` : "";
+  const peakTooltip = `피크 ${options.timeLabel || "시각"}: ${peak.label}${peakSourceLine}\n검색 관심도: ${peak.formatted || num(peak.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
   const axisLabel = (point) => {
     const date = new Date(point.datetime);
     if (!Number.isFinite(date.getTime())) return point.date;

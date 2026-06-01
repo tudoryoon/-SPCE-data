@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE 데이터 모니터</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-google-trends" />
+    <link rel="stylesheet" href="styles.css?v=20260601-hourly-trends" />
   </head>
   <body>
     <div class="app-shell">
@@ -193,13 +193,13 @@
           <div class="panel-heading">
             <div>
               <h2>SPCE Google Trends</h2>
-              <p id="spce-google-trends-method" class="panel-subtitle">미국 기준 최근 90일 검색 관심도</p>
+              <p id="spce-google-trends-method" class="panel-subtitle">미국 기준 최근 7일, 시간 단위 검색 관심도</p>
             </div>
             <span id="spce-google-trends-chip" class="status-chip">--</span>
           </div>
           <div class="case-layout google-layout">
             <div>
-              <div class="chart-title">SPCE 검색 관심도</div>
+              <div class="chart-title">SPCE 시간 단위 검색 관심도</div>
               <div id="spce-google-trends-chart" class="mention-history-chart"></div>
             </div>
             <div>
@@ -269,6 +269,6 @@
     </div>
 
     <div id="chart-tooltip" class="chart-tooltip" hidden></div>
-    <script src="app.js?v=20260601-google-trends"></script>
+    <script src="app.js?v=20260601-hourly-trends"></script>
   </body>
 </html>

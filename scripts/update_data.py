@@ -446,8 +446,14 @@ def google_trends_session() -> requests.Session:
     return session
 
 
-def collect_google_trends(keyword: str, start_date: str, end_date: str, geo: str = "US") -> dict[str, Any]:
-    timeframe = f"{start_date} {end_date}"
+def collect_google_trends(
+    keyword: str,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    geo: str = "US",
+    timeframe: str | None = None,
+) -> dict[str, Any]:
+    timeframe = timeframe or f"{start_date} {end_date}"
     source_url = f"https://trends.google.com/trends/explore?date={quote_plus(timeframe)}&geo={quote_plus(geo)}&q={quote_plus(keyword)}"
     base = {
         "status": "error",
@@ -514,9 +520,13 @@ def collect_google_trends(keyword: str, start_date: str, end_date: str, geo: str
                 timestamp = safe_float(row.get("time"))
                 if interest is None or timestamp is None:
                     continue
+                point_time = datetime.fromtimestamp(timestamp, timezone.utc).replace(microsecond=0)
                 rows.append(
                     {
-                        "date": datetime.fromtimestamp(timestamp, timezone.utc).date().isoformat(),
+                        "date": point_time.date().isoformat(),
+                        "datetime_utc": iso_z(point_time),
+                        "label": row.get("formattedTime") or point_time.isoformat(),
+                        "axis_label": row.get("formattedAxisTime") or row.get("formattedTime") or point_time.isoformat(),
                         "interest": interest,
                         "formatted_value": (row.get("formattedValue") or [str(int(interest))])[0],
                     }
@@ -546,10 +556,8 @@ def google_trends_with_fallback(result: dict[str, Any], previous_path: list[str]
     return result
 
 
-def collect_current_google_trends(symbol: str, days: int = 90) -> dict[str, Any]:
-    end_date = utc_now().date()
-    start_date = end_date - timedelta(days=days)
-    result = collect_google_trends(f"{symbol} stock", start_date.isoformat(), end_date.isoformat())
+def collect_current_google_trends(symbol: str) -> dict[str, Any]:
+    result = collect_google_trends(f"{symbol} stock", timeframe="now 7-d")
     return google_trends_with_fallback(result, ["symbols", symbol, "google_trends"])
 
 
@@ -1629,7 +1637,10 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
             },
             "google_trends": {
                 "latest_interest": google_latest.get("interest"),
+                "latest_datetime_utc": google_latest.get("datetime_utc"),
+                "latest_label": google_latest.get("label"),
                 "peak_interest": google_peak.get("interest"),
+                "peak_datetime_utc": google_peak.get("datetime_utc"),
                 "peak_date": google_peak.get("date"),
             } if google_trends else None,
         }

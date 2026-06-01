@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-hover-gme-short" />
+    <link rel="stylesheet" href="styles.css?v=20260601-tabs" />
   </head>
   <body>
     <div class="app-shell">
@@ -21,12 +21,17 @@
         </div>
       </header>
 
+      <nav class="tab-nav" aria-label="Dashboard views">
+        <button class="tab-button is-active" type="button" data-tab-target="main" aria-selected="true">Main</button>
+        <button class="tab-button" type="button" data-tab-target="gme" aria-selected="false">GME Compare</button>
+      </nav>
+
       <main>
-        <section class="metric-grid" aria-label="SPCE key metrics">
+        <section class="metric-grid" aria-label="SPCE key metrics" data-tab-panel="main">
           <article class="metric-card">
             <span>Short float</span>
             <strong id="metric-short">--</strong>
-            <small>GME 기준 122.97%</small>
+            <small>FINRA short interest</small>
           </article>
           <article class="metric-card">
             <span>5D move</span>
@@ -50,7 +55,7 @@
           </article>
         </section>
 
-        <section class="panel short-panel">
+        <section class="panel short-panel" data-tab-panel="main">
           <div class="panel-heading">
             <div>
               <h2>공매도 상세</h2>
@@ -86,7 +91,7 @@
           <p id="short-caveat" class="panel-subtitle caveat"></p>
         </section>
 
-        <section class="panel exposure-panel">
+        <section class="panel exposure-panel" data-tab-panel="main">
           <div class="panel-heading">
             <div>
               <h2>Short Exposure Rank</h2>
@@ -107,7 +112,7 @@
           </div>
         </section>
 
-        <section class="panel gme-case-panel">
+        <section class="panel gme-case-panel" data-tab-panel="gme">
           <div class="panel-heading">
             <div>
               <h2>GME 2021 Case Study</h2>
@@ -138,7 +143,7 @@
           </div>
         </section>
 
-        <section class="panel trend-panel">
+        <section class="panel trend-panel" data-tab-panel="main">
           <div class="panel-heading">
             <div>
               <h2>WallStreetBets Top Trending Stocks</h2>
@@ -174,7 +179,7 @@
           </div>
         </section>
 
-        <section class="dashboard-grid">
+        <section class="dashboard-grid" data-tab-panel="main">
           <article class="panel">
             <div class="panel-heading">
               <h2>SPCE Tracking Factors</h2>
@@ -204,7 +209,7 @@
           </article>
         </section>
 
-        <section class="panel">
+        <section class="panel" data-tab-panel="gme">
             <div class="panel-heading">
               <h2>SPCE vs GME</h2>
               <span class="status-chip">current data</span>
@@ -223,7 +228,7 @@
             </div>
         </section>
 
-        <section class="panel">
+        <section class="panel" data-tab-panel="gme">
           <div class="panel-heading">
             <h2>현재 GME 상태</h2>
             <span class="status-chip">watch</span>
@@ -233,6 +238,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-hover-gme-short"></script>
+    <script src="app.js?v=20260601-tabs"></script>
   </body>
 </html>

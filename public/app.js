@@ -131,6 +131,7 @@ function render() {
   renderComponents(components);
   renderSocial(spce.social);
   renderShortDeepDive(spce.market);
+  renderGme2021Case(latest.gme_2021_case);
   renderWsbTrending(latest.wsb_trending);
   renderWsbMentionHistory();
   renderComparison(spce, latest.baseline);
@@ -233,6 +234,128 @@ function renderShortDeepDive(market) {
     { aria: "SPCE daily short volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 0)}%`, minZero: true },
   );
   $("short-caveat").textContent = detail.caveat || "";
+}
+
+function renderGme2021Case(caseData) {
+  if (!caseData) {
+    setText("gme-case-chip", "no data");
+    $("gme-case-chart").innerHTML = `<div class="empty-state">No GME baseline data yet</div>`;
+    $("gme-case-grid").innerHTML = "";
+    $("gme-social-benchmark").innerHTML = "";
+    return;
+  }
+  setText("gme-case-chip", caseData.window || "2021");
+  $("gme-case-method").textContent = caseData.methodology_note || "Historical baseline for the meme squeeze regime";
+  const peak = caseData.peak || {};
+  const base = caseData.base || {};
+  const social = caseData.social_benchmark || {};
+  $("gme-case-grid").innerHTML = [
+    {
+      label: "Short / float peak",
+      value: `${num(caseData.short_interest_peak_percent_float)}%`,
+      sub: "SEC January 2021",
+    },
+    {
+      label: "January gain",
+      value: `+${num(caseData.jan_2021_gain_pct, 0)}%`,
+      sub: "CNBC recap",
+    },
+    {
+      label: "COVID low to peak",
+      value: peak.normalized ? `${num(peak.normalized, 1)}x` : "--",
+      sub: base.date && peak.date ? `${base.date} -> ${peak.date}` : peak.date || "--",
+    },
+    {
+      label: "Reddit mentions",
+      value: compact(social.reddit_mentions),
+      sub: social.window || "--",
+    },
+    {
+      label: "Tweets",
+      value: compact(social.tweets),
+      sub: social.window || "--",
+    },
+    {
+      label: "YouTube videos",
+      value: compact(social.youtube_videos),
+      sub: social.window || "--",
+    },
+  ].map((item) => `
+    <article class="case-card">
+      <span>${item.label}</span>
+      <strong>${item.value}</strong>
+      <small>${item.sub}</small>
+    </article>
+  `).join("");
+  $("gme-case-chart").innerHTML = gmeCaseChart(caseData.series || [], caseData.milestones || []);
+  $("gme-social-benchmark").innerHTML = [
+    ["Source", social.source || "--"],
+    ["Window", social.window || "--"],
+    ["Current metric caveat", social.note || "--"],
+    ["SEC volume note", caseData.sec_volume_note || "--"],
+  ].map(([label, value]) => `
+    <div class="benchmark-row">
+      <span>${label}</span>
+      <strong>${esc(value)}</strong>
+    </div>
+  `).join("");
+}
+
+function gmeCaseChart(series, milestones) {
+  const points = series
+    .map((item) => ({
+      date: item.date,
+      time: new Date(`${item.date}T00:00:00Z`).getTime(),
+      value: item.normalized,
+      close: item.close,
+    }))
+    .filter((item) => Number.isFinite(item.time) && item.value !== null && item.value !== undefined);
+  const width = 900;
+  const height = 300;
+  const pad = { top: 22, right: 28, bottom: 46, left: 58 };
+  if (!points.length) {
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="No GME 2021 price data"><text x="58" y="150" fill="#69736f">No GME 2021 price data yet</text></svg>`;
+  }
+  const minX = Math.min(...points.map((point) => point.time));
+  const maxX = Math.max(...points.map((point) => point.time));
+  const xSpan = Math.max(1, maxX - minX);
+  const maxY = Math.max(2, Math.max(...points.map((point) => Number(point.value))) * 1.12);
+  const x = (value) => pad.left + ((value - minX) / xSpan) * (width - pad.left - pad.right);
+  const y = (value) => height - pad.bottom - (value / maxY) * (height - pad.top - pad.bottom);
+  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${x(point.time).toFixed(2)} ${y(point.value).toFixed(2)}`).join(" ");
+  const grid = [1, Math.round(maxY / 3), Math.round((maxY / 3) * 2), Math.round(maxY)]
+    .filter((tick, index, arr) => arr.indexOf(tick) === index)
+    .map((tick) => `
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
+      <text x="12" y="${y(tick) + 4}" fill="#69736f" font-size="12">${tick}x</text>
+    `).join("");
+  const labels = milestones.filter(Boolean).map((milestone, index) => {
+    const time = new Date(`${milestone.date}T00:00:00Z`).getTime();
+    if (!Number.isFinite(time) || time < minX || time > maxX) return "";
+    const labelY = pad.top + 12 + (index % 3) * 15;
+    const lineX = x(time);
+    const labelX = lineX > width - 250 ? lineX - 5 : lineX + 5;
+    const anchor = lineX > width - 250 ? "end" : "start";
+    return `
+      <line x1="${lineX}" x2="${lineX}" y1="${pad.top}" y2="${height - pad.bottom}" stroke="#b77a18" stroke-dasharray="4 5"/>
+      <text x="${labelX}" y="${labelY}" text-anchor="${anchor}" fill="#69736f" font-size="11">${esc(milestone.label)}</text>
+    `;
+  }).join("");
+  const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="GME 2021 normalized price trend">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+      ${grid}
+      ${labels}
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
+      <path d="${path}" fill="none" stroke="#b54242" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="${x(peak.time)}" cy="${y(peak.value)}" r="6" fill="#b54242">
+        <title>${peak.date} · ${num(peak.value, 1)}x · close ${num(peak.close)}</title>
+      </circle>
+      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${points[0].date}</text>
+      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${points[points.length - 1].date}</text>
+    </svg>
+  `;
 }
 
 function shortSeriesChart(points, options) {

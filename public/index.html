@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-short-depth" />
+    <link rel="stylesheet" href="styles.css?v=20260601-gme-case" />
   </head>
   <body>
     <div class="app-shell">
@@ -79,6 +79,27 @@
             </div>
           </div>
           <p id="short-caveat" class="panel-subtitle caveat"></p>
+        </section>
+
+        <section class="panel gme-case-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>GME 2021 Case Study</h2>
+              <p id="gme-case-method" class="panel-subtitle">Historical baseline for the meme squeeze regime</p>
+            </div>
+            <span id="gme-case-chip" class="status-chip">--</span>
+          </div>
+          <div id="gme-case-grid" class="case-grid"></div>
+          <div class="case-layout">
+            <div>
+              <div class="chart-title">GME Price, COVID-Low Normalized</div>
+              <div id="gme-case-chart" class="case-chart"></div>
+            </div>
+            <div>
+              <div class="chart-title">Social Attention Benchmark</div>
+              <div id="gme-social-benchmark" class="benchmark-list"></div>
+            </div>
+          </div>
         </section>
 
         <section class="panel trend-panel">
@@ -186,6 +207,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-short-depth"></script>
+    <script src="app.js?v=20260601-gme-case"></script>
   </body>
 </html>

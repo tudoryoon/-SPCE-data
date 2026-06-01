@@ -30,6 +30,16 @@ BASELINE = {
     "source_url": "https://www.sec.gov/files/staff-report-equity-options-market-struction-conditions-early-2021.pdf",
 }
 
+GME_2021_SOCIAL_BENCHMARK = {
+    "window": "2021-01-20 to 2021-01-27",
+    "reddit_mentions": 82000,
+    "tweets": 1582000,
+    "youtube_videos": 1465,
+    "source": "Sprout Social social-listening recap",
+    "source_url": "https://sproutsocial.com/insights/gamestop-stock-social-media/",
+    "note": "External social-listening benchmark, not the same methodology as the current ApeWisdom 24h WSB ranking.",
+}
+
 SYMBOLS = {
     "SPCE": {
         "company": "Virgin Galactic",
@@ -364,6 +374,77 @@ def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
         "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
         "latest": latest,
         "history": rows[-26:],
+    }
+
+
+def collect_gme_2021_case() -> dict[str, Any]:
+    series = []
+    status = "ok"
+    note = ""
+    try:
+        import yfinance as yf
+
+        hist = yf.Ticker("GME").history(start="2020-04-01", end="2021-02-16", interval="1d", auto_adjust=False)
+        if hist is not None and not hist.empty:
+            for index, (dt, row) in enumerate(hist.iterrows()):
+                close = safe_float(row.get("Close"))
+                volume = safe_float(row.get("Volume"))
+                if close is None:
+                    continue
+                series.append(
+                    {
+                        "date": dt.strftime("%Y-%m-%d"),
+                        "close": close,
+                        "volume": volume,
+                        "normalized": None,
+                    }
+                )
+        else:
+            status = "empty"
+            note = "No GME price history returned by yfinance."
+    except Exception as exc:  # noqa: BLE001
+        status = "error"
+        note = str(exc)
+
+    start = series[0] if series else None
+    base = min(series, key=lambda item: item.get("close") or float("inf")) if series else None
+    if base and base.get("close") not in (None, 0):
+        for item in series:
+            item["normalized"] = item["close"] / base["close"] if item.get("close") is not None else None
+    peak = max(series, key=lambda item: item.get("close") or 0) if series else None
+    peak_return_pct = None
+    if peak and base and base.get("close") not in (None, 0):
+        peak_return_pct = (peak["close"] / base["close"] - 1) * 100
+
+    milestones = [
+        {"date": "2020-08-31", "label": "Ryan Cohen stake disclosed"},
+        {"date": "2021-01-11", "label": "Ryan Cohen board catalyst"},
+        {"date": "2021-01-22", "label": "Retail/WSB acceleration"},
+        {"date": "2021-01-27", "label": "Social volume peak week"},
+        {"date": "2021-01-28", "label": "Broker restrictions / volatility peak"},
+    ]
+    if base:
+        milestones.insert(0, {"date": base["date"], "label": "COVID-era closing low"})
+
+    return {
+        "status": status,
+        "note": note,
+        "price_source": "yfinance GME daily close, split-adjusted by Yahoo where applicable; normalized to the COVID-era closing low in this window",
+        "window": "2020-04-01 to 2021-02-15",
+        "start": start,
+        "base": base,
+        "peak": peak,
+        "peak_return_pct": peak_return_pct,
+        "jan_2021_gain_pct": 1625,
+        "jan_2021_gain_source": "CNBC recap of January 2021 GME move",
+        "jan_2021_gain_source_url": "https://www.cnbc.com/2021/01/30/gamestop-reddit-and-robinhood-a-full-recap-of-the-historic-retail-trading-mania-on-wall-street.html",
+        "short_interest_peak_percent_float": BASELINE["short_percent_float"],
+        "short_interest_source": BASELINE["source_url"],
+        "sec_volume_note": "SEC staff described Jan. 13-29, 2021 average GME trading volume as roughly 100 million shares per day, more than 1,400% above the 2020 average.",
+        "social_benchmark": GME_2021_SOCIAL_BENCHMARK,
+        "series": series,
+        "milestones": milestones,
+        "methodology_note": "Price is normalized to GME's COVID-era closing low in this window. The historical social benchmark is not directly comparable to the current ApeWisdom WSB 24h count; it shows order-of-magnitude attention during the GME event.",
     }
 
 
@@ -1041,6 +1122,7 @@ def build_snapshot(window_hours: int) -> dict[str, Any]:
         "generated_at_utc": iso_z(utc_now()),
         "window_hours": window_hours,
         "baseline": BASELINE,
+        "gme_2021_case": collect_gme_2021_case(),
         "symbols": {},
         "wsb_trending": collect_wsb_trending(window_hours),
         "meta": {

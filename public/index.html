@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-gme-case" />
+    <link rel="stylesheet" href="styles.css?v=20260601-tracking-focus" />
   </head>
   <body>
     <div class="app-shell">
@@ -22,15 +22,6 @@
       </header>
 
       <main>
-        <section class="score-band">
-          <div class="score-readout">
-            <span class="label">GME 2021 유사도</span>
-            <strong id="score-main">--</strong>
-            <span id="score-label" class="status-chip">--</span>
-          </div>
-          <p id="verdict" class="verdict">데이터를 불러오는 중입니다.</p>
-        </section>
-
         <section class="metric-grid" aria-label="SPCE key metrics">
           <article class="metric-card">
             <span>Short float</span>
@@ -141,7 +132,7 @@
         <section class="dashboard-grid">
           <article class="panel">
             <div class="panel-heading">
-              <h2>점수 구성</h2>
+              <h2>SPCE Tracking Factors</h2>
               <span id="confidence-chip" class="status-chip">--</span>
             </div>
             <div id="component-bars" class="bar-list"></div>
@@ -168,19 +159,10 @@
           </article>
         </section>
 
-        <section class="dashboard-grid">
-          <article class="panel wide">
-            <div class="panel-heading">
-              <h2>유사도 히스토리</h2>
-              <span class="status-chip">SPCE</span>
-            </div>
-            <div id="score-chart" class="chart"></div>
-          </article>
-
-          <article class="panel">
+        <section class="panel">
             <div class="panel-heading">
               <h2>SPCE vs GME</h2>
-              <span class="status-chip">현재값</span>
+              <span class="status-chip">current data</span>
             </div>
             <div class="table-wrap">
               <table>
@@ -194,7 +176,6 @@
                 <tbody id="comparison-table"></tbody>
               </table>
             </div>
-          </article>
         </section>
 
         <section class="panel">
@@ -207,6 +188,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-gme-case"></script>
+    <script src="app.js?v=20260601-tracking-focus"></script>
   </body>
 </html>

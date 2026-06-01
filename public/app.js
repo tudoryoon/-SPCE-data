@@ -79,13 +79,6 @@ function setText(id, value) {
   if (el) el.textContent = value;
 }
 
-function scoreClass(score) {
-  if (score === null || score === undefined) return "neutral";
-  if (score >= 75) return "positive";
-  if (score >= 45) return "warning";
-  return "negative";
-}
-
 async function fetchJson(path) {
   const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
   if (!response.ok) throw new Error(`${path}: ${response.status}`);
@@ -102,7 +95,6 @@ async function loadData() {
     state.history = Array.isArray(history) ? history : [];
     render();
   } catch (error) {
-    setText("verdict", `데이터 로드 실패: ${error.message}`);
     setText("last-updated", "Load failed");
   }
 }
@@ -111,14 +103,9 @@ function render() {
   const latest = state.latest;
   const spce = latest.symbols.SPCE;
   const gme = latest.symbols.GME;
-  const score = spce.score.score;
   const components = spce.score.components;
 
   setText("last-updated", localTime(latest.generated_at_utc));
-  $("score-main").textContent = score === null ? "--" : Math.round(score);
-  $("score-main").className = scoreClass(score);
-  setText("score-label", spce.score.label);
-  setText("verdict", spce.score.verdict_ko);
   setText("confidence-chip", `confidence ${num(spce.score.confidence * 100, 0)}%`);
   setText("window-chip", `${latest.window_hours}h`);
 
@@ -136,7 +123,6 @@ function render() {
   renderWsbMentionHistory();
   renderComparison(spce, latest.baseline);
   renderGme(gme);
-  renderChart();
 }
 
 function renderComponents(components) {
@@ -557,7 +543,6 @@ function renderComparison(spce, baseline) {
     ["Short ratio", num(spce.market.short_ratio), "n/a"],
     ["5D move", pct(spce.market.price_change_5d_pct), "n/a"],
     ["Volume / 20D", `${num(spce.market.volume_ratio_20d)}x`, "n/a"],
-    ["Similarity", `${num(spce.score.score, 0)}/100`, "100 anchor"],
   ];
   $("comparison-table").innerHTML = rows
     .map(([metric, current, base]) => `<tr><td>${metric}</td><td>${current}</td><td>${base}</td></tr>`)
@@ -570,52 +555,10 @@ function renderGme(gme) {
     ["5D move", `${num(gme.market.price_change_5d_pct)}%`],
     ["Short float", `${num(gme.market.short_percent_float)}%`],
     ["Volume / 20D", `${num(gme.market.volume_ratio_20d)}x`],
-    ["Similarity", `${num(gme.score.score, 0)}/100`],
   ];
   $("gme-strip").innerHTML = items
     .map(([label, value]) => `<div class="strip-item"><span>${label}</span><strong>${value}</strong></div>`)
     .join("");
-}
-
-function renderChart() {
-  const points = state.history
-    .map((item) => ({
-      time: new Date(item.generated_at_utc).getTime(),
-      value: item.symbols?.SPCE?.score,
-    }))
-    .filter((item) => Number.isFinite(item.time) && item.value !== null && item.value !== undefined);
-  $("score-chart").innerHTML = lineChart(points);
-}
-
-function lineChart(points) {
-  const width = 900;
-  const height = 290;
-  const pad = { top: 18, right: 22, bottom: 34, left: 44 };
-  if (!points.length) {
-    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="No chart data"><text x="44" y="145" fill="#69736f">No history yet</text></svg>`;
-  }
-  const minX = Math.min(...points.map((d) => d.time));
-  const maxX = Math.max(...points.map((d) => d.time));
-  const xSpan = Math.max(1, maxX - minX);
-  const minY = 0;
-  const maxY = 100;
-  const x = (value) => pad.left + ((value - minX) / xSpan) * (width - pad.left - pad.right);
-  const y = (value) => height - pad.bottom - ((value - minY) / (maxY - minY)) * (height - pad.top - pad.bottom);
-  const path = points.map((d, index) => `${index === 0 ? "M" : "L"} ${x(d.time).toFixed(2)} ${y(d.value).toFixed(2)}`).join(" ");
-  const last = points[points.length - 1];
-  const grid = [0, 25, 50, 75, 100]
-    .map((tick) => `<line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/><text x="8" y="${y(tick) + 4}" fill="#69736f" font-size="12">${tick}</text>`)
-    .join("");
-  return `
-    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="SPCE similarity history">
-      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
-      ${grid}
-      <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
-      <path d="${path}" fill="none" stroke="#137f8f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="${x(last.time)}" cy="${y(last.value)}" r="6" fill="#0f8a5f"/>
-      <text x="${width - pad.right - 110}" y="${pad.top + 12}" fill="#18201d" font-size="13" font-weight="700">Latest ${num(last.value, 0)}/100</text>
-    </svg>
-  `;
 }
 
 $("refresh-button").addEventListener("click", loadData);

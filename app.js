@@ -645,11 +645,13 @@ function renderSpceGoogleTrends(trends) {
   }
   const latest = trends.latest || {};
   const peak = trends.peak || {};
+  const latestLabel = trendPointLabel(latest);
+  const peakLabel = trendPointLabel(peak);
   setText(
     "spce-google-trends-chip",
-    latest.date ? `최신 ${num(latest.interest, 0)}/100 · ${latest.date}` : koStatus(trends.status),
+    latestLabel ? `최신 ${num(latest.interest, 0)}/100 · ${latestLabel}` : koStatus(trends.status),
   );
-  $("spce-google-trends-method").textContent = `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · ${trends.window || "최근 90일"}`;
+  $("spce-google-trends-method").textContent = `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · ${trends.window || "최근 7일 시간 단위"}`;
   $("spce-google-trends-chart").innerHTML = googleTrendChart(
     trends.history || [],
     {
@@ -660,9 +662,9 @@ function renderSpceGoogleTrends(trends) {
     },
   );
   $("spce-google-trends-notes").innerHTML = googleTrendNotes(trends, [
-    ["최신 관심도", latest.date ? `${latest.date} 기준 ${num(latest.interest, 0)}/100` : "--"],
-    ["기간 내 피크", peak.date ? `${peak.date} · ${num(peak.interest, 0)}/100` : "--"],
-    ["주의", "Google Trends는 절대 검색량이 아니라 해당 기간 내 최대 검색 관심도를 100으로 둔 정규화 지표입니다."],
+    ["최신 관심도", latestLabel ? `${latestLabel} 기준 ${num(latest.interest, 0)}/100` : "--"],
+    ["기간 내 피크", peakLabel ? `${peakLabel} · ${num(peak.interest, 0)}/100` : "--"],
+    ["주의", "Google Trends는 절대 검색량이 아니라 해당 기간 내 최대 검색 관심도를 100으로 둔 정규화 지표입니다. 최근 7일 조회는 시간 단위 포인트로 표시합니다."],
   ]);
 }
 
@@ -677,11 +679,28 @@ function googleTrendNotes(trends, rows) {
   `).join("");
 }
 
+function trendPointLabel(point) {
+  if (!point) return "";
+  const rawLabel = point.label || point.axis_label || "";
+  if (rawLabel.includes(" at ") && point.datetime_utc) {
+    const date = new Date(point.datetime_utc);
+    if (Number.isFinite(date.getTime())) {
+      return date.toLocaleString("ko-KR", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    }
+  }
+  return point.date || rawLabel || point.datetime_utc || "";
+}
+
 function googleTrendChart(history, options) {
   const points = history
     .map((item) => ({
       date: item.date,
-      time: new Date(`${item.date}T00:00:00Z`).getTime(),
+      datetime: item.datetime_utc || `${item.date}T00:00:00Z`,
+      label: trendPointLabel(item),
+      time: new Date(item.datetime_utc || `${item.date}T00:00:00Z`).getTime(),
       value: Number(item.interest),
       formatted: item.formatted_value,
     }))
@@ -704,11 +723,21 @@ function googleTrendChart(history, options) {
     <text x="14" y="${y(tick) + 4}" fill="#69736f" font-size="12">${tick}</text>
   `).join("");
   const markers = points.map((point) => {
-    const tooltip = `날짜: ${point.date}\n검색 관심도: ${point.formatted || num(point.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+    const tooltip = `시각: ${point.label}\n검색 관심도: ${point.formatted || num(point.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
     return `<circle class="chart-hit-target" ${tooltipAttr(tooltip)} cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}"></circle>`;
   }).join("");
   const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
-  const peakTooltip = `피크 날짜: ${peak.date}\n검색 관심도: ${peak.formatted || num(peak.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+  const peakTooltip = `피크 시각: ${peak.label}\n검색 관심도: ${peak.formatted || num(peak.value, 0)}/100\n검색어: ${options.keyword || "--"}`;
+  const axisLabel = (point) => {
+    const date = new Date(point.datetime);
+    if (!Number.isFinite(date.getTime())) return point.date;
+    return date.toLocaleString("ko-KR", {
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      hour12: false,
+    });
+  };
   return `
     <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.aria}">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
@@ -718,8 +747,8 @@ function googleTrendChart(history, options) {
       <path d="${path}" fill="none" stroke="${options.color}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
       <circle class="chart-hit-target" ${tooltipAttr(peakTooltip)} cx="${x(peak.time)}" cy="${y(peak.value)}" r="7" fill="#b54242"></circle>
       ${markers}
-      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${points[0].date}</text>
-      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${points[points.length - 1].date}</text>
+      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${axisLabel(points[0])}</text>
+      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${axisLabel(points[points.length - 1])}</text>
     </svg>
   `;
 }

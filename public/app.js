@@ -107,6 +107,7 @@ function render() {
   renderComponents(components);
   renderSocial(spce.social);
   renderWsbTrending(latest.wsb_trending);
+  renderWsbMentionHistory();
   renderComparison(spce, latest.baseline);
   renderGme(gme);
   renderChart();
@@ -171,6 +172,78 @@ function renderWsbTrending(wsb) {
       </tr>
     `;
   }).join("");
+}
+
+function renderWsbMentionHistory() {
+  const points = state.history
+    .map((item) => ({
+      time: new Date(item.generated_at_utc).getTime(),
+      value: item.wsb?.spce_mentions,
+      rank: item.wsb?.spce_rank,
+    }))
+    .filter((item) => Number.isFinite(item.time) && item.value !== null && item.value !== undefined);
+  const latestItem = state.latest?.wsb_trending?.items?.find((item) => item.ticker === "SPCE");
+  const latestTime = new Date(state.latest?.generated_at_utc || 0).getTime();
+  if (latestItem && Number.isFinite(latestTime) && !points.some((item) => item.time === latestTime)) {
+    points.push({
+      time: latestTime,
+      value: latestItem.mentions,
+      rank: latestItem.rank,
+    });
+  }
+  points.sort((a, b) => a.time - b.time);
+  const latestPoint = points[points.length - 1];
+  setText(
+    "wsb-history-latest",
+    latestPoint ? `latest ${compact(latestPoint.value)} · rank #${latestPoint.rank || "--"}` : "--",
+  );
+  $("wsb-history-chart").innerHTML = mentionHistoryChart(points);
+}
+
+function mentionHistoryChart(points) {
+  const width = 940;
+  const height = 280;
+  const pad = { top: 22, right: 28, bottom: 44, left: 58 };
+  if (!points.length) {
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="No WSB mention history"><text x="58" y="140" fill="#69736f">No SPCE mention history yet</text></svg>`;
+  }
+  const values = points.map((point) => Number(point.value) || 0);
+  const minX = Math.min(...points.map((point) => point.time));
+  const maxX = Math.max(...points.map((point) => point.time));
+  const xSpan = Math.max(1, maxX - minX);
+  const rawMin = Math.min(...values);
+  const rawMax = Math.max(...values);
+  const padding = Math.max(20, (rawMax - rawMin) * 0.18);
+  const minY = Math.max(0, Math.floor(rawMin - padding));
+  const maxY = Math.max(minY + 1, Math.ceil(rawMax + padding));
+  const x = (value) => pad.left + ((value - minX) / xSpan) * (width - pad.left - pad.right);
+  const y = (value) => height - pad.bottom - ((value - minY) / (maxY - minY)) * (height - pad.top - pad.bottom);
+  const path = points.map((point, index) => `${index === 0 ? "M" : "L"} ${x(point.time).toFixed(2)} ${y(point.value).toFixed(2)}`).join(" ");
+  const areaPath = `${path} L ${x(points[points.length - 1].time).toFixed(2)} ${height - pad.bottom} L ${x(points[0].time).toFixed(2)} ${height - pad.bottom} Z`;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((ratio) => Math.round(minY + (maxY - minY) * ratio));
+  const grid = ticks.map((tick) => `
+    <line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="#dbe2dc"/>
+    <text x="10" y="${y(tick) + 4}" fill="#69736f" font-size="12">${compact(tick)}</text>
+  `).join("");
+  const markers = points.map((point) => `
+    <circle cx="${x(point.time)}" cy="${y(point.value)}" r="4.5" fill="#2f6fb0">
+      <title>${new Date(point.time).toLocaleString()} · ${point.value} mentions · rank #${point.rank || "--"}</title>
+    </circle>
+  `).join("");
+  const firstLabel = localTime(new Date(points[0].time).toISOString());
+  const lastLabel = localTime(new Date(points[points.length - 1].time).toISOString());
+  return `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="SPCE WallStreetBets mention history">
+      <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+      ${grid}
+      <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
+      <path d="${areaPath}" fill="rgba(47, 111, 176, 0.10)"></path>
+      <path d="${path}" fill="none" stroke="#2f6fb0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+      ${markers}
+      <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${firstLabel}</text>
+      <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${lastLabel}</text>
+    </svg>
+  `;
 }
 
 function stackedMentionChart(items) {

@@ -243,6 +243,29 @@ h2 {
   min-width: 420px;
 }
 
+.trend-history {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.compact-heading {
+  margin-bottom: 8px;
+}
+
+.mention-history-chart {
+  width: 100%;
+  min-height: 280px;
+  overflow-x: auto;
+}
+
+.mention-history-chart svg {
+  display: block;
+  width: 100%;
+  min-width: 720px;
+  height: 280px;
+}
+
 .empty-state {
   display: grid;
   min-height: 220px;

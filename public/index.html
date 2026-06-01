@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260531-wsb" />
+    <link rel="stylesheet" href="styles.css?v=20260601-wsb-history" />
   </head>
   <body>
     <div class="app-shell">
@@ -83,6 +83,16 @@
               </table>
             </div>
           </div>
+          <div class="trend-history">
+            <div class="panel-heading compact-heading">
+              <div>
+                <h2>SPCE WSB Mention History</h2>
+                <p class="panel-subtitle">24h rolling mentions at each update</p>
+              </div>
+              <span id="wsb-history-latest" class="status-chip">--</span>
+            </div>
+            <div id="wsb-history-chart" class="mention-history-chart"></div>
+          </div>
         </section>
 
         <section class="dashboard-grid">
@@ -154,6 +164,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260531-wsb"></script>
+    <script src="app.js?v=20260601-wsb-history"></script>
   </body>
 </html>

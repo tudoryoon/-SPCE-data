@@ -1636,6 +1636,8 @@ def slim_history_item(snapshot: dict[str, Any]) -> dict[str, Any]:
                 for source, payload in (data.get("social") or {}).items()
             },
             "google_trends": {
+                "status": google_trends.get("status"),
+                "window": google_trends.get("window"),
                 "latest_interest": google_latest.get("interest"),
                 "latest_datetime_utc": google_latest.get("datetime_utc"),
                 "latest_label": google_latest.get("label"),

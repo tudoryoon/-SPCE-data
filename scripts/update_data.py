@@ -340,10 +340,9 @@ def mention_pattern(symbol: str, aliases: list[str]) -> re.Pattern[str]:
     return re.compile("|".join(terms), re.IGNORECASE)
 
 
-def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
-    start_date = (utc_now() - timedelta(days=370)).date().isoformat()
+def collect_finra_short_interest_history(symbol: str, start_date: str, end_date: str | None = None) -> dict[str, Any]:
     body = {
-        "limit": 60,
+        "limit": 120,
         "compareFilters": [
             {"compareType": "EQUAL", "fieldName": "symbolCode", "fieldValue": symbol},
             {"compareType": "GREATER", "fieldName": "settlementDate", "fieldValue": start_date},
@@ -363,6 +362,8 @@ def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
             "stockSplitFlag",
         ],
     }
+    if end_date:
+        body["compareFilters"].append({"compareType": "LESSER", "fieldName": "settlementDate", "fieldValue": end_date})
     payload, err = http_post_json("https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest", body)
     if err:
         return {"status": "error", "note": err, "history": []}
@@ -390,7 +391,83 @@ def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
         "source": "FINRA Consolidated Short Interest",
         "source_url": "https://api.finra.org/data/group/OTCMarket/name/ConsolidatedShortInterest",
         "latest": latest,
-        "history": rows[-26:],
+        "history": rows,
+    }
+
+
+def collect_finra_short_interest(symbol: str) -> dict[str, Any]:
+    start_date = (utc_now() - timedelta(days=370)).date().isoformat()
+    result = collect_finra_short_interest_history(symbol, start_date)
+    result["history"] = (result.get("history") or [])[-26:]
+    return result
+
+
+def collect_finra_daily_short_volume_files(symbol: str, start_date: str, end_date: str) -> dict[str, Any]:
+    try:
+        start = datetime.fromisoformat(start_date).date()
+        end = datetime.fromisoformat(end_date).date()
+    except ValueError as exc:
+        return {"status": "error", "note": str(exc), "history": []}
+
+    rows: list[dict[str, Any]] = []
+    errors: list[str] = []
+    day = start
+    while day <= end:
+        if day.weekday() >= 5:
+            day += timedelta(days=1)
+            continue
+        date_code = day.strftime("%Y%m%d")
+        url = f"https://cdn.finra.org/equity/regsho/daily/CNMSshvol{date_code}.txt"
+        try:
+            response = requests.get(
+                url,
+                headers={
+                    "Accept": "text/plain",
+                    "User-Agent": os.environ.get("REDDIT_USER_AGENT") or USER_AGENT,
+                },
+                timeout=20,
+            )
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"{date_code}: {exc}")
+            day += timedelta(days=1)
+            continue
+        if response.status_code == 404:
+            day += timedelta(days=1)
+            continue
+        if not response.ok:
+            errors.append(f"{date_code}: HTTP {response.status_code}")
+            day += timedelta(days=1)
+            continue
+        for line in response.text.splitlines():
+            parts = line.strip().split("|")
+            if len(parts) < 6 or parts[1].upper() != symbol.upper():
+                continue
+            short_volume = safe_float(parts[2])
+            short_exempt_volume = safe_float(parts[3])
+            total_volume = safe_float(parts[4])
+            rows.append(
+                {
+                    "trade_date": day.isoformat(),
+                    "short_volume": short_volume,
+                    "short_exempt_volume": short_exempt_volume,
+                    "total_volume": total_volume,
+                    "short_volume_ratio": ratio(short_volume, total_volume),
+                    "short_exempt_ratio": ratio(short_exempt_volume, total_volume),
+                    "market": parts[5],
+                }
+            )
+            break
+        day += timedelta(days=1)
+
+    rows = sorted(rows, key=lambda row: row["trade_date"])
+    return {
+        "status": "ok" if rows else "empty",
+        "note": "; ".join(errors[:5]),
+        "source": "FINRA Reg SHO Daily Short Sale Volume Files",
+        "source_url": "https://www.finra.org/finra-data/browse-catalog/short-sale-volume-data/daily-short-sale-volume-files",
+        "file_url_pattern": "https://cdn.finra.org/equity/regsho/daily/CNMSshvolYYYYMMDD.txt",
+        "latest": rows[-1] if rows else None,
+        "history": rows,
     }
 
 
@@ -433,6 +510,14 @@ def collect_gme_2021_case() -> dict[str, Any]:
     if peak and base and base.get("close") not in (None, 0):
         peak_return_pct = (peak["close"] / base["close"] - 1) * 100
 
+    short_interest = collect_finra_short_interest_history("GME", "2020-11-01", "2021-03-01")
+    short_interest_history = short_interest.get("history") or []
+    short_interest_peak = max(short_interest_history, key=lambda item: item.get("shares_short") or 0) if short_interest_history else None
+    short_flow = collect_finra_daily_short_volume_files("GME", "2021-01-04", "2021-02-12")
+    short_flow_history = short_flow.get("history") or []
+    short_flow_volume_peak = max(short_flow_history, key=lambda item: item.get("short_volume") or 0) if short_flow_history else None
+    short_flow_ratio_peak = max(short_flow_history, key=lambda item: item.get("short_volume_ratio") or 0) if short_flow_history else None
+
     milestones = [
         {"date": "2020-08-31", "label": "Ryan Cohen stake disclosed"},
         {"date": "2021-01-11", "label": "Ryan Cohen board catalyst"},
@@ -462,9 +547,20 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "short_interest_source": BASELINE["source_url"],
         "sec_volume_note": "SEC staff described Jan. 13-29, 2021 average GME trading volume as roughly 100 million shares per day, more than 1,400% above the 2020 average.",
         "social_benchmark": GME_2021_SOCIAL_BENCHMARK,
+        "short_interest_history": short_interest_history,
+        "short_interest_history_status": short_interest.get("status"),
+        "short_interest_history_source": short_interest.get("source"),
+        "short_interest_history_source_url": short_interest.get("source_url"),
+        "short_interest_peak": short_interest_peak,
+        "daily_short_sale_volume_history": short_flow_history,
+        "daily_short_sale_volume_status": short_flow.get("status"),
+        "daily_short_sale_volume_source": short_flow.get("source"),
+        "daily_short_sale_volume_source_url": short_flow.get("source_url"),
+        "daily_short_sale_volume_peak": short_flow_volume_peak,
+        "daily_short_sale_ratio_peak": short_flow_ratio_peak,
         "series": series,
         "milestones": milestones,
-        "methodology_note": "Price is normalized to GME's COVID-era closing low in this window. The historical social benchmark is not directly comparable to the current ApeWisdom WSB 24h count; it shows order-of-magnitude attention during the GME event.",
+        "methodology_note": "Price is normalized to GME's COVID-era closing low in this window. FINRA short interest is settlement-date based; daily short-sale volume is trade flow, not open short inventory. The historical social benchmark is not directly comparable to the current ApeWisdom WSB 24h count.",
     }
 
 

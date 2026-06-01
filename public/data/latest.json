@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-01T07:05:51Z",
+  "generated_at_utc": "2026-06-01T11:22:55Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -566,8 +566,8 @@
         },
         {
           "date": "2021-01-22",
-          "interest": 7.0,
-          "formatted_value": "7"
+          "interest": 6.0,
+          "formatted_value": "6"
         },
         {
           "date": "2021-01-23",
@@ -586,13 +586,13 @@
         },
         {
           "date": "2021-01-26",
-          "interest": 22.0,
-          "formatted_value": "22"
+          "interest": 21.0,
+          "formatted_value": "21"
         },
         {
           "date": "2021-01-27",
-          "interest": 52.0,
-          "formatted_value": "52"
+          "interest": 51.0,
+          "formatted_value": "51"
         },
         {
           "date": "2021-01-28",
@@ -601,8 +601,8 @@
         },
         {
           "date": "2021-01-29",
-          "interest": 88.0,
-          "formatted_value": "88"
+          "interest": 86.0,
+          "formatted_value": "86"
         },
         {
           "date": "2021-01-30",
@@ -611,13 +611,13 @@
         },
         {
           "date": "2021-01-31",
-          "interest": 11.0,
-          "formatted_value": "11"
+          "interest": 12.0,
+          "formatted_value": "12"
         },
         {
           "date": "2021-02-01",
-          "interest": 51.0,
-          "formatted_value": "51"
+          "interest": 52.0,
+          "formatted_value": "52"
         },
         {
           "date": "2021-02-02",
@@ -626,18 +626,18 @@
         },
         {
           "date": "2021-02-03",
-          "interest": 42.0,
-          "formatted_value": "42"
+          "interest": 41.0,
+          "formatted_value": "41"
         },
         {
           "date": "2021-02-04",
-          "interest": 33.0,
-          "formatted_value": "33"
+          "interest": 32.0,
+          "formatted_value": "32"
         },
         {
           "date": "2021-02-05",
-          "interest": 27.0,
-          "formatted_value": "27"
+          "interest": 28.0,
+          "formatted_value": "28"
         },
         {
           "date": "2021-02-06",
@@ -1679,8 +1679,8 @@
         "history": [
           {
             "date": "2026-03-03",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-03-04",
@@ -1689,13 +1689,13 @@
           },
           {
             "date": "2026-03-05",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-03-06",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-03-07",
@@ -1744,8 +1744,8 @@
           },
           {
             "date": "2026-03-16",
-            "interest": 3.0,
-            "formatted_value": "3"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-03-17",
@@ -1754,13 +1754,13 @@
           },
           {
             "date": "2026-03-18",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-03-19",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-03-20",
@@ -1779,8 +1779,8 @@
           },
           {
             "date": "2026-03-23",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-03-24",
@@ -1799,8 +1799,8 @@
           },
           {
             "date": "2026-03-27",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-03-28",
@@ -1814,18 +1814,18 @@
           },
           {
             "date": "2026-03-30",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-03-31",
-            "interest": 5.0,
-            "formatted_value": "5"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-04-01",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-04-02",
@@ -1849,8 +1849,8 @@
           },
           {
             "date": "2026-04-06",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-04-07",
@@ -1859,8 +1859,8 @@
           },
           {
             "date": "2026-04-08",
-            "interest": 7.0,
-            "formatted_value": "7"
+            "interest": 8.0,
+            "formatted_value": "8"
           },
           {
             "date": "2026-04-09",
@@ -1869,8 +1869,8 @@
           },
           {
             "date": "2026-04-10",
-            "interest": 4.0,
-            "formatted_value": "4"
+            "interest": 5.0,
+            "formatted_value": "5"
           },
           {
             "date": "2026-04-11",
@@ -1879,8 +1879,8 @@
           },
           {
             "date": "2026-04-12",
-            "interest": 3.0,
-            "formatted_value": "3"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-04-13",
@@ -1889,23 +1889,23 @@
           },
           {
             "date": "2026-04-14",
-            "interest": 4.0,
-            "formatted_value": "4"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-04-15",
-            "interest": 3.0,
-            "formatted_value": "3"
+            "interest": 0.0,
+            "formatted_value": "0"
           },
           {
             "date": "2026-04-16",
-            "interest": 4.0,
-            "formatted_value": "4"
+            "interest": 6.0,
+            "formatted_value": "6"
           },
           {
             "date": "2026-04-17",
-            "interest": 4.0,
-            "formatted_value": "4"
+            "interest": 5.0,
+            "formatted_value": "5"
           },
           {
             "date": "2026-04-18",
@@ -1924,8 +1924,8 @@
           },
           {
             "date": "2026-04-21",
-            "interest": 5.0,
-            "formatted_value": "5"
+            "interest": 4.0,
+            "formatted_value": "4"
           },
           {
             "date": "2026-04-22",
@@ -1939,8 +1939,8 @@
           },
           {
             "date": "2026-04-24",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-04-25",
@@ -1954,8 +1954,8 @@
           },
           {
             "date": "2026-04-27",
-            "interest": 3.0,
-            "formatted_value": "3"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-04-28",
@@ -1974,8 +1974,8 @@
           },
           {
             "date": "2026-05-01",
-            "interest": 5.0,
-            "formatted_value": "5"
+            "interest": 4.0,
+            "formatted_value": "4"
           },
           {
             "date": "2026-05-02",
@@ -1994,13 +1994,13 @@
           },
           {
             "date": "2026-05-05",
-            "interest": 3.0,
-            "formatted_value": "3"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-05-06",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-05-07",
@@ -2014,8 +2014,8 @@
           },
           {
             "date": "2026-05-09",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-05-10",
@@ -2029,8 +2029,8 @@
           },
           {
             "date": "2026-05-12",
-            "interest": 0.0,
-            "formatted_value": "0"
+            "interest": 2.0,
+            "formatted_value": "2"
           },
           {
             "date": "2026-05-13",
@@ -2084,8 +2084,8 @@
           },
           {
             "date": "2026-05-23",
-            "interest": 2.0,
-            "formatted_value": "2"
+            "interest": 3.0,
+            "formatted_value": "3"
           },
           {
             "date": "2026-05-24",
@@ -2104,8 +2104,8 @@
           },
           {
             "date": "2026-05-27",
-            "interest": 12.0,
-            "formatted_value": "12"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-05-28",
@@ -2119,18 +2119,18 @@
           },
           {
             "date": "2026-05-30",
-            "interest": 50.0,
-            "formatted_value": "50"
+            "interest": 51.0,
+            "formatted_value": "51"
           },
           {
             "date": "2026-05-31",
-            "interest": 33.0,
-            "formatted_value": "33"
+            "interest": 35.0,
+            "formatted_value": "35"
           },
           {
             "date": "2026-06-01",
-            "interest": 42.0,
-            "formatted_value": "42"
+            "interest": 45.0,
+            "formatted_value": "45"
           }
         ],
         "peak": {
@@ -2140,8 +2140,8 @@
         },
         "latest": {
           "date": "2026-06-01",
-          "interest": 42.0,
-          "formatted_value": "42"
+          "interest": 45.0,
+          "formatted_value": "45"
         }
       },
       "score": {
@@ -2963,13 +2963,13 @@
         "rank": 1,
         "ticker": "SPCE",
         "name": "Virgin Galactic",
-        "mentions": 937,
-        "upvotes": 12640,
+        "mentions": 1111,
+        "upvotes": 14271,
         "rank_24h_ago": 1,
-        "mentions_24h_ago": 809,
+        "mentions_24h_ago": 844,
         "positive": 0,
         "negative": 0,
-        "neutral": 937,
+        "neutral": 1111,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2977,13 +2977,13 @@
         "rank": 2,
         "ticker": "MU",
         "name": "Micron Technology",
-        "mentions": 309,
-        "upvotes": 2428,
-        "rank_24h_ago": 4,
-        "mentions_24h_ago": 72,
+        "mentions": 370,
+        "upvotes": 2621,
+        "rank_24h_ago": 3,
+        "mentions_24h_ago": 65,
         "positive": 0,
         "negative": 0,
-        "neutral": 309,
+        "neutral": 370,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -2991,41 +2991,41 @@
         "rank": 3,
         "ticker": "NOW",
         "name": "ServiceNow",
-        "mentions": 184,
-        "upvotes": 966,
-        "rank_24h_ago": 7,
-        "mentions_24h_ago": 31,
+        "mentions": 219,
+        "upvotes": 1093,
+        "rank_24h_ago": 6,
+        "mentions_24h_ago": 30,
         "positive": 0,
         "negative": 0,
-        "neutral": 184,
+        "neutral": 219,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 4,
-        "ticker": "MSFT",
-        "name": "Microsoft",
-        "mentions": 124,
-        "upvotes": 1368,
-        "rank_24h_ago": 10,
-        "mentions_24h_ago": 29,
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "mentions": 140,
+        "upvotes": 1581,
+        "rank_24h_ago": 4,
+        "mentions_24h_ago": 41,
         "positive": 0,
         "negative": 0,
-        "neutral": 124,
+        "neutral": 140,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 5,
-        "ticker": "NVDA",
-        "name": "NVIDIA",
-        "mentions": 112,
-        "upvotes": 1394,
-        "rank_24h_ago": 5,
-        "mentions_24h_ago": 46,
+        "ticker": "MSFT",
+        "name": "Microsoft",
+        "mentions": 135,
+        "upvotes": 1545,
+        "rank_24h_ago": 8,
+        "mentions_24h_ago": 38,
         "positive": 0,
         "negative": 0,
-        "neutral": 112,
+        "neutral": 135,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3033,13 +3033,13 @@
         "rank": 6,
         "ticker": "IBM",
         "name": "IBM",
-        "mentions": 85,
-        "upvotes": 1521,
-        "rank_24h_ago": 16,
-        "mentions_24h_ago": 16,
+        "mentions": 103,
+        "upvotes": 1165,
+        "rank_24h_ago": 13,
+        "mentions_24h_ago": 25,
         "positive": 0,
         "negative": 0,
-        "neutral": 85,
+        "neutral": 103,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3047,13 +3047,13 @@
         "rank": 7,
         "ticker": "HPE",
         "name": "Hewlett Packard Enterprise",
-        "mentions": 76,
-        "upvotes": 403,
-        "rank_24h_ago": 30,
-        "mentions_24h_ago": 10,
+        "mentions": 87,
+        "upvotes": 436,
+        "rank_24h_ago": 21,
+        "mentions_24h_ago": 12,
         "positive": 0,
         "negative": 0,
-        "neutral": 76,
+        "neutral": 87,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3061,83 +3061,83 @@
         "rank": 8,
         "ticker": "SPY",
         "name": "SPDR S&amp;P 500 ETF Trust",
-        "mentions": 72,
-        "upvotes": 300,
-        "rank_24h_ago": 9,
-        "mentions_24h_ago": 33,
+        "mentions": 77,
+        "upvotes": 304,
+        "rank_24h_ago": 7,
+        "mentions_24h_ago": 27,
         "positive": 0,
         "negative": 0,
-        "neutral": 72,
+        "neutral": 77,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 9,
-        "ticker": "SPCX",
-        "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
-        "mentions": 58,
-        "upvotes": 645,
-        "rank_24h_ago": 2,
-        "mentions_24h_ago": 120,
+        "ticker": "ASTS",
+        "name": "AST SpaceMobile",
+        "mentions": 69,
+        "upvotes": 437,
+        "rank_24h_ago": 5,
+        "mentions_24h_ago": 33,
         "positive": 0,
         "negative": 0,
-        "neutral": 58,
+        "neutral": 69,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 10,
-        "ticker": "ASTS",
-        "name": "AST SpaceMobile",
-        "mentions": 58,
-        "upvotes": 320,
-        "rank_24h_ago": 3,
-        "mentions_24h_ago": 52,
+        "ticker": "AMD",
+        "name": "AMD",
+        "mentions": 62,
+        "upvotes": 907,
+        "rank_24h_ago": 10,
+        "mentions_24h_ago": 24,
         "positive": 0,
         "negative": 0,
-        "neutral": 58,
+        "neutral": 62,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 11,
-        "ticker": "RKLB",
-        "name": "Rocket Lab USA",
-        "mentions": 53,
-        "upvotes": 223,
-        "rank_24h_ago": 6,
-        "mentions_24h_ago": 30,
+        "ticker": "SPCX",
+        "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
+        "mentions": 62,
+        "upvotes": 914,
+        "rank_24h_ago": 2,
+        "mentions_24h_ago": 119,
         "positive": 0,
         "negative": 0,
-        "neutral": 53,
+        "neutral": 62,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 12,
-        "ticker": "AMD",
-        "name": "AMD",
-        "mentions": 47,
-        "upvotes": 776,
-        "rank_24h_ago": 8,
-        "mentions_24h_ago": 28,
+        "ticker": "RKLB",
+        "name": "Rocket Lab USA",
+        "mentions": 59,
+        "upvotes": 330,
+        "rank_24h_ago": 9,
+        "mentions_24h_ago": 26,
         "positive": 0,
         "negative": 0,
-        "neutral": 47,
+        "neutral": 59,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 13,
-        "ticker": "TSLA",
-        "name": "Tesla",
-        "mentions": 40,
-        "upvotes": 164,
-        "rank_24h_ago": 15,
-        "mentions_24h_ago": 16,
+        "ticker": "RDDT",
+        "name": "Reddit",
+        "mentions": 44,
+        "upvotes": 160,
+        "rank_24h_ago": 25,
+        "mentions_24h_ago": 9,
         "positive": 0,
         "negative": 0,
-        "neutral": 40,
+        "neutral": 44,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3145,27 +3145,27 @@
         "rank": 14,
         "ticker": "DELL",
         "name": "Dell",
-        "mentions": 40,
-        "upvotes": 768,
-        "rank_24h_ago": 23,
-        "mentions_24h_ago": 11,
+        "mentions": 42,
+        "upvotes": 1113,
+        "rank_24h_ago": 26,
+        "mentions_24h_ago": 12,
         "positive": 0,
         "negative": 0,
-        "neutral": 40,
+        "neutral": 42,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 15,
-        "ticker": "HOOD",
-        "name": "Robinhood",
-        "mentions": 39,
-        "upvotes": 124,
-        "rank_24h_ago": 26,
-        "mentions_24h_ago": 17,
+        "ticker": "ARM",
+        "name": "Arm Holdings",
+        "mentions": 42,
+        "upvotes": 179,
+        "rank_24h_ago": 60,
+        "mentions_24h_ago": 5,
         "positive": 0,
         "negative": 0,
-        "neutral": 39,
+        "neutral": 42,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       }
@@ -3180,7 +3180,7 @@
   "short_exposure_context": {
     "status": "ok",
     "note": "",
-    "generated_at_utc": "2026-06-01T07:06:41Z",
+    "generated_at_utc": "2026-06-01T11:23:02Z",
     "spce": {
       "short_percent_float": 22.59848880581121,
       "short_notional_to_market_cap_pct": 21.73936969588713,
@@ -3295,21 +3295,21 @@
       },
       {
         "rank": 11,
-        "symbol": "INHD",
-        "company": "Inno Holdings Inc.",
-        "short_percent_float": 65.93,
-        "price": 1.27,
-        "change_pct": 2.42,
-        "market_cap": "3.20M"
-      },
-      {
-        "rank": 12,
         "symbol": "SPRY",
         "company": "ARS Pharmaceuticals, Inc.",
         "short_percent_float": 61.04,
         "price": 9.07,
         "change_pct": -3.51,
         "market_cap": "900.68M"
+      },
+      {
+        "rank": 12,
+        "symbol": "HCWB",
+        "company": "HCW Biologics Inc.",
+        "short_percent_float": 60.08,
+        "price": 1.98,
+        "change_pct": -5.26,
+        "market_cap": "14.18M"
       }
     ],
     "source": "StockAnalysis 고공매도 종목 리스트",

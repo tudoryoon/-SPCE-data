@@ -3,53 +3,53 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-tabs" />
+    <title>SPCE 데이터 모니터</title>
+    <link rel="stylesheet" href="styles.css?v=20260601-tooltips-ko2" />
   </head>
   <body>
     <div class="app-shell">
       <header class="topbar">
         <div>
           <p class="eyebrow">$SPCE / $GME</p>
-          <h1>SPCE Data Monitor</h1>
+          <h1>SPCE 데이터 모니터</h1>
         </div>
         <div class="topbar-actions">
-          <span id="last-updated" class="timestamp">Loading</span>
-          <button id="refresh-button" class="icon-button" type="button" aria-label="Refresh data" title="Refresh data">
+          <span id="last-updated" class="timestamp">불러오는 중</span>
+          <button id="refresh-button" class="icon-button" type="button" aria-label="데이터 새로고침" title="데이터 새로고침">
             <span aria-hidden="true">↻</span>
           </button>
         </div>
       </header>
 
-      <nav class="tab-nav" aria-label="Dashboard views">
+      <nav class="tab-nav" aria-label="대시보드 보기">
         <button class="tab-button is-active" type="button" data-tab-target="main" aria-selected="true">Main</button>
-        <button class="tab-button" type="button" data-tab-target="gme" aria-selected="false">GME Compare</button>
+        <button class="tab-button" type="button" data-tab-target="gme" aria-selected="false">GME 비교</button>
       </nav>
 
       <main>
-        <section class="metric-grid" aria-label="SPCE key metrics" data-tab-panel="main">
+        <section class="metric-grid" aria-label="SPCE 핵심 지표" data-tab-panel="main">
           <article class="metric-card">
-            <span>Short float</span>
+            <span>유통주식 대비 공매도</span>
             <strong id="metric-short">--</strong>
-            <small>FINRA short interest</small>
+            <small>FINRA 공매도 잔고</small>
           </article>
           <article class="metric-card">
-            <span>5D move</span>
+            <span>5일 변화</span>
             <strong id="metric-move">--</strong>
             <small>단기 모멘텀</small>
           </article>
           <article class="metric-card">
-            <span>Volume / 20D</span>
+            <span>거래량 / 20일 평균</span>
             <strong id="metric-volume">--</strong>
             <small>거래량 압력</small>
           </article>
           <article class="metric-card">
-            <span>Social heat</span>
+            <span>소셜 관심도</span>
             <strong id="metric-social">--</strong>
             <small>Reddit / X / YouTube</small>
           </article>
           <article class="metric-card">
-            <span>Leader focus</span>
+            <span>작성자 집중도</span>
             <strong id="metric-leader">--</strong>
             <small>작성자 집중도</small>
           </article>
@@ -59,33 +59,33 @@
           <div class="panel-heading">
             <div>
               <h2>공매도 상세</h2>
-              <p class="panel-subtitle">Open short interest, short-sale flow, and market-cap exposure</p>
+              <p class="panel-subtitle">미청산 공매도 잔고, 당일 공매도성 거래 흐름, 시총 대비 노출</p>
             </div>
             <span id="short-source-chip" class="status-chip">--</span>
           </div>
           <div id="short-metric-grid" class="short-metric-grid"></div>
           <div class="short-chart-grid">
             <div>
-              <div class="chart-title">Open Short Interest Shares</div>
+              <div class="chart-title">미청산 공매도 잔고</div>
               <div id="short-interest-chart" class="mini-chart"></div>
             </div>
             <div>
-              <div class="chart-title">Daily Short Sale Volume Ratio</div>
+              <div class="chart-title">일별 공매도성 거래 비율</div>
               <div id="short-volume-chart" class="mini-chart"></div>
             </div>
           </div>
           <div class="short-explainer-grid">
             <article>
-              <strong>Open short interest</strong>
-              <p>Shares sold short and not yet covered as of the FINRA settlement date. This is the slower squeeze-fuel number.</p>
+              <strong>미청산 공매도 잔고</strong>
+              <p>FINRA 결제일 기준으로 아직 갚지 않은 공매도 주식 수입니다. 숏스퀴즈의 느린 핵심 연료에 가깝습니다.</p>
             </article>
             <article>
-              <strong>Daily short sale volume</strong>
-              <p>Same-day trade flow marked as short sale. It is useful for pressure tracking, but it is not open short inventory.</p>
+              <strong>일별 공매도성 거래</strong>
+              <p>그날 short sale로 표시된 거래 흐름입니다. 압력 추적에는 좋지만 누적 공매도 잔고는 아닙니다.</p>
             </article>
             <article>
-              <strong>Short / market cap</strong>
-              <p>Shares short multiplied by price, divided by market cap. This approximates short exposure versus company equity value.</p>
+              <strong>시총 대비 공매도</strong>
+              <p>공매도 주식 수에 현재가를 곱한 뒤 시총으로 나눈 값입니다. 회사 가치 대비 숏 노출을 봅니다.</p>
             </article>
           </div>
           <p id="short-caveat" class="panel-subtitle caveat"></p>
@@ -94,19 +94,19 @@
         <section class="panel exposure-panel" data-tab-panel="main">
           <div class="panel-heading">
             <div>
-              <h2>Short Exposure Rank</h2>
-              <p id="exposure-method" class="panel-subtitle">SPCE short exposure versus current high-short-interest stocks</p>
+              <h2>공매도 노출 순위</h2>
+              <p id="exposure-method" class="panel-subtitle">SPCE 공매도 노출을 현재 고공매도 종목군과 비교</p>
             </div>
             <span id="exposure-status" class="status-chip">--</span>
           </div>
           <div id="exposure-grid" class="exposure-grid"></div>
           <div class="exposure-layout">
             <div>
-              <div class="chart-title">Highest Short % Float Now</div>
+              <div class="chart-title">현재 유통주식 대비 공매도 상위 종목</div>
               <div id="exposure-top-list" class="rank-list"></div>
             </div>
             <div>
-              <div class="chart-title">SPCE Read</div>
+              <div class="chart-title">SPCE 해석</div>
               <div id="exposure-notes" class="benchmark-list"></div>
             </div>
           </div>
@@ -115,29 +115,29 @@
         <section class="panel gme-case-panel" data-tab-panel="gme">
           <div class="panel-heading">
             <div>
-              <h2>GME 2021 Case Study</h2>
-              <p id="gme-case-method" class="panel-subtitle">Historical baseline for the meme squeeze regime</p>
+              <h2>GME 2021 케이스 스터디</h2>
+              <p id="gme-case-method" class="panel-subtitle">밈 숏스퀴즈 국면의 과거 기준선</p>
             </div>
             <span id="gme-case-chip" class="status-chip">--</span>
           </div>
           <div id="gme-case-grid" class="case-grid"></div>
           <div class="case-layout">
             <div>
-              <div class="chart-title">GME Price, COVID-Low Normalized</div>
+              <div class="chart-title">GME 가격, 2021년 1월 저점 기준</div>
               <div id="gme-case-chart" class="case-chart"></div>
             </div>
             <div>
-              <div class="chart-title">Social Attention Benchmark</div>
+              <div class="chart-title">소셜 관심도 벤치마크</div>
               <div id="gme-social-benchmark" class="benchmark-list"></div>
             </div>
           </div>
           <div class="case-layout gme-short-layout">
             <div>
-              <div class="chart-title">GME FINRA Short Interest</div>
+              <div class="chart-title">GME FINRA 공매도 잔고</div>
               <div id="gme-short-interest-chart" class="case-chart"></div>
             </div>
             <div>
-              <div class="chart-title">GME Daily Short-Sale Flow</div>
+              <div class="chart-title">GME 일별 공매도성 거래 흐름</div>
               <div id="gme-short-flow-chart" class="case-chart"></div>
             </div>
           </div>
@@ -146,8 +146,8 @@
         <section class="panel trend-panel" data-tab-panel="main">
           <div class="panel-heading">
             <div>
-              <h2>WallStreetBets Top Trending Stocks</h2>
-              <p id="wsb-method" class="panel-subtitle">r/wallstreetbets 24h mentions</p>
+              <h2>WallStreetBets 인기 언급 종목</h2>
+              <p id="wsb-method" class="panel-subtitle">r/wallstreetbets 24시간 티커 언급량</p>
             </div>
             <span id="wsb-status" class="status-chip">--</span>
           </div>
@@ -157,10 +157,10 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Ticker</th>
-                    <th>Mentions</th>
-                    <th>24h Ago</th>
-                    <th>Net</th>
+                    <th>티커</th>
+                    <th>언급량</th>
+                    <th>24시간 전</th>
+                    <th>순감성</th>
                   </tr>
                 </thead>
                 <tbody id="wsb-table"></tbody>
@@ -170,8 +170,8 @@
           <div class="trend-history">
             <div class="panel-heading compact-heading">
               <div>
-                <h2>SPCE WSB Mention History</h2>
-                <p class="panel-subtitle">24h rolling mentions at each update</p>
+                <h2>SPCE WSB 언급량 히스토리</h2>
+                <p class="panel-subtitle">업데이트 시점별 24시간 롤링 언급량</p>
               </div>
               <span id="wsb-history-latest" class="status-chip">--</span>
             </div>
@@ -182,7 +182,7 @@
         <section class="dashboard-grid" data-tab-panel="main">
           <article class="panel">
             <div class="panel-heading">
-              <h2>SPCE Tracking Factors</h2>
+              <h2>SPCE 추적 지표 구성</h2>
               <span id="confidence-chip" class="status-chip">--</span>
             </div>
             <div id="component-bars" class="bar-list"></div>
@@ -197,10 +197,10 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Source</th>
-                    <th>Mentions</th>
-                    <th>Top</th>
-                    <th>Status</th>
+                    <th>채널</th>
+                    <th>언급량</th>
+                    <th>상위 작성자</th>
+                    <th>상태</th>
                   </tr>
                 </thead>
                 <tbody id="social-table"></tbody>
@@ -212,13 +212,13 @@
         <section class="panel" data-tab-panel="gme">
             <div class="panel-heading">
               <h2>SPCE vs GME</h2>
-              <span class="status-chip">current data</span>
+              <span class="status-chip">현재 데이터</span>
             </div>
             <div class="table-wrap">
               <table>
                 <thead>
                   <tr>
-                    <th>Metric</th>
+                    <th>지표</th>
                     <th>SPCE</th>
                     <th>GME 2021</th>
                   </tr>
@@ -231,13 +231,14 @@
         <section class="panel" data-tab-panel="gme">
           <div class="panel-heading">
             <h2>현재 GME 상태</h2>
-            <span class="status-chip">watch</span>
+            <span class="status-chip">관찰</span>
           </div>
           <div id="gme-strip" class="strip"></div>
         </section>
       </main>
     </div>
 
-    <script src="app.js?v=20260601-tabs"></script>
+    <div id="chart-tooltip" class="chart-tooltip" hidden></div>
+    <script src="app.js?v=20260601-tooltips-ko2"></script>
   </body>
 </html>

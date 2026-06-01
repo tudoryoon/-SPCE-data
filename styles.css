@@ -437,6 +437,23 @@ h2 {
   cursor: crosshair;
 }
 
+.chart-tooltip {
+  position: fixed;
+  z-index: 50;
+  max-width: min(320px, calc(100vw - 24px));
+  padding: 9px 11px;
+  border: 1px solid rgba(24, 32, 29, 0.12);
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(24, 32, 29, 0.94);
+  box-shadow: 0 12px 30px rgba(25, 33, 29, 0.18);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+  pointer-events: none;
+  white-space: pre-line;
+}
+
 .benchmark-list {
   display: grid;
   gap: 10px;

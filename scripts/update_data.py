@@ -26,6 +26,7 @@ USER_AGENT = "spce-data-monitor/0.1"
 REDDIT_TOKEN: tuple[str, float] | None = None
 GOOGLE_TRENDS_SESSION: requests.Session | None = None
 PREVIOUS_LATEST: dict[str, Any] | None = None
+SPCE_GOOGLE_TRENDS_START_UTC = datetime(2026, 5, 29, tzinfo=timezone.utc)
 
 BASELINE = {
     "name": "GME January 2021",
@@ -278,6 +279,15 @@ def utc_now() -> datetime:
 
 def iso_z(value: datetime) -> str:
     return value.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def parse_iso_z(value: Any) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(str(value).replace("Z", "+00:00")).astimezone(timezone.utc)
+    except ValueError:
+        return None
 
 
 def load_dotenv() -> None:
@@ -556,9 +566,39 @@ def google_trends_with_fallback(result: dict[str, Any], previous_path: list[str]
     return result
 
 
+def drop_incomplete_current_google_hour(result: dict[str, Any]) -> dict[str, Any]:
+    rows = result.get("history") or []
+    if not rows:
+        return result
+    current_hour = utc_now().replace(minute=0, second=0, microsecond=0)
+    trimmed = [
+        row
+        for row in rows
+        if (parse_iso_z(row.get("datetime_utc")) or datetime.min.replace(tzinfo=timezone.utc)) < current_hour
+    ]
+    if len(trimmed) == len(rows) or not trimmed:
+        return result
+    result = dict(result)
+    result["history"] = trimmed
+    result["peak"] = max(trimmed, key=lambda item: item.get("interest") or 0)
+    result["latest"] = trimmed[-1]
+    result["trimmed_partial_current_hour"] = True
+    return result
+
+
 def collect_current_google_trends(symbol: str) -> dict[str, Any]:
-    result = collect_google_trends(f"{symbol} stock", timeframe="now 7-d")
-    return google_trends_with_fallback(result, ["symbols", symbol, "google_trends"])
+    end = max(utc_now(), SPCE_GOOGLE_TRENDS_START_UTC)
+    timeframe = f"{SPCE_GOOGLE_TRENDS_START_UTC:%Y-%m-%dT%H} {end:%Y-%m-%d}T23"
+    result = collect_google_trends(f"{symbol} stock", timeframe=timeframe)
+    result = drop_incomplete_current_google_hour(result)
+    result = google_trends_with_fallback(result, ["symbols", symbol, "google_trends"])
+    result = drop_incomplete_current_google_hour(result)
+    result["tracking_start_utc"] = iso_z(SPCE_GOOGLE_TRENDS_START_UTC)
+    note = "2026-05-29 00:00 UTC부터 마지막 완료 시간봉까지 Google Trends를 조회합니다."
+    if result.get("trimmed_partial_current_hour"):
+        note += " 현재 진행 중인 시간봉은 0으로 왜곡될 수 있어 제외했습니다."
+    result["note"] = result.get("note") or note
+    return result
 
 
 def pct_change(values: list[float], periods: int) -> float | None:

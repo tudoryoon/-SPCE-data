@@ -3,6 +3,8 @@ const state = {
   history: [],
 };
 
+const SPCE_GOOGLE_TRENDS_START_UTC = "2026-05-29T00:00:00Z";
+
 const componentLabels = {
   short_pressure: "공매도 압력",
   volume_pressure: "거래량 압력",
@@ -645,34 +647,46 @@ function renderSpceGoogleTrends(trends) {
   }
   const latest = trends.latest || {};
   const peak = trends.peak || {};
-  const trackedPoints = spceTrackedGoogleTrendPoints(trends);
-  const trackedLatest = trackedPoints[trackedPoints.length - 1] || null;
-  const trackedPeak = trackedPoints.reduce((best, point) => (!best || point.interest > best.interest ? point : best), null);
-  const latestLabel = trackedLatest ? trendPointLabel(trackedLatest) : trendPointLabel(latest);
-  const peakLabel = trendPointLabel(peak);
+  const hourlyPoints = spceGoogleTrendHourlyPoints(trends);
+  const hourlyLatest = hourlyPoints[hourlyPoints.length - 1] || null;
+  const hourlyPeak = hourlyPoints.reduce((best, point) => (!best || point.interest > best.interest ? point : best), null);
+  const latestLabel = hourlyLatest ? trendPointLabel(hourlyLatest) : trendPointLabel(latest);
+  const peakPoint = hourlyPeak || peak;
+  const peakLabel = trendPointLabel(peakPoint);
   setText(
     "spce-google-trends-chip",
-    trackedLatest ? `최신 ${num(trackedLatest.interest, 0)}/100 · ${latestLabel}` : latestLabel ? `최신 ${num(latest.interest, 0)}/100 · ${latestLabel}` : koStatus(trends.status),
+    hourlyLatest ? `최신 ${num(hourlyLatest.interest, 0)}/100 · ${latestLabel}` : latestLabel ? `최신 ${num(latest.interest, 0)}/100 · ${latestLabel}` : koStatus(trends.status),
   );
-  $("spce-google-trends-method").textContent = trackedPoints.length
-    ? `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 추적 스냅샷 ${trackedPoints.length}개`
-    : `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 추적 스냅샷 대기`;
+  $("spce-google-trends-method").textContent = hourlyPoints.length
+    ? `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 2026-05-29부터 1시간 단위 ${hourlyPoints.length}개`
+    : `${trends.keyword || "SPCE stock"} · ${trends.geo || "US"} · 2026-05-29부터 1시간 단위 대기`;
   $("spce-google-trends-chart").innerHTML = googleTrendChart(
-    trackedPoints,
+    hourlyPoints,
     {
       aria: "SPCE Google Trends 검색 관심도",
       color: "#137f8f",
-      emptyText: "SPCE Google Trends 추적 데이터가 아직 없습니다",
+      emptyText: "SPCE Google Trends 시간별 데이터가 아직 없습니다",
       keyword: trends.keyword || "SPCE stock",
-      timeLabel: "수집시각",
+      timeLabel: "Google 기준시각",
     },
   );
   $("spce-google-trends-notes").innerHTML = googleTrendNotes(trends, [
-    ["최신 추적값", trackedLatest ? `${latestLabel} 수집 · ${num(trackedLatest.interest, 0)}/100` : "--"],
-    ["추적 후 피크", trackedPeak ? `${trendPointLabel(trackedPeak)} · ${num(trackedPeak.interest, 0)}/100` : "--"],
-    ["Google 원자료 피크", peakLabel ? `${peakLabel} · ${num(peak.interest, 0)}/100` : "--"],
-    ["주의", "그래프는 Google이 되돌려준 7일 백필 시계열이 아니라, 우리가 액션으로 저장하기 시작한 시점부터의 스냅샷만 이어 붙입니다. 추적 시작 전 0값은 제외했습니다."],
+    ["최신값", hourlyLatest ? `${latestLabel} · ${num(hourlyLatest.interest, 0)}/100` : "--"],
+    ["구간 피크", peakLabel ? `${peakLabel} · ${num(peakPoint.interest, 0)}/100` : "--"],
+    ["조회 구간", trends.window || "2026-05-29T00 이후"],
+    ["주의", "Google Trends는 조회 구간 안에서 최대 검색 관심도를 100으로 놓는 상대 지표입니다. 이 그래프는 2026년 5월 29일부터 시간 단위 원자료를 그립니다."],
   ]);
+}
+
+function spceGoogleTrendHourlyPoints(trends) {
+  const startTime = new Date(trends.tracking_start_utc || SPCE_GOOGLE_TRENDS_START_UTC).getTime();
+  return (trends.history || [])
+    .map((item) => ({
+      ...item,
+      time: new Date(item.datetime_utc || `${item.date}T00:00:00Z`).getTime(),
+    }))
+    .filter((item) => Number.isFinite(item.time) && item.time >= startTime && Number.isFinite(Number(item.interest)))
+    .sort((a, b) => a.time - b.time);
 }
 
 function spceTrackedGoogleTrendPoints(trends) {

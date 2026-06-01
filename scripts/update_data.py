@@ -26,8 +26,11 @@ REDDIT_TOKEN: tuple[str, float] | None = None
 BASELINE = {
     "name": "GME January 2021",
     "short_percent_float": 122.97,
+    "short_percent_shares_outstanding": 109.26,
+    "short_notional_to_market_cap_pct": 109.26,
     "source": "SEC Staff Report on Equity and Options Market Structure Conditions in Early 2021",
     "source_url": "https://www.sec.gov/files/staff-report-equity-options-market-struction-conditions-early-2021.pdf",
+    "short_market_cap_note": "Short notional / market cap is approximated as shares sold short / shares outstanding when measured at the same share price. SEC staff reported GME short interest exceeded shares outstanding in January 2021, with a cited 109.26% high on December 31, 2020; SEC also reported 122.97% of float in January 2021.",
 }
 
 GME_2021_SOCIAL_BENCHMARK = {
@@ -439,6 +442,9 @@ def collect_gme_2021_case() -> dict[str, Any]:
         "jan_2021_gain_source": "CNBC recap of January 2021 GME move",
         "jan_2021_gain_source_url": "https://www.cnbc.com/2021/01/30/gamestop-reddit-and-robinhood-a-full-recap-of-the-historic-retail-trading-mania-on-wall-street.html",
         "short_interest_peak_percent_float": BASELINE["short_percent_float"],
+        "short_interest_peak_percent_shares_outstanding": BASELINE["short_percent_shares_outstanding"],
+        "short_notional_to_market_cap_pct": BASELINE["short_notional_to_market_cap_pct"],
+        "short_market_cap_note": BASELINE["short_market_cap_note"],
         "short_interest_source": BASELINE["source_url"],
         "sec_volume_note": "SEC staff described Jan. 13-29, 2021 average GME trading volume as roughly 100 million shares per day, more than 1,400% above the 2020 average.",
         "social_benchmark": GME_2021_SOCIAL_BENCHMARK,
@@ -527,18 +533,35 @@ def enrich_short_deep_dive(market: dict[str, Any]) -> None:
     shares_short = official_shares_short if official_shares_short is not None else safe_float(market.get("shares_short"))
     price = safe_float(market.get("price"))
     float_shares = safe_float(market.get("float_shares"))
+    shares_outstanding = safe_float(market.get("shares_outstanding"))
+    market_cap = safe_float(market.get("market_cap"))
+    if market_cap in (None, 0) and price is not None and shares_outstanding not in (None, 0):
+        market_cap = price * shares_outstanding
+    short_notional = shares_short * price if shares_short is not None and price is not None else None
 
     short_percent_float_calc = None
     if shares_short is not None and float_shares not in (None, 0):
         short_percent_float_calc = shares_short / float_shares * 100
 
+    short_percent_shares_outstanding = None
+    if shares_short is not None and shares_outstanding not in (None, 0):
+        short_percent_shares_outstanding = shares_short / shares_outstanding * 100
+
+    short_notional_to_market_cap_pct = None
+    if short_notional is not None and market_cap not in (None, 0):
+        short_notional_to_market_cap_pct = short_notional / market_cap * 100
+
     market["short_deep_dive"] = {
         "shares_short": shares_short,
         "shares_short_source": "FINRA" if official_shares_short is not None else "yfinance",
-        "short_notional": shares_short * price if shares_short is not None and price is not None else None,
+        "short_notional": short_notional,
         "short_percent_float": short_percent_float_calc or safe_float(market.get("short_percent_float")),
+        "short_percent_shares_outstanding": short_percent_shares_outstanding,
+        "short_notional_to_market_cap_pct": short_notional_to_market_cap_pct,
         "reported_short_percent_float": safe_float(market.get("short_percent_float")),
         "float_shares": float_shares,
+        "shares_outstanding": shares_outstanding,
+        "market_cap": market_cap,
         "official_settlement_date": latest_interest.get("settlement_date"),
         "official_days_to_cover": safe_float(latest_interest.get("days_to_cover")),
         "official_average_daily_volume": safe_float(latest_interest.get("average_daily_volume")),
@@ -551,7 +574,7 @@ def enrich_short_deep_dive(market: dict[str, Any]) -> None:
         "daily_short_exempt_volume": safe_float(latest_volume.get("short_exempt_volume")),
         "daily_short_exempt_ratio": safe_float(latest_volume.get("short_exempt_ratio")),
         "average_short_volume_ratio_5d": safe_float(finra_volume.get("average_short_volume_ratio_5d")),
-        "caveat": "FINRA daily short sale volume is trade-flow data, not open short interest. Exchange-reported short interest is settlement-date based and delayed.",
+        "caveat": "Short Interest Shares is the open short-position stock reported on FINRA settlement dates. Daily Short Sale Volume Ratio is same-day reported short-sale flow, not accumulated open short interest. Short / Market Cap is short shares times price divided by market cap.",
     }
 
 

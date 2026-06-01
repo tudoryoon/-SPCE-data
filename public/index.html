@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>SPCE Data Monitor</title>
-    <link rel="stylesheet" href="styles.css?v=20260601-tracking-focus" />
+    <link rel="stylesheet" href="styles.css?v=20260601-short-mktcap" />
   </head>
   <body>
     <div class="app-shell">
@@ -54,20 +54,34 @@
           <div class="panel-heading">
             <div>
               <h2>공매도 상세</h2>
-              <p class="panel-subtitle">FINRA short interest and short sale flow</p>
+              <p class="panel-subtitle">Open short interest, short-sale flow, and market-cap exposure</p>
             </div>
             <span id="short-source-chip" class="status-chip">--</span>
           </div>
           <div id="short-metric-grid" class="short-metric-grid"></div>
           <div class="short-chart-grid">
             <div>
-              <div class="chart-title">Short Interest Shares</div>
+              <div class="chart-title">Open Short Interest Shares</div>
               <div id="short-interest-chart" class="mini-chart"></div>
             </div>
             <div>
-              <div class="chart-title">Daily Short Volume Ratio</div>
+              <div class="chart-title">Daily Short Sale Volume Ratio</div>
               <div id="short-volume-chart" class="mini-chart"></div>
             </div>
+          </div>
+          <div class="short-explainer-grid">
+            <article>
+              <strong>Open short interest</strong>
+              <p>Shares sold short and not yet covered as of the FINRA settlement date. This is the slower squeeze-fuel number.</p>
+            </article>
+            <article>
+              <strong>Daily short sale volume</strong>
+              <p>Same-day trade flow marked as short sale. It is useful for pressure tracking, but it is not open short inventory.</p>
+            </article>
+            <article>
+              <strong>Short / market cap</strong>
+              <p>Shares short multiplied by price, divided by market cap. This approximates short exposure versus company equity value.</p>
+            </article>
           </div>
           <p id="short-caveat" class="panel-subtitle caveat"></p>
         </section>
@@ -188,6 +202,6 @@
       </main>
     </div>
 
-    <script src="app.js?v=20260601-tracking-focus"></script>
+    <script src="app.js?v=20260601-short-mktcap"></script>
   </body>
 </html>

@@ -162,12 +162,13 @@ function renderShortDeepDive(market) {
   const interest = market.finra_short_interest || {};
   const volume = market.finra_short_volume || {};
   const settlement = detail.official_settlement_date || "--";
-  setText("short-source-chip", settlement === "--" ? "FINRA" : `FINRA · ${settlement}`);
+  const volumeDate = detail.daily_short_volume_date || "--";
+  setText("short-source-chip", settlement === "--" ? "FINRA" : `SI ${settlement} | flow ${volumeDate}`);
   $("short-metric-grid").innerHTML = [
     {
       label: "Shares short",
       value: compact(detail.shares_short),
-      sub: `${detail.shares_short_source || "--"} source`,
+      sub: `${detail.shares_short_source || "--"} open interest`,
     },
     {
       label: "Short / float",
@@ -190,9 +191,14 @@ function renderShortDeepDive(market) {
       sub: "shares short x price",
     },
     {
+      label: "Short / market cap",
+      value: `${num(detail.short_notional_to_market_cap_pct)}%`,
+      sub: `${money(detail.short_notional)} / ${money(detail.market_cap)}`,
+    },
+    {
       label: "Daily short volume",
       value: detail.daily_short_volume_ratio === null || detail.daily_short_volume_ratio === undefined ? "--" : `${num(detail.daily_short_volume_ratio * 100, 1)}%`,
-      sub: `${detail.daily_short_volume_date || "--"} · 5D ${detail.average_short_volume_ratio_5d === null || detail.average_short_volume_ratio_5d === undefined ? "--" : `${num(detail.average_short_volume_ratio_5d * 100, 1)}%`}`,
+      sub: `${detail.daily_short_volume_date || "--"} | 5D ${detail.average_short_volume_ratio_5d === null || detail.average_short_volume_ratio_5d === undefined ? "--" : `${num(detail.average_short_volume_ratio_5d * 100, 1)}%`}`,
     },
   ].map((item) => `
     <article class="short-metric">
@@ -242,6 +248,11 @@ function renderGme2021Case(caseData) {
       sub: "SEC January 2021",
     },
     {
+      label: "Short / mkt cap proxy",
+      value: `${num(caseData.short_notional_to_market_cap_pct)}%+`,
+      sub: "SEC shares outstanding",
+    },
+    {
       label: "January gain",
       value: `+${num(caseData.jan_2021_gain_pct, 0)}%`,
       sub: "CNBC recap",
@@ -277,6 +288,7 @@ function renderGme2021Case(caseData) {
   $("gme-social-benchmark").innerHTML = [
     ["Source", social.source || "--"],
     ["Window", social.window || "--"],
+    ["GME short-cap note", caseData.short_market_cap_note || "--"],
     ["Current metric caveat", social.note || "--"],
     ["SEC volume note", caseData.sec_volume_note || "--"],
   ].map(([label, value]) => `
@@ -538,8 +550,10 @@ function stackedMentionChart(items) {
 }
 
 function renderComparison(spce, baseline) {
+  const shortDetail = spce.market.short_deep_dive || {};
   const rows = [
     ["Short float", `${num(spce.market.short_percent_float)}%`, `${num(baseline.short_percent_float)}%`],
+    ["Short / market cap", `${num(shortDetail.short_notional_to_market_cap_pct)}%`, `${num(baseline.short_notional_to_market_cap_pct)}%+`],
     ["Short ratio", num(spce.market.short_ratio), "n/a"],
     ["5D move", pct(spce.market.price_change_5d_pct), "n/a"],
     ["Volume / 20D", `${num(spce.market.volume_ratio_20d)}x`, "n/a"],

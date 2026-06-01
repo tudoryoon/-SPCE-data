@@ -316,6 +316,8 @@ function renderGme2021Case(caseData) {
   const peak = caseData.peak || {};
   const base = caseData.base || {};
   const social = caseData.social_benchmark || {};
+  const shortInterestPeak = caseData.short_interest_peak || {};
+  const shortFlowPeak = caseData.daily_short_sale_volume_peak || {};
   $("gme-case-grid").innerHTML = [
     {
       label: "Short / float peak",
@@ -326,6 +328,16 @@ function renderGme2021Case(caseData) {
       label: "Short / mkt cap proxy",
       value: `${num(caseData.short_notional_to_market_cap_pct)}%+`,
       sub: "SEC shares outstanding",
+    },
+    {
+      label: "SI shares peak",
+      value: compact(shortInterestPeak.shares_short),
+      sub: shortInterestPeak.settlement_date || "--",
+    },
+    {
+      label: "Short volume peak",
+      value: compact(shortFlowPeak.short_volume),
+      sub: `${shortFlowPeak.trade_date || "--"} | ratio ${shortFlowPeak.short_volume_ratio === null || shortFlowPeak.short_volume_ratio === undefined ? "--" : `${num(shortFlowPeak.short_volume_ratio * 100, 1)}%`}`,
     },
     {
       label: "January gain",
@@ -360,10 +372,29 @@ function renderGme2021Case(caseData) {
     </article>
   `).join("");
   $("gme-case-chart").innerHTML = gmeCaseChart(caseData.series || [], caseData.milestones || []);
+  $("gme-short-interest-chart").innerHTML = shortSeriesChart(
+    (caseData.short_interest_history || []).map((item) => ({
+      label: item.settlement_date,
+      time: new Date(item.settlement_date).getTime(),
+      value: item.shares_short,
+      extra: `DTC ${num(item.days_to_cover)} | change ${item.change_percent === null || item.change_percent === undefined ? "--" : `${num(item.change_percent, 1)}%`}`,
+    })),
+    { aria: "GME 2021 FINRA short interest shares", color: "#7a3e8e", formatter: compact, minZero: false },
+  );
+  $("gme-short-flow-chart").innerHTML = shortSeriesChart(
+    (caseData.daily_short_sale_volume_history || []).map((item) => ({
+      label: item.trade_date,
+      time: new Date(item.trade_date).getTime(),
+      value: item.short_volume_ratio,
+      extra: `${compact(item.short_volume)} short / ${compact(item.total_volume)} total`,
+    })),
+    { aria: "GME 2021 daily short-sale volume ratio", color: "#b77a18", formatter: (value) => `${num(value * 100, 1)}%`, minZero: true },
+  );
   $("gme-social-benchmark").innerHTML = [
     ["Source", social.source || "--"],
     ["Window", social.window || "--"],
     ["GME short-cap note", caseData.short_market_cap_note || "--"],
+    ["GME short data", `${caseData.short_interest_history_source || "FINRA short interest"}; ${caseData.daily_short_sale_volume_source || "FINRA daily short-sale files"}`],
     ["Current metric caveat", social.note || "--"],
     ["SEC volume note", caseData.sec_volume_note || "--"],
   ].map(([label, value]) => `
@@ -415,6 +446,14 @@ function gmeCaseChart(series, milestones) {
     `;
   }).join("");
   const peak = points.reduce((best, point) => (point.value > best.value ? point : best), points[0]);
+  const hitMarkers = points.map((point) => {
+    const original = series.find((item) => item.date === point.date) || {};
+    return `
+      <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="7" fill="transparent" stroke="transparent">
+        <title>${point.date} | ${num(point.value, 1)}x | close ${num(point.close)} | volume ${compact(original.volume)}</title>
+      </circle>
+    `;
+  }).join("");
   return `
     <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="GME 2021 normalized price trend">
       <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
@@ -423,8 +462,9 @@ function gmeCaseChart(series, milestones) {
       <line x1="${pad.left}" x2="${width - pad.right}" y1="${height - pad.bottom}" y2="${height - pad.bottom}" stroke="#aeb9b2"/>
       <path d="${path}" fill="none" stroke="#b54242" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
       <circle cx="${x(peak.time)}" cy="${y(peak.value)}" r="6" fill="#b54242">
-        <title>${peak.date} · ${num(peak.value, 1)}x · close ${num(peak.close)}</title>
+        <title>${peak.date} | peak ${num(peak.value, 1)}x | close ${num(peak.close)}</title>
       </circle>
+      ${hitMarkers}
       <text x="${pad.left}" y="${height - 12}" fill="#69736f" font-size="12">${points[0].date}</text>
       <text x="${width - pad.right}" y="${height - 12}" text-anchor="end" fill="#69736f" font-size="12">${points[points.length - 1].date}</text>
     </svg>
@@ -457,8 +497,8 @@ function shortSeriesChart(points, options) {
     <text x="8" y="${y(tick) + 4}" fill="#69736f" font-size="12">${options.formatter(tick)}</text>
   `).join("");
   const markers = filtered.map((point) => `
-    <circle cx="${x(point.time)}" cy="${y(point.value)}" r="4" fill="${options.color}">
-      <title>${point.label} · ${options.formatter(point.value)} · ${point.extra || ""}</title>
+    <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="${options.color}">
+      <title>${point.label} | ${options.formatter(point.value)} | ${point.extra || ""}</title>
     </circle>
   `).join("");
   return `
@@ -555,8 +595,8 @@ function mentionHistoryChart(points) {
     <text x="10" y="${y(tick) + 4}" fill="#69736f" font-size="12">${compact(tick)}</text>
   `).join("");
   const markers = points.map((point) => `
-    <circle cx="${x(point.time)}" cy="${y(point.value)}" r="4.5" fill="#2f6fb0">
-      <title>${new Date(point.time).toLocaleString()} · ${point.value} mentions · rank #${point.rank || "--"}</title>
+    <circle class="chart-hit-target" cx="${x(point.time)}" cy="${y(point.value)}" r="5.5" fill="#2f6fb0">
+      <title>${new Date(point.time).toLocaleString()} | ${point.value} mentions | rank #${point.rank || "--"}</title>
     </circle>
   `).join("");
   const firstLabel = localTime(new Date(points[0].time).toISOString());
@@ -602,12 +642,15 @@ function stackedMentionChart(items) {
     const base = pad.top + innerH;
     const highlight = item.ticker === "SPCE" ? `<rect x="${x - 4}" y="${y(total) - 8}" width="${barW + 8}" height="${(total / maxMentions) * innerH + 12}" rx="7" fill="none" stroke="#2f6fb0" stroke-width="2"/>` : "";
     return `
-      ${highlight}
-      <rect x="${x}" y="${base - posH}" width="${barW}" height="${posH}" fill="#0f8a5f"/>
-      <rect x="${x}" y="${base - posH - negH}" width="${barW}" height="${negH}" fill="#b54242"/>
-      <rect x="${x}" y="${base - posH - negH - neuH}" width="${barW}" height="${neuH}" fill="#7b7d86"/>
-      <text transform="translate(${x + barW / 2} ${height - 42}) rotate(-34)" text-anchor="end" fill="#18201d" font-size="13" font-weight="700">${esc(item.ticker)}</text>
-      <text x="${x + barW / 2}" y="${Math.max(18, y(total) - 10)}" text-anchor="middle" fill="#69736f" font-size="12">${compact(total)}</text>
+      <g class="chart-hit-target">
+        <title>${item.ticker} | mentions ${compact(total)} | positive ${compact(positive)} | negative ${compact(negative)} | neutral ${compact(neutral)} | rank #${item.rank || "--"}</title>
+        ${highlight}
+        <rect x="${x}" y="${base - posH}" width="${barW}" height="${posH}" fill="#0f8a5f"/>
+        <rect x="${x}" y="${base - posH - negH}" width="${barW}" height="${negH}" fill="#b54242"/>
+        <rect x="${x}" y="${base - posH - negH - neuH}" width="${barW}" height="${neuH}" fill="#7b7d86"/>
+        <text transform="translate(${x + barW / 2} ${height - 42}) rotate(-34)" text-anchor="end" fill="#18201d" font-size="13" font-weight="700">${esc(item.ticker)}</text>
+        <text x="${x + barW / 2}" y="${Math.max(18, y(total) - 10)}" text-anchor="middle" fill="#69736f" font-size="12">${compact(total)}</text>
+      </g>
     `;
   }).join("");
   return `

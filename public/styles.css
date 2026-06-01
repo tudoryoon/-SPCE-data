@@ -96,6 +96,44 @@ h2 {
   color: var(--blue);
 }
 
+.tab-nav {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 18px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 8px 18px rgba(25, 33, 29, 0.05);
+}
+
+.tab-button {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--muted);
+  background: transparent;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  color: var(--ink);
+  background: var(--surface-strong);
+}
+
+.tab-button.is-active {
+  color: #fff;
+  background: var(--ink);
+}
+
+[data-tab-panel][hidden] {
+  display: none !important;
+}
+
 .metric-card span {
   color: var(--muted);
   font-size: 0.82rem;
@@ -668,6 +706,16 @@ tr:last-child td {
   .topbar-actions {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .tab-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .tab-button {
+    padding: 0 10px;
   }
 
   .panel-heading {

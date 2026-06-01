@@ -693,6 +693,31 @@ function renderGme(gme) {
     .join("");
 }
 
+function activateTab(tabName, updateHash = true) {
+  const selected = tabName === "gme" ? "gme" : "main";
+  document.querySelectorAll("[data-tab-target]").forEach((button) => {
+    const active = button.dataset.tabTarget === selected;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+  });
+  document.querySelectorAll("[data-tab-panel]").forEach((panel) => {
+    panel.hidden = panel.dataset.tabPanel !== selected;
+  });
+  if (updateHash) {
+    const hash = selected === "gme" ? "#gme-compare" : "#main";
+    history.replaceState(null, "", `${location.pathname}${location.search}${hash}`);
+  }
+}
+
+function initTabs() {
+  document.querySelectorAll("[data-tab-target]").forEach((button) => {
+    button.addEventListener("click", () => activateTab(button.dataset.tabTarget || "main"));
+  });
+  const initial = location.hash === "#gme-compare" || location.hash === "#gme" ? "gme" : "main";
+  activateTab(initial, false);
+}
+
+initTabs();
 $("refresh-button").addEventListener("click", loadData);
 loadData();
 setInterval(loadData, 300000);

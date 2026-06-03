@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-03T12:16:25Z",
+  "generated_at_utc": "2026-06-03T17:23:30Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -664,8 +664,8 @@
           "datetime_utc": "2021-01-26T00:00:00Z",
           "label": "Jan 26, 2021",
           "axis_label": "Jan 26, 2021",
-          "interest": 22.0,
-          "formatted_value": "22"
+          "interest": 23.0,
+          "formatted_value": "23"
         },
         {
           "date": "2021-01-27",
@@ -688,8 +688,8 @@
           "datetime_utc": "2021-01-29T00:00:00Z",
           "label": "Jan 29, 2021",
           "axis_label": "Jan 29, 2021",
-          "interest": 87.0,
-          "formatted_value": "87"
+          "interest": 90.0,
+          "formatted_value": "90"
         },
         {
           "date": "2021-01-30",
@@ -712,8 +712,8 @@
           "datetime_utc": "2021-02-01T00:00:00Z",
           "label": "Feb 1, 2021",
           "axis_label": "Feb 1, 2021",
-          "interest": 53.0,
-          "formatted_value": "53"
+          "interest": 52.0,
+          "formatted_value": "52"
         },
         {
           "date": "2021-02-02",
@@ -736,24 +736,24 @@
           "datetime_utc": "2021-02-04T00:00:00Z",
           "label": "Feb 4, 2021",
           "axis_label": "Feb 4, 2021",
-          "interest": 32.0,
-          "formatted_value": "32"
+          "interest": 33.0,
+          "formatted_value": "33"
         },
         {
           "date": "2021-02-05",
           "datetime_utc": "2021-02-05T00:00:00Z",
           "label": "Feb 5, 2021",
           "axis_label": "Feb 5, 2021",
-          "interest": 28.0,
-          "formatted_value": "28"
+          "interest": 29.0,
+          "formatted_value": "29"
         },
         {
           "date": "2021-02-06",
           "datetime_utc": "2021-02-06T00:00:00Z",
           "label": "Feb 6, 2021",
           "axis_label": "Feb 6, 2021",
-          "interest": 6.0,
-          "formatted_value": "6"
+          "interest": 7.0,
+          "formatted_value": "7"
         },
         {
           "date": "2021-02-07",
@@ -776,8 +776,8 @@
           "datetime_utc": "2021-02-09T00:00:00Z",
           "label": "Feb 9, 2021",
           "axis_label": "Feb 9, 2021",
-          "interest": 13.0,
-          "formatted_value": "13"
+          "interest": 12.0,
+          "formatted_value": "12"
         },
         {
           "date": "2021-02-10",
@@ -1038,18 +1038,18 @@
       "market": {
         "status": "ok",
         "note": "",
-        "price": 4.590000152587891,
-        "price_change_5d_pct": 30.769235471766866,
-        "price_change_20d_pct": 82.14286457654305,
-        "volume": 127886400.0,
-        "volume_avg_20d": 43739165.0,
-        "volume_ratio_20d": 2.9238418245981603,
+        "price": 4.401000022888184,
+        "price_change_5d_pct": 16.121373804352835,
+        "price_change_20d_pct": 79.6326504992923,
+        "volume": 42830758.0,
+        "volume_avg_20d": 45655847.9,
+        "volume_ratio_20d": 0.9381220581821678,
         "short_percent_float": 22.58,
         "shares_short": 22707202.0,
         "short_ratio": 2.62,
         "float_shares": 100481064.0,
         "shares_outstanding": 104451974.0,
-        "market_cap": 479434592.0,
+        "market_cap": 459693152.0,
         "average_volume": 18576371.0,
         "beta": null,
         "finra_short_interest": {
@@ -1775,14 +1775,14 @@
         "short_deep_dive": {
           "shares_short": 22707202.0,
           "shares_short_source": "FINRA",
-          "short_notional": 104226060.64484406,
+          "short_notional": 99934396.52172661,
           "short_percent_float": 22.59848880581121,
           "short_percent_shares_outstanding": 21.73937086148319,
-          "short_notional_to_market_cap_pct": 21.739370163103303,
+          "short_notional_to_market_cap_pct": 21.739370292322,
           "reported_short_percent_float": 22.58,
           "float_shares": 100481064.0,
           "shares_outstanding": 104451974.0,
-          "market_cap": 479434592.0,
+          "market_cap": 459693152.0,
           "official_settlement_date": "2026-05-15",
           "official_days_to_cover": 2.48,
           "official_average_daily_volume": 9152826.0,
@@ -1846,8 +1846,8 @@
             "datetime_utc": "2026-05-29T02:00:00Z",
             "label": "May 29, 2026 at 2:00 AM",
             "axis_label": "May 29 at 2:00 AM",
-            "interest": 14.0,
-            "formatted_value": "14"
+            "interest": 15.0,
+            "formatted_value": "15"
           },
           {
             "date": "2026-05-29",
@@ -1878,8 +1878,8 @@
             "datetime_utc": "2026-05-29T06:00:00Z",
             "label": "May 29, 2026 at 6:00 AM",
             "axis_label": "May 29 at 6:00 AM",
-            "interest": 13.0,
-            "formatted_value": "13"
+            "interest": 14.0,
+            "formatted_value": "14"
           },
           {
             "date": "2026-05-29",
@@ -1894,8 +1894,8 @@
             "datetime_utc": "2026-05-29T08:00:00Z",
             "label": "May 29, 2026 at 8:00 AM",
             "axis_label": "May 29 at 8:00 AM",
-            "interest": 12.0,
-            "formatted_value": "12"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-05-29",
@@ -1942,8 +1942,8 @@
             "datetime_utc": "2026-05-29T14:00:00Z",
             "label": "May 29, 2026 at 2:00 PM",
             "axis_label": "May 29 at 2:00 PM",
-            "interest": 21.0,
-            "formatted_value": "21"
+            "interest": 20.0,
+            "formatted_value": "20"
           },
           {
             "date": "2026-05-29",
@@ -1982,24 +1982,24 @@
             "datetime_utc": "2026-05-29T19:00:00Z",
             "label": "May 29, 2026 at 7:00 PM",
             "axis_label": "May 29 at 7:00 PM",
-            "interest": 34.0,
-            "formatted_value": "34"
+            "interest": 33.0,
+            "formatted_value": "33"
           },
           {
             "date": "2026-05-29",
             "datetime_utc": "2026-05-29T20:00:00Z",
             "label": "May 29, 2026 at 8:00 PM",
             "axis_label": "May 29 at 8:00 PM",
-            "interest": 33.0,
-            "formatted_value": "33"
+            "interest": 34.0,
+            "formatted_value": "34"
           },
           {
             "date": "2026-05-29",
             "datetime_utc": "2026-05-29T21:00:00Z",
             "label": "May 29, 2026 at 9:00 PM",
             "axis_label": "May 29 at 9:00 PM",
-            "interest": 23.0,
-            "formatted_value": "23"
+            "interest": 22.0,
+            "formatted_value": "22"
           },
           {
             "date": "2026-05-29",
@@ -2070,16 +2070,16 @@
             "datetime_utc": "2026-05-30T06:00:00Z",
             "label": "May 30, 2026 at 6:00 AM",
             "axis_label": "May 30 at 6:00 AM",
-            "interest": 11.0,
-            "formatted_value": "11"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-05-30",
             "datetime_utc": "2026-05-30T07:00:00Z",
             "label": "May 30, 2026 at 7:00 AM",
             "axis_label": "May 30 at 7:00 AM",
-            "interest": 13.0,
-            "formatted_value": "13"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-05-30",
@@ -2094,16 +2094,16 @@
             "datetime_utc": "2026-05-30T09:00:00Z",
             "label": "May 30, 2026 at 9:00 AM",
             "axis_label": "May 30 at 9:00 AM",
-            "interest": 7.0,
-            "formatted_value": "7"
+            "interest": 9.0,
+            "formatted_value": "9"
           },
           {
             "date": "2026-05-30",
             "datetime_utc": "2026-05-30T10:00:00Z",
             "label": "May 30, 2026 at 10:00 AM",
             "axis_label": "May 30 at 10:00 AM",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 11.0,
+            "formatted_value": "11"
           },
           {
             "date": "2026-05-30",
@@ -2150,8 +2150,8 @@
             "datetime_utc": "2026-05-30T16:00:00Z",
             "label": "May 30, 2026 at 4:00 PM",
             "axis_label": "May 30 at 4:00 PM",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 11.0,
+            "formatted_value": "11"
           },
           {
             "date": "2026-05-30",
@@ -2206,8 +2206,8 @@
             "datetime_utc": "2026-05-30T23:00:00Z",
             "label": "May 30, 2026 at 11:00 PM",
             "axis_label": "May 30 at 11:00 PM",
-            "interest": 7.0,
-            "formatted_value": "7"
+            "interest": 8.0,
+            "formatted_value": "8"
           },
           {
             "date": "2026-05-31",
@@ -2262,48 +2262,48 @@
             "datetime_utc": "2026-05-31T06:00:00Z",
             "label": "May 31, 2026 at 6:00 AM",
             "axis_label": "May 31 at 6:00 AM",
-            "interest": 9.0,
-            "formatted_value": "9"
+            "interest": 10.0,
+            "formatted_value": "10"
           },
           {
             "date": "2026-05-31",
             "datetime_utc": "2026-05-31T07:00:00Z",
             "label": "May 31, 2026 at 7:00 AM",
             "axis_label": "May 31 at 7:00 AM",
-            "interest": 8.0,
-            "formatted_value": "8"
+            "interest": 10.0,
+            "formatted_value": "10"
           },
           {
             "date": "2026-05-31",
             "datetime_utc": "2026-05-31T08:00:00Z",
             "label": "May 31, 2026 at 8:00 AM",
             "axis_label": "May 31 at 8:00 AM",
-            "interest": 4.0,
-            "formatted_value": "4"
+            "interest": 6.0,
+            "formatted_value": "6"
           },
           {
             "date": "2026-05-31",
             "datetime_utc": "2026-05-31T09:00:00Z",
             "label": "May 31, 2026 at 9:00 AM",
             "axis_label": "May 31 at 9:00 AM",
-            "interest": 7.0,
-            "formatted_value": "7"
+            "interest": 8.0,
+            "formatted_value": "8"
           },
           {
             "date": "2026-05-31",
             "datetime_utc": "2026-05-31T10:00:00Z",
             "label": "May 31, 2026 at 10:00 AM",
             "axis_label": "May 31 at 10:00 AM",
-            "interest": 6.0,
-            "formatted_value": "6"
+            "interest": 8.0,
+            "formatted_value": "8"
           },
           {
             "date": "2026-05-31",
             "datetime_utc": "2026-05-31T11:00:00Z",
             "label": "May 31, 2026 at 11:00 AM",
             "axis_label": "May 31 at 11:00 AM",
-            "interest": 9.0,
-            "formatted_value": "9"
+            "interest": 10.0,
+            "formatted_value": "10"
           },
           {
             "date": "2026-05-31",
@@ -2334,8 +2334,8 @@
             "datetime_utc": "2026-05-31T15:00:00Z",
             "label": "May 31, 2026 at 3:00 PM",
             "axis_label": "May 31 at 3:00 PM",
-            "interest": 6.0,
-            "formatted_value": "6"
+            "interest": 7.0,
+            "formatted_value": "7"
           },
           {
             "date": "2026-05-31",
@@ -2366,8 +2366,8 @@
             "datetime_utc": "2026-05-31T19:00:00Z",
             "label": "May 31, 2026 at 7:00 PM",
             "axis_label": "May 31 at 7:00 PM",
-            "interest": 8.0,
-            "formatted_value": "8"
+            "interest": 7.0,
+            "formatted_value": "7"
           },
           {
             "date": "2026-05-31",
@@ -2390,8 +2390,8 @@
             "datetime_utc": "2026-05-31T22:00:00Z",
             "label": "May 31, 2026 at 10:00 PM",
             "axis_label": "May 31 at 10:00 PM",
-            "interest": 7.0,
-            "formatted_value": "7"
+            "interest": 6.0,
+            "formatted_value": "6"
           },
           {
             "date": "2026-05-31",
@@ -2414,8 +2414,8 @@
             "datetime_utc": "2026-06-01T01:00:00Z",
             "label": "Jun 1, 2026 at 1:00 AM",
             "axis_label": "Jun 1 at 1:00 AM",
-            "interest": 16.0,
-            "formatted_value": "16"
+            "interest": 17.0,
+            "formatted_value": "17"
           },
           {
             "date": "2026-06-01",
@@ -2446,24 +2446,24 @@
             "datetime_utc": "2026-06-01T05:00:00Z",
             "label": "Jun 1, 2026 at 5:00 AM",
             "axis_label": "Jun 1 at 5:00 AM",
-            "interest": 15.0,
-            "formatted_value": "15"
+            "interest": 14.0,
+            "formatted_value": "14"
           },
           {
             "date": "2026-06-01",
             "datetime_utc": "2026-06-01T06:00:00Z",
             "label": "Jun 1, 2026 at 6:00 AM",
             "axis_label": "Jun 1 at 6:00 AM",
-            "interest": 14.0,
-            "formatted_value": "14"
+            "interest": 15.0,
+            "formatted_value": "15"
           },
           {
             "date": "2026-06-01",
             "datetime_utc": "2026-06-01T07:00:00Z",
             "label": "Jun 1, 2026 at 7:00 AM",
             "axis_label": "Jun 1 at 7:00 AM",
-            "interest": 13.0,
-            "formatted_value": "13"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-06-01",
@@ -2486,8 +2486,8 @@
             "datetime_utc": "2026-06-01T10:00:00Z",
             "label": "Jun 1, 2026 at 10:00 AM",
             "axis_label": "Jun 1 at 10:00 AM",
-            "interest": 27.0,
-            "formatted_value": "27"
+            "interest": 28.0,
+            "formatted_value": "28"
           },
           {
             "date": "2026-06-01",
@@ -2502,16 +2502,16 @@
             "datetime_utc": "2026-06-01T12:00:00Z",
             "label": "Jun 1, 2026 at 12:00 PM",
             "axis_label": "Jun 1 at 12:00 PM",
-            "interest": 45.0,
-            "formatted_value": "45"
+            "interest": 44.0,
+            "formatted_value": "44"
           },
           {
             "date": "2026-06-01",
             "datetime_utc": "2026-06-01T13:00:00Z",
             "label": "Jun 1, 2026 at 1:00 PM",
             "axis_label": "Jun 1 at 1:00 PM",
-            "interest": 71.0,
-            "formatted_value": "71"
+            "interest": 69.0,
+            "formatted_value": "69"
           },
           {
             "date": "2026-06-01",
@@ -2550,16 +2550,16 @@
             "datetime_utc": "2026-06-01T18:00:00Z",
             "label": "Jun 1, 2026 at 6:00 PM",
             "axis_label": "Jun 1 at 6:00 PM",
-            "interest": 36.0,
-            "formatted_value": "36"
+            "interest": 38.0,
+            "formatted_value": "38"
           },
           {
             "date": "2026-06-01",
             "datetime_utc": "2026-06-01T19:00:00Z",
             "label": "Jun 1, 2026 at 7:00 PM",
             "axis_label": "Jun 1 at 7:00 PM",
-            "interest": 43.0,
-            "formatted_value": "43"
+            "interest": 42.0,
+            "formatted_value": "42"
           },
           {
             "date": "2026-06-01",
@@ -2590,8 +2590,8 @@
             "datetime_utc": "2026-06-01T23:00:00Z",
             "label": "Jun 1, 2026 at 11:00 PM",
             "axis_label": "Jun 1 at 11:00 PM",
-            "interest": 18.0,
-            "formatted_value": "18"
+            "interest": 17.0,
+            "formatted_value": "17"
           },
           {
             "date": "2026-06-02",
@@ -2630,32 +2630,32 @@
             "datetime_utc": "2026-06-02T04:00:00Z",
             "label": "Jun 2, 2026 at 4:00 AM",
             "axis_label": "Jun 2 at 4:00 AM",
-            "interest": 13.0,
-            "formatted_value": "13"
+            "interest": 15.0,
+            "formatted_value": "15"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T05:00:00Z",
             "label": "Jun 2, 2026 at 5:00 AM",
             "axis_label": "Jun 2 at 5:00 AM",
-            "interest": 16.0,
-            "formatted_value": "16"
+            "interest": 17.0,
+            "formatted_value": "17"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T06:00:00Z",
             "label": "Jun 2, 2026 at 6:00 AM",
             "axis_label": "Jun 2 at 6:00 AM",
-            "interest": 17.0,
-            "formatted_value": "17"
+            "interest": 18.0,
+            "formatted_value": "18"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T07:00:00Z",
             "label": "Jun 2, 2026 at 7:00 AM",
             "axis_label": "Jun 2 at 7:00 AM",
-            "interest": 13.0,
-            "formatted_value": "13"
+            "interest": 15.0,
+            "formatted_value": "15"
           },
           {
             "date": "2026-06-02",
@@ -2670,16 +2670,16 @@
             "datetime_utc": "2026-06-02T09:00:00Z",
             "label": "Jun 2, 2026 at 9:00 AM",
             "axis_label": "Jun 2 at 9:00 AM",
-            "interest": 28.0,
-            "formatted_value": "28"
+            "interest": 25.0,
+            "formatted_value": "25"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T10:00:00Z",
             "label": "Jun 2, 2026 at 10:00 AM",
             "axis_label": "Jun 2 at 10:00 AM",
-            "interest": 27.0,
-            "formatted_value": "27"
+            "interest": 26.0,
+            "formatted_value": "26"
           },
           {
             "date": "2026-06-02",
@@ -2694,112 +2694,112 @@
             "datetime_utc": "2026-06-02T12:00:00Z",
             "label": "Jun 2, 2026 at 12:00 PM",
             "axis_label": "Jun 2 at 12:00 PM",
-            "interest": 33.0,
-            "formatted_value": "33"
+            "interest": 32.0,
+            "formatted_value": "32"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T13:00:00Z",
             "label": "Jun 2, 2026 at 1:00 PM",
             "axis_label": "Jun 2 at 1:00 PM",
-            "interest": 45.0,
-            "formatted_value": "45"
+            "interest": 44.0,
+            "formatted_value": "44"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T14:00:00Z",
             "label": "Jun 2, 2026 at 2:00 PM",
             "axis_label": "Jun 2 at 2:00 PM",
-            "interest": 49.0,
-            "formatted_value": "49"
+            "interest": 56.0,
+            "formatted_value": "56"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T15:00:00Z",
             "label": "Jun 2, 2026 at 3:00 PM",
             "axis_label": "Jun 2 at 3:00 PM",
-            "interest": 42.0,
-            "formatted_value": "42"
+            "interest": 47.0,
+            "formatted_value": "47"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T16:00:00Z",
             "label": "Jun 2, 2026 at 4:00 PM",
             "axis_label": "Jun 2 at 4:00 PM",
-            "interest": 36.0,
-            "formatted_value": "36"
+            "interest": 40.0,
+            "formatted_value": "40"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T17:00:00Z",
             "label": "Jun 2, 2026 at 5:00 PM",
             "axis_label": "Jun 2 at 5:00 PM",
-            "interest": 31.0,
-            "formatted_value": "31"
+            "interest": 37.0,
+            "formatted_value": "37"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T18:00:00Z",
             "label": "Jun 2, 2026 at 6:00 PM",
             "axis_label": "Jun 2 at 6:00 PM",
-            "interest": 26.0,
-            "formatted_value": "26"
+            "interest": 29.0,
+            "formatted_value": "29"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T19:00:00Z",
             "label": "Jun 2, 2026 at 7:00 PM",
             "axis_label": "Jun 2 at 7:00 PM",
-            "interest": 22.0,
-            "formatted_value": "22"
+            "interest": 27.0,
+            "formatted_value": "27"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T20:00:00Z",
             "label": "Jun 2, 2026 at 8:00 PM",
             "axis_label": "Jun 2 at 8:00 PM",
-            "interest": 27.0,
-            "formatted_value": "27"
+            "interest": 31.0,
+            "formatted_value": "31"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T21:00:00Z",
             "label": "Jun 2, 2026 at 9:00 PM",
             "axis_label": "Jun 2 at 9:00 PM",
-            "interest": 18.0,
-            "formatted_value": "18"
+            "interest": 21.0,
+            "formatted_value": "21"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T22:00:00Z",
             "label": "Jun 2, 2026 at 10:00 PM",
             "axis_label": "Jun 2 at 10:00 PM",
-            "interest": 15.0,
-            "formatted_value": "15"
+            "interest": 16.0,
+            "formatted_value": "16"
           },
           {
             "date": "2026-06-02",
             "datetime_utc": "2026-06-02T23:00:00Z",
             "label": "Jun 2, 2026 at 11:00 PM",
             "axis_label": "Jun 2 at 11:00 PM",
-            "interest": 12.0,
-            "formatted_value": "12"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T00:00:00Z",
             "label": "Jun 3, 2026 at 12:00 AM",
             "axis_label": "Jun 3 at 12:00 AM",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T01:00:00Z",
             "label": "Jun 3, 2026 at 1:00 AM",
             "axis_label": "Jun 3 at 1:00 AM",
-            "interest": 9.0,
-            "formatted_value": "9"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-06-03",
@@ -2814,48 +2814,48 @@
             "datetime_utc": "2026-06-03T03:00:00Z",
             "label": "Jun 3, 2026 at 3:00 AM",
             "axis_label": "Jun 3 at 3:00 AM",
-            "interest": 11.0,
-            "formatted_value": "11"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T04:00:00Z",
             "label": "Jun 3, 2026 at 4:00 AM",
             "axis_label": "Jun 3 at 4:00 AM",
-            "interest": 12.0,
-            "formatted_value": "12"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T05:00:00Z",
             "label": "Jun 3, 2026 at 5:00 AM",
             "axis_label": "Jun 3 at 5:00 AM",
-            "interest": 12.0,
-            "formatted_value": "12"
+            "interest": 14.0,
+            "formatted_value": "14"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T06:00:00Z",
             "label": "Jun 3, 2026 at 6:00 AM",
             "axis_label": "Jun 3 at 6:00 AM",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 14.0,
+            "formatted_value": "14"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T07:00:00Z",
             "label": "Jun 3, 2026 at 7:00 AM",
             "axis_label": "Jun 3 at 7:00 AM",
-            "interest": 10.0,
-            "formatted_value": "10"
+            "interest": 12.0,
+            "formatted_value": "12"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T08:00:00Z",
             "label": "Jun 3, 2026 at 8:00 AM",
             "axis_label": "Jun 3 at 8:00 AM",
-            "interest": 11.0,
-            "formatted_value": "11"
+            "interest": 13.0,
+            "formatted_value": "13"
           },
           {
             "date": "2026-06-03",
@@ -2870,16 +2870,56 @@
             "datetime_utc": "2026-06-03T10:00:00Z",
             "label": "Jun 3, 2026 at 10:00 AM",
             "axis_label": "Jun 3 at 10:00 AM",
-            "interest": 15.0,
-            "formatted_value": "15"
+            "interest": 14.0,
+            "formatted_value": "14"
           },
           {
             "date": "2026-06-03",
             "datetime_utc": "2026-06-03T11:00:00Z",
             "label": "Jun 3, 2026 at 11:00 AM",
             "axis_label": "Jun 3 at 11:00 AM",
-            "interest": 16.0,
-            "formatted_value": "16"
+            "interest": 15.0,
+            "formatted_value": "15"
+          },
+          {
+            "date": "2026-06-03",
+            "datetime_utc": "2026-06-03T12:00:00Z",
+            "label": "Jun 3, 2026 at 12:00 PM",
+            "axis_label": "Jun 3 at 12:00 PM",
+            "interest": 21.0,
+            "formatted_value": "21"
+          },
+          {
+            "date": "2026-06-03",
+            "datetime_utc": "2026-06-03T13:00:00Z",
+            "label": "Jun 3, 2026 at 1:00 PM",
+            "axis_label": "Jun 3 at 1:00 PM",
+            "interest": 25.0,
+            "formatted_value": "25"
+          },
+          {
+            "date": "2026-06-03",
+            "datetime_utc": "2026-06-03T14:00:00Z",
+            "label": "Jun 3, 2026 at 2:00 PM",
+            "axis_label": "Jun 3 at 2:00 PM",
+            "interest": 24.0,
+            "formatted_value": "24"
+          },
+          {
+            "date": "2026-06-03",
+            "datetime_utc": "2026-06-03T15:00:00Z",
+            "label": "Jun 3, 2026 at 3:00 PM",
+            "axis_label": "Jun 3 at 3:00 PM",
+            "interest": 23.0,
+            "formatted_value": "23"
+          },
+          {
+            "date": "2026-06-03",
+            "datetime_utc": "2026-06-03T16:00:00Z",
+            "label": "Jun 3, 2026 at 4:00 PM",
+            "axis_label": "Jun 3 at 4:00 PM",
+            "interest": 18.0,
+            "formatted_value": "18"
           }
         ],
         "peak": {
@@ -2892,22 +2932,22 @@
         },
         "latest": {
           "date": "2026-06-03",
-          "datetime_utc": "2026-06-03T11:00:00Z",
-          "label": "Jun 3, 2026 at 11:00 AM",
-          "axis_label": "Jun 3 at 11:00 AM",
-          "interest": 16.0,
-          "formatted_value": "16"
+          "datetime_utc": "2026-06-03T16:00:00Z",
+          "label": "Jun 3, 2026 at 4:00 PM",
+          "axis_label": "Jun 3 at 4:00 PM",
+          "interest": 18.0,
+          "formatted_value": "18"
         },
         "trimmed_partial_current_hour": true,
         "tracking_start_utc": "2026-05-29T00:00:00Z"
       },
       "score": {
-        "score": 17.706809262636327,
+        "score": 12.398338596240334,
         "confidence": 0.65,
         "components": {
           "short_pressure": 18.36220216312922,
-          "volume_pressure": 14.619209122990801,
-          "price_momentum": 20.512823647844577,
+          "volume_pressure": 4.690610290910839,
+          "price_momentum": 10.747582536235223,
           "social_heat": null,
           "leader_concentration": null
         },
@@ -2927,18 +2967,18 @@
       "market": {
         "status": "ok",
         "note": "",
-        "price": 20.920000076293945,
-        "price_change_5d_pct": -4.518483697000564,
-        "price_change_20d_pct": -12.248322389280574,
-        "volume": 5604100.0,
-        "volume_avg_20d": 7457395.0,
-        "volume_ratio_20d": 0.7514822535215044,
+        "price": 22.290000915527344,
+        "price_change_5d_pct": 2.8136559122000193,
+        "price_change_20d_pct": -8.006597867768395,
+        "volume": 12250340.0,
+        "volume_avg_20d": 7170932.0,
+        "volume_ratio_20d": 1.708333031187578,
         "short_percent_float": 14.149999999999999,
         "shares_short": 57937281.0,
         "short_ratio": 5.51,
         "float_shares": 446844052.0,
         "shares_outstanding": 448691227.0,
-        "market_cap": 9386620928.0,
+        "market_cap": 10001328128.0,
         "average_volume": 7448755.0,
         "beta": null,
         "finra_short_interest": {
@@ -3664,14 +3704,14 @@
         "short_deep_dive": {
           "shares_short": 57937281.0,
           "shares_short_source": "FINRA",
-          "short_notional": 1212047922.9402637,
+          "short_notional": 1291422046.533165,
           "short_percent_float": 12.965883900811104,
           "short_percent_shares_outstanding": 12.912505864528526,
-          "short_notional_to_market_cap_pct": 12.912505279985925,
+          "short_notional_to_market_cap_pct": 12.912505519318612,
           "reported_short_percent_float": 14.149999999999999,
           "float_shares": 446844052.0,
           "shares_outstanding": 448691227.0,
-          "market_cap": 9386620928.0,
+          "market_cap": 10001328128.0,
           "official_settlement_date": "2026-05-15",
           "official_days_to_cover": 4.16,
           "official_average_daily_volume": 13910930.0,
@@ -3705,12 +3745,12 @@
         }
       },
       "score": {
-        "score": 6.466990356816726,
+        "score": 8.371938616641458,
         "confidence": 0.65,
         "components": {
           "short_pressure": 11.506871594697893,
-          "volume_pressure": 3.757411267607522,
-          "price_momentum": 0.0,
+          "volume_pressure": 8.54166515593789,
+          "price_momentum": 1.8757706081333463,
           "social_heat": null,
           "leader_concentration": null
         },
@@ -3733,13 +3773,13 @@
         "rank": 1,
         "ticker": "SPCE",
         "name": "Virgin Galactic",
-        "mentions": 1820,
-        "upvotes": 24478,
+        "mentions": 976,
+        "upvotes": 10009,
         "rank_24h_ago": 1,
-        "mentions_24h_ago": 2553,
+        "mentions_24h_ago": 2150,
         "positive": 0,
         "negative": 0,
-        "neutral": 1820,
+        "neutral": 976,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3747,13 +3787,13 @@
         "rank": 2,
         "ticker": "MRVL",
         "name": "Marvell Technology Group",
-        "mentions": 877,
-        "upvotes": 4003,
-        "rank_24h_ago": 16,
-        "mentions_24h_ago": 173,
+        "mentions": 945,
+        "upvotes": 4602,
+        "rank_24h_ago": 7,
+        "mentions_24h_ago": 310,
         "positive": 0,
         "negative": 0,
-        "neutral": 877,
+        "neutral": 945,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3761,55 +3801,55 @@
         "rank": 3,
         "ticker": "MU",
         "name": "Micron Technology",
-        "mentions": 540,
-        "upvotes": 4111,
+        "mentions": 488,
+        "upvotes": 1875,
         "rank_24h_ago": 3,
-        "mentions_24h_ago": 526,
+        "mentions_24h_ago": 536,
         "positive": 0,
         "negative": 0,
-        "neutral": 540,
+        "neutral": 488,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 4,
-        "ticker": "OPEN",
-        "name": "Opendoor",
-        "mentions": 411,
-        "upvotes": 1927,
-        "rank_24h_ago": 11,
-        "mentions_24h_ago": 160,
+        "ticker": "SPY",
+        "name": "SPDR S&amp;P 500 ETF Trust",
+        "mentions": 390,
+        "upvotes": 2049,
+        "rank_24h_ago": 4,
+        "mentions_24h_ago": 319,
         "positive": 0,
         "negative": 0,
-        "neutral": 411,
+        "neutral": 390,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 5,
-        "ticker": "SPY",
-        "name": "SPDR S&amp;P 500 ETF Trust",
-        "mentions": 409,
-        "upvotes": 2066,
-        "rank_24h_ago": 4,
-        "mentions_24h_ago": 309,
+        "ticker": "MSFT",
+        "name": "Microsoft",
+        "mentions": 388,
+        "upvotes": 2510,
+        "rank_24h_ago": 5,
+        "mentions_24h_ago": 318,
         "positive": 0,
         "negative": 0,
-        "neutral": 409,
+        "neutral": 388,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 6,
-        "ticker": "MSFT",
-        "name": "Microsoft",
-        "mentions": 355,
-        "upvotes": 1363,
-        "rank_24h_ago": 6,
-        "mentions_24h_ago": 229,
+        "ticker": "AVGO",
+        "name": "Broadcom",
+        "mentions": 334,
+        "upvotes": 1292,
+        "rank_24h_ago": 11,
+        "mentions_24h_ago": 196,
         "positive": 0,
         "negative": 0,
-        "neutral": 355,
+        "neutral": 334,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -3817,94 +3857,66 @@
         "rank": 7,
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "mentions": 349,
+        "mentions": 332,
         "upvotes": 1873,
-        "rank_24h_ago": 5,
-        "mentions_24h_ago": 275,
+        "rank_24h_ago": 6,
+        "mentions_24h_ago": 296,
         "positive": 0,
         "negative": 0,
-        "neutral": 349,
+        "neutral": 332,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 8,
-        "ticker": "AVGO",
-        "name": "Broadcom",
-        "mentions": 281,
-        "upvotes": 1147,
-        "rank_24h_ago": 14,
-        "mentions_24h_ago": 162,
+        "ticker": "BB",
+        "name": "BlackBerry",
+        "mentions": 213,
+        "upvotes": 1012,
+        "rank_24h_ago": 30,
+        "mentions_24h_ago": 53,
         "positive": 0,
         "negative": 0,
-        "neutral": 281,
+        "neutral": 213,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 9,
-        "ticker": "ASTS",
-        "name": "AST SpaceMobile",
-        "mentions": 217,
-        "upvotes": 844,
-        "rank_24h_ago": 7,
-        "mentions_24h_ago": 242,
+        "ticker": "PANW",
+        "name": "Palo Alto Networks",
+        "mentions": 185,
+        "upvotes": 640,
+        "rank_24h_ago": 42,
+        "mentions_24h_ago": 45,
         "positive": 0,
         "negative": 0,
-        "neutral": 217,
+        "neutral": 185,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 10,
-        "ticker": "BB",
-        "name": "BlackBerry",
-        "mentions": 209,
-        "upvotes": 996,
-        "rank_24h_ago": 32,
-        "mentions_24h_ago": 49,
+        "ticker": "OPEN",
+        "name": "Opendoor",
+        "mentions": 179,
+        "upvotes": 615,
+        "rank_24h_ago": 13,
+        "mentions_24h_ago": 314,
         "positive": 0,
         "negative": 0,
-        "neutral": 209,
+        "neutral": 179,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 11,
-        "ticker": "PANW",
-        "name": "Palo Alto Networks",
-        "mentions": 189,
-        "upvotes": 679,
-        "rank_24h_ago": 51,
-        "mentions_24h_ago": 30,
-        "positive": 0,
-        "negative": 0,
-        "neutral": 189,
-        "net_sentiment": 0.0,
-        "sample_mentions": 0
-      },
-      {
-        "rank": 12,
         "ticker": "NOW",
         "name": "ServiceNow",
-        "mentions": 183,
-        "upvotes": 739,
-        "rank_24h_ago": 9,
-        "mentions_24h_ago": 148,
-        "positive": 0,
-        "negative": 0,
-        "neutral": 183,
-        "net_sentiment": 0.0,
-        "sample_mentions": 0
-      },
-      {
-        "rank": 13,
-        "ticker": "MSTR",
-        "name": "MicroStrategy",
         "mentions": 139,
-        "upvotes": 3167,
-        "rank_24h_ago": 37,
-        "mentions_24h_ago": 46,
+        "upvotes": 586,
+        "rank_24h_ago": 14,
+        "mentions_24h_ago": 159,
         "positive": 0,
         "negative": 0,
         "neutral": 139,
@@ -3912,30 +3924,58 @@
         "sample_mentions": 0
       },
       {
-        "rank": 14,
-        "ticker": "HPE",
-        "name": "Hewlett Packard Enterprise",
-        "mentions": 127,
-        "upvotes": 600,
-        "rank_24h_ago": 2,
-        "mentions_24h_ago": 650,
+        "rank": 12,
+        "ticker": "ASTS",
+        "name": "AST SpaceMobile",
+        "mentions": 133,
+        "upvotes": 620,
+        "rank_24h_ago": 8,
+        "mentions_24h_ago": 226,
         "positive": 0,
         "negative": 0,
-        "neutral": 127,
+        "neutral": 133,
+        "net_sentiment": 0.0,
+        "sample_mentions": 0
+      },
+      {
+        "rank": 13,
+        "ticker": "META",
+        "name": "Meta Platforms (Facebook)",
+        "mentions": 106,
+        "upvotes": 1117,
+        "rank_24h_ago": 10,
+        "mentions_24h_ago": 160,
+        "positive": 0,
+        "negative": 0,
+        "neutral": 106,
+        "net_sentiment": 0.0,
+        "sample_mentions": 0
+      },
+      {
+        "rank": 14,
+        "ticker": "QQQ",
+        "name": "Invesco QQQ ETF",
+        "mentions": 105,
+        "upvotes": 328,
+        "rank_24h_ago": 21,
+        "mentions_24h_ago": 74,
+        "positive": 0,
+        "negative": 0,
+        "neutral": 105,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 15,
-        "ticker": "GOOG",
-        "name": "Alphabet (Google)",
-        "mentions": 120,
-        "upvotes": 317,
-        "rank_24h_ago": 12,
-        "mentions_24h_ago": 156,
+        "ticker": "MSTR",
+        "name": "MicroStrategy",
+        "mentions": 102,
+        "upvotes": 3369,
+        "rank_24h_ago": 34,
+        "mentions_24h_ago": 92,
         "positive": 0,
         "negative": 0,
-        "neutral": 120,
+        "neutral": 102,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       }
@@ -3950,17 +3990,17 @@
   "short_exposure_context": {
     "status": "ok",
     "note": "",
-    "generated_at_utc": "2026-06-03T12:16:32Z",
+    "generated_at_utc": "2026-06-03T17:23:39Z",
     "spce": {
       "short_percent_float": 22.59848880581121,
-      "short_notional_to_market_cap_pct": 21.739370163103303,
+      "short_notional_to_market_cap_pct": 21.739370292322,
       "shares_short": 22707202.0,
-      "market_cap": 479434592.0,
-      "short_notional": 104226060.64484406,
+      "market_cap": 459693152.0,
+      "short_notional": 99934396.52172661,
       "settlement_date": "2026-05-15",
       "rank_in_top100_short_float": null,
       "top100_count_above_spce": 100,
-      "top100_cutoff_ratio_pct": 78.27671910568483,
+      "top100_cutoff_ratio_pct": 77.15428066169756,
       "high_threshold_multiple": 2.259848880581121,
       "classification": "높은 공매도 비율이지만 현재 상위 100개 고공매도 구간보다는 낮습니다."
     },
@@ -3968,7 +4008,7 @@
       "high_short_float_threshold_pct": 10.0,
       "top_observed_short_float_pct": 99.61,
       "top_observed_symbol": "QUCY",
-      "top100_cutoff_short_float_pct": 28.87,
+      "top100_cutoff_short_float_pct": 29.29,
       "gme_2021_short_float_pct": 122.97,
       "gme_2021_short_market_cap_proxy_pct": 109.26
     },
@@ -3978,62 +4018,62 @@
         "symbol": "QUCY",
         "company": "Quantum Cyber N.V.",
         "short_percent_float": 99.61,
-        "price": 2.45,
-        "change_pct": 9.87,
-        "market_cap": "30.66M"
+        "price": 2.58,
+        "change_pct": 5.31,
+        "market_cap": "32.29M"
       },
       {
         "rank": 2,
         "symbol": "XOMA",
         "company": "XOMA Royalty Corporation",
         "short_percent_float": 89.2,
-        "price": 41.69,
-        "change_pct": null,
-        "market_cap": "522.84M"
+        "price": 41.64,
+        "change_pct": -0.12,
+        "market_cap": "522.21M"
       },
       {
         "rank": 3,
         "symbol": "ONCO",
         "company": "Onconetix, Inc.",
         "short_percent_float": 89.19,
-        "price": 1.14,
-        "change_pct": null,
-        "market_cap": "78.99K"
+        "price": 1.05,
+        "change_pct": -7.89,
+        "market_cap": "72.76K"
       },
       {
         "rank": 4,
         "symbol": "HKIT",
         "company": "Hitek Global Inc.",
         "short_percent_float": 84.2,
-        "price": 0.62,
-        "change_pct": -90.58,
-        "market_cap": "5.38M"
+        "price": 0.43,
+        "change_pct": -30.6,
+        "market_cap": "3.74M"
       },
       {
         "rank": 5,
         "symbol": "FLWS",
         "company": "1-800-FLOWERS.COM, Inc.",
         "short_percent_float": 80.49,
-        "price": 4.695,
-        "change_pct": 2.96,
-        "market_cap": "300.94M"
+        "price": 4.275,
+        "change_pct": -8.95,
+        "market_cap": "274.02M"
       },
       {
         "rank": 6,
         "symbol": "LRHC",
         "company": "La Rosa Holdings Corp.",
         "short_percent_float": 78.55,
-        "price": 1.34,
-        "change_pct": 6.35,
-        "market_cap": "71.69K"
+        "price": 1.23,
+        "change_pct": -8.21,
+        "market_cap": "65.81K"
       },
       {
         "rank": 7,
         "symbol": "BH",
         "company": "Biglari Holdings Inc.",
         "short_percent_float": 76.24,
-        "price": 295.97,
-        "change_pct": -0.9,
+        "price": 296.82,
+        "change_pct": 0.29,
         "market_cap": "939.14M"
       },
       {
@@ -4041,45 +4081,45 @@
         "symbol": "LNAI",
         "company": "Lunai Bioworks Inc.",
         "short_percent_float": 74.35,
-        "price": 2.98,
-        "change_pct": 0.68,
-        "market_cap": "13.51M"
+        "price": 2.87,
+        "change_pct": -3.69,
+        "market_cap": "13.01M"
       },
       {
         "rank": 9,
         "symbol": "WOLF",
         "company": "Wolfspeed, Inc.",
         "short_percent_float": 68.27,
-        "price": 61.06,
-        "change_pct": 15.32,
-        "market_cap": "2.95B"
+        "price": 63.07,
+        "change_pct": 3.28,
+        "market_cap": "3.05B"
       },
       {
         "rank": 10,
         "symbol": "ELPW",
         "company": "Elong Power Holding Limited",
         "short_percent_float": 67.94,
-        "price": 0.93,
-        "change_pct": 7.14,
-        "market_cap": "1.33M"
+        "price": 0.84,
+        "change_pct": -9.65,
+        "market_cap": "1.20M"
       },
       {
         "rank": 11,
         "symbol": "GRPN",
         "company": "Groupon, Inc.",
         "short_percent_float": 66.7,
-        "price": 18.8,
-        "change_pct": -0.58,
-        "market_cap": "714.10M"
+        "price": 17.4,
+        "change_pct": -7.45,
+        "market_cap": "660.92M"
       },
       {
         "rank": 12,
         "symbol": "HCWB",
         "company": "HCW Biologics Inc.",
         "short_percent_float": 61.8,
-        "price": 1.79,
-        "change_pct": -13.53,
-        "market_cap": "12.82M"
+        "price": 1.61,
+        "change_pct": -10.06,
+        "market_cap": "11.53M"
       }
     ],
     "source": "StockAnalysis 고공매도 종목 리스트",

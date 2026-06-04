@@ -1753,5 +1753,60 @@
       "spce_rank": 3,
       "spce_net_sentiment": 0.0
     }
+  },
+  {
+    "generated_at_utc": "2026-06-04T00:04:22Z",
+    "symbols": {
+      "SPCE": {
+        "price": 4.289999961853027,
+        "price_change_5d_pct": 13.19261226998898,
+        "volume_ratio_20d": 1.1901671503905398,
+        "short_percent_float": 22.58,
+        "official_short_percent_float": 22.59848880581121,
+        "official_shares_short": 22707202.0,
+        "official_days_to_cover": 2.48,
+        "short_volume_ratio": 0.4763585821387816,
+        "score": 12.335521578966466,
+        "confidence": 0.65,
+        "social_mentions": {
+          "reddit": null,
+          "x": null,
+          "youtube": null
+        },
+        "google_trends": {
+          "status": "ok",
+          "window": "2026-05-29T00 2026-06-04T23",
+          "latest_interest": 6.0,
+          "latest_datetime_utc": "2026-06-03T23:00:00Z",
+          "latest_label": "Jun 3, 2026 at 11:00 PM",
+          "peak_interest": 100.0,
+          "peak_datetime_utc": "2026-06-01T14:00:00Z",
+          "peak_date": "2026-06-01"
+        }
+      },
+      "GME": {
+        "price": 22.18000030517578,
+        "price_change_5d_pct": 2.30627303026667,
+        "volume_ratio_20d": 2.375254830565989,
+        "short_percent_float": 14.149999999999999,
+        "official_short_percent_float": 12.965883900811104,
+        "official_shares_short": 57937281.0,
+        "official_days_to_cover": 4.16,
+        "short_volume_ratio": 0.6515142037526885,
+        "score": 9.319913249233881,
+        "confidence": 0.65,
+        "social_mentions": {
+          "reddit": null,
+          "x": null,
+          "youtube": null
+        },
+        "google_trends": null
+      }
+    },
+    "wsb": {
+      "spce_mentions": 612,
+      "spce_rank": 3,
+      "spce_net_sentiment": 0.0
+    }
   }
 ]

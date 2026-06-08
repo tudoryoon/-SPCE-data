@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-06-08T19:36:56Z",
+  "generated_at_utc": "2026-06-08T22:02:46Z",
   "window_hours": 24,
   "baseline": {
     "name": "GME January 2021",
@@ -632,8 +632,8 @@
           "datetime_utc": "2021-01-22T00:00:00Z",
           "label": "Jan 22, 2021",
           "axis_label": "Jan 22, 2021",
-          "interest": 5.0,
-          "formatted_value": "5"
+          "interest": 6.0,
+          "formatted_value": "6"
         },
         {
           "date": "2021-01-23",
@@ -672,8 +672,8 @@
           "datetime_utc": "2021-01-27T00:00:00Z",
           "label": "Jan 27, 2021",
           "axis_label": "Jan 27, 2021",
-          "interest": 52.0,
-          "formatted_value": "52"
+          "interest": 54.0,
+          "formatted_value": "54"
         },
         {
           "date": "2021-01-28",
@@ -688,32 +688,32 @@
           "datetime_utc": "2021-01-29T00:00:00Z",
           "label": "Jan 29, 2021",
           "axis_label": "Jan 29, 2021",
-          "interest": 85.0,
-          "formatted_value": "85"
+          "interest": 87.0,
+          "formatted_value": "87"
         },
         {
           "date": "2021-01-30",
           "datetime_utc": "2021-01-30T00:00:00Z",
           "label": "Jan 30, 2021",
           "axis_label": "Jan 30, 2021",
-          "interest": 23.0,
-          "formatted_value": "23"
+          "interest": 24.0,
+          "formatted_value": "24"
         },
         {
           "date": "2021-01-31",
           "datetime_utc": "2021-01-31T00:00:00Z",
           "label": "Jan 31, 2021",
           "axis_label": "Jan 31, 2021",
-          "interest": 11.0,
-          "formatted_value": "11"
+          "interest": 12.0,
+          "formatted_value": "12"
         },
         {
           "date": "2021-02-01",
           "datetime_utc": "2021-02-01T00:00:00Z",
           "label": "Feb 1, 2021",
           "axis_label": "Feb 1, 2021",
-          "interest": 52.0,
-          "formatted_value": "52"
+          "interest": 53.0,
+          "formatted_value": "53"
         },
         {
           "date": "2021-02-02",
@@ -728,32 +728,32 @@
           "datetime_utc": "2021-02-03T00:00:00Z",
           "label": "Feb 3, 2021",
           "axis_label": "Feb 3, 2021",
-          "interest": 42.0,
-          "formatted_value": "42"
+          "interest": 43.0,
+          "formatted_value": "43"
         },
         {
           "date": "2021-02-04",
           "datetime_utc": "2021-02-04T00:00:00Z",
           "label": "Feb 4, 2021",
           "axis_label": "Feb 4, 2021",
-          "interest": 31.0,
-          "formatted_value": "31"
+          "interest": 32.0,
+          "formatted_value": "32"
         },
         {
           "date": "2021-02-05",
           "datetime_utc": "2021-02-05T00:00:00Z",
           "label": "Feb 5, 2021",
           "axis_label": "Feb 5, 2021",
-          "interest": 29.0,
-          "formatted_value": "29"
+          "interest": 28.0,
+          "formatted_value": "28"
         },
         {
           "date": "2021-02-06",
           "datetime_utc": "2021-02-06T00:00:00Z",
           "label": "Feb 6, 2021",
           "axis_label": "Feb 6, 2021",
-          "interest": 6.0,
-          "formatted_value": "6"
+          "interest": 7.0,
+          "formatted_value": "7"
         },
         {
           "date": "2021-02-07",
@@ -1038,18 +1038,18 @@
       "market": {
         "status": "ok",
         "note": "",
-        "price": 4.269999980926514,
-        "price_change_5d_pct": -43.21808521599995,
-        "price_change_20d_pct": 45.238091762605826,
-        "volume": 23803454.0,
-        "volume_avg_20d": 51774862.7,
-        "volume_ratio_20d": 0.4597492442988168,
+        "price": 4.119999885559082,
+        "price_change_5d_pct": -45.21276734030695,
+        "price_change_20d_pct": 40.136047801788855,
+        "volume": 27228457.0,
+        "volume_avg_20d": 51946112.85,
+        "volume_ratio_20d": 0.5241673631793221,
         "short_percent_float": 22.58,
         "shares_short": 22707202.0,
         "short_ratio": 2.62,
         "float_shares": 100481064.0,
         "shares_outstanding": 104451974.0,
-        "market_cap": 446009920.0,
+        "market_cap": 430342144.0,
         "average_volume": 19457207.0,
         "beta": null,
         "finra_short_interest": {
@@ -1354,19 +1354,19 @@
           "source": "FINRA Reg SHO 일별 공매도성 거래",
           "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
           "latest": {
-            "trade_date": "2026-06-05",
-            "short_volume": 9107472.573936,
-            "short_exempt_volume": 311151.37354,
-            "total_volume": 18297476.677345,
+            "trade_date": "2026-06-08",
+            "short_volume": 8411393.393433,
+            "short_exempt_volume": 1188524.3699,
+            "total_volume": 15405301.912285002,
             "facilities": [
               "NCTRF",
               "NQTRF",
               "NYTRF"
             ],
-            "short_volume_ratio": 0.4977447292069735,
-            "short_exempt_ratio": 0.017005152077895623
+            "short_volume_ratio": 0.5460063971044482,
+            "short_exempt_ratio": 0.07715034581387904
           },
-          "average_short_volume_ratio_5d": 0.48200497776399026,
+          "average_short_volume_ratio_5d": 0.471130996664703,
           "history": [
             {
               "trade_date": "2026-04-27",
@@ -1744,32 +1744,45 @@
               ],
               "short_volume_ratio": 0.4977447292069735,
               "short_exempt_ratio": 0.017005152077895623
+            },
+            {
+              "trade_date": "2026-06-08",
+              "short_volume": 8411393.393433,
+              "short_exempt_volume": 1188524.3699,
+              "total_volume": 15405301.912285002,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5460063971044482,
+              "short_exempt_ratio": 0.07715034581387904
             }
           ]
         },
         "short_deep_dive": {
           "shares_short": 22707202.0,
           "shares_short_source": "FINRA",
-          "short_notional": 96959752.1068945,
+          "short_notional": 93553669.64136696,
           "short_percent_float": 22.59848880581121,
           "short_percent_shares_outstanding": 21.73937086148319,
-          "short_notional_to_market_cap_pct": 21.739371202078754,
+          "short_notional_to_market_cap_pct": 21.73936969588713,
           "reported_short_percent_float": 22.58,
           "float_shares": 100481064.0,
           "shares_outstanding": 104451974.0,
-          "market_cap": 446009920.0,
+          "market_cap": 430342144.0,
           "official_settlement_date": "2026-05-15",
           "official_days_to_cover": 2.48,
           "official_average_daily_volume": 9152826.0,
           "short_interest_change_shares": 831452.0,
           "short_interest_change_percent": 3.8,
-          "daily_short_volume_date": "2026-06-05",
-          "daily_short_volume": 9107472.573936,
-          "daily_total_reported_volume": 18297476.677345,
-          "daily_short_volume_ratio": 0.4977447292069735,
-          "daily_short_exempt_volume": 311151.37354,
-          "daily_short_exempt_ratio": 0.017005152077895623,
-          "average_short_volume_ratio_5d": 0.48200497776399026,
+          "daily_short_volume_date": "2026-06-08",
+          "daily_short_volume": 8411393.393433,
+          "daily_total_reported_volume": 15405301.912285002,
+          "daily_short_volume_ratio": 0.5460063971044482,
+          "daily_short_exempt_volume": 1188524.3699,
+          "daily_short_exempt_ratio": 0.07715034581387904,
+          "average_short_volume_ratio_5d": 0.471130996664703,
           "caveat": "공매도 주식 수는 FINRA 결제일 기준으로 보고된 미청산 공매도 잔고입니다. 일별 공매도성 거래 비율은 당일 공매도성 거래로 보고된 흐름이며 누적 미청산 잔고가 아닙니다. 시총 대비 공매도는 공매도 주식 수에 현재가를 곱한 뒤 시총으로 나눈 값입니다."
         }
       },
@@ -3341,11 +3354,11 @@
         "tracking_start_utc": "2026-05-29T00:00:00Z"
       },
       "score": {
-        "score": 9.182169066519357,
+        "score": 9.281273864797058,
         "confidence": 0.65,
         "components": {
           "short_pressure": 18.36220216312922,
-          "volume_pressure": 2.298746221494084,
+          "volume_pressure": 2.620836815896611,
           "price_momentum": 0.0,
           "social_heat": null,
           "leader_concentration": null
@@ -3366,18 +3379,18 @@
       "market": {
         "status": "ok",
         "note": "",
-        "price": 22.01140022277832,
-        "price_change_5d_pct": 3.0496235665418148,
-        "price_change_20d_pct": -9.343494232745076,
-        "volume": 3429089.0,
-        "volume_avg_20d": 6987664.45,
-        "volume_ratio_20d": 0.4907346402416332,
+        "price": 22.260000228881836,
+        "price_change_5d_pct": 4.2134812397622845,
+        "price_change_20d_pct": -8.31960626292203,
+        "volume": 5101163.0,
+        "volume_avg_20d": 7071268.15,
+        "volume_ratio_20d": 0.7213929512770634,
         "short_percent_float": 14.149999999999999,
         "shares_short": 57937281.0,
         "short_ratio": 5.51,
         "float_shares": 446844052.0,
         "shares_outstanding": 448691227.0,
-        "market_cap": 9876322304.0,
+        "market_cap": 9987866624.0,
         "average_volume": 7683347.0,
         "beta": 1.773,
         "finra_short_interest": {
@@ -3682,19 +3695,19 @@
           "source": "FINRA Reg SHO 일별 공매도성 거래",
           "source_url": "https://api.finra.org/data/group/OTCMarket/name/regShoDaily",
           "latest": {
-            "trade_date": "2026-06-05",
-            "short_volume": 1801345.9735299998,
-            "short_exempt_volume": 25288.0,
-            "total_volume": 2940000.3998400006,
+            "trade_date": "2026-06-08",
+            "short_volume": 1483766.112254,
+            "short_exempt_volume": 0.0,
+            "total_volume": 2742776.391209,
             "facilities": [
               "NCTRF",
               "NQTRF",
               "NYTRF"
             ],
-            "short_volume_ratio": 0.6127026287574764,
-            "short_exempt_ratio": 0.00860135937443281
+            "short_volume_ratio": 0.5409723216991688,
+            "short_exempt_ratio": 0.0
           },
-          "average_short_volume_ratio_5d": 0.6417209837672007,
+          "average_short_volume_ratio_5d": 0.6035615615942536,
           "history": [
             {
               "trade_date": "2026-04-27",
@@ -4072,32 +4085,45 @@
               ],
               "short_volume_ratio": 0.6127026287574764,
               "short_exempt_ratio": 0.00860135937443281
+            },
+            {
+              "trade_date": "2026-06-08",
+              "short_volume": 1483766.112254,
+              "short_exempt_volume": 0.0,
+              "total_volume": 2742776.391209,
+              "facilities": [
+                "NCTRF",
+                "NQTRF",
+                "NYTRF"
+              ],
+              "short_volume_ratio": 0.5409723216991688,
+              "short_exempt_ratio": 0.0
             }
           ]
         },
         "short_deep_dive": {
           "shares_short": 57937281.0,
           "shares_short_source": "FINRA",
-          "short_notional": 1275280679.9105701,
+          "short_notional": 1289683888.3207912,
           "short_percent_float": 12.965883900811104,
           "short_percent_shares_outstanding": 12.912505864528526,
-          "short_notional_to_market_cap_pct": 12.91250569449389,
+          "short_notional_to_market_cap_pct": 12.912506112384298,
           "reported_short_percent_float": 14.149999999999999,
           "float_shares": 446844052.0,
           "shares_outstanding": 448691227.0,
-          "market_cap": 9876322304.0,
+          "market_cap": 9987866624.0,
           "official_settlement_date": "2026-05-15",
           "official_days_to_cover": 4.16,
           "official_average_daily_volume": 13910930.0,
           "short_interest_change_shares": -1437193.0,
           "short_interest_change_percent": -2.42,
-          "daily_short_volume_date": "2026-06-05",
-          "daily_short_volume": 1801345.9735299998,
-          "daily_total_reported_volume": 2940000.3998400006,
-          "daily_short_volume_ratio": 0.6127026287574764,
-          "daily_short_exempt_volume": 25288.0,
-          "daily_short_exempt_ratio": 0.00860135937443281,
-          "average_short_volume_ratio_5d": 0.6417209837672007,
+          "daily_short_volume_date": "2026-06-08",
+          "daily_short_volume": 1483766.112254,
+          "daily_total_reported_volume": 2742776.391209,
+          "daily_short_volume_ratio": 0.5409723216991688,
+          "daily_short_exempt_volume": 0.0,
+          "daily_short_exempt_ratio": 0.0,
+          "average_short_volume_ratio_5d": 0.6035615615942536,
           "caveat": "공매도 주식 수는 FINRA 결제일 기준으로 보고된 미청산 공매도 잔고입니다. 일별 공매도성 거래 비율은 당일 공매도성 거래로 보고된 흐름이며 누적 미청산 잔고가 아닙니다. 시총 대비 공매도는 공매도 주식 수에 현재가를 곱한 뒤 시총으로 나눈 값입니다."
         }
       },
@@ -4119,12 +4145,12 @@
         }
       },
       "score": {
-        "score": 6.535013038931051,
+        "score": 7.06892700563486,
         "confidence": 0.65,
         "components": {
           "short_pressure": 11.506871594697893,
-          "volume_pressure": 2.453673201208166,
-          "price_momentum": 2.0330823776945435,
+          "volume_pressure": 3.6069647563853167,
+          "price_momentum": 2.8089874931748566,
           "social_heat": null,
           "leader_concentration": null
         },
@@ -4147,13 +4173,13 @@
         "rank": 1,
         "ticker": "MU",
         "name": "Micron Technology",
-        "mentions": 360,
-        "upvotes": 3380,
+        "mentions": 362,
+        "upvotes": 3539,
         "rank_24h_ago": 2,
-        "mentions_24h_ago": 66,
+        "mentions_24h_ago": 75,
         "positive": 0,
         "negative": 0,
-        "neutral": 360,
+        "neutral": 362,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4161,13 +4187,13 @@
         "rank": 2,
         "ticker": "SPY",
         "name": "SPDR S&amp;P 500 ETF Trust",
-        "mentions": 347,
-        "upvotes": 1195,
+        "mentions": 348,
+        "upvotes": 1316,
         "rank_24h_ago": 1,
-        "mentions_24h_ago": 78,
+        "mentions_24h_ago": 90,
         "positive": 0,
         "negative": 0,
-        "neutral": 347,
+        "neutral": 348,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4175,13 +4201,13 @@
         "rank": 3,
         "ticker": "MSFT",
         "name": "Microsoft",
-        "mentions": 251,
-        "upvotes": 1501,
-        "rank_24h_ago": 12,
+        "mentions": 263,
+        "upvotes": 2022,
+        "rank_24h_ago": 14,
         "mentions_24h_ago": 20,
         "positive": 0,
         "negative": 0,
-        "neutral": 251,
+        "neutral": 263,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4190,9 +4216,9 @@
         "ticker": "MRVL",
         "name": "Marvell Technology Group",
         "mentions": 176,
-        "upvotes": 569,
+        "upvotes": 555,
         "rank_24h_ago": 5,
-        "mentions_24h_ago": 51,
+        "mentions_24h_ago": 61,
         "positive": 0,
         "negative": 0,
         "neutral": 176,
@@ -4203,13 +4229,13 @@
         "rank": 5,
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "mentions": 136,
-        "upvotes": 470,
-        "rank_24h_ago": 4,
-        "mentions_24h_ago": 56,
+        "mentions": 134,
+        "upvotes": 449,
+        "rank_24h_ago": 3,
+        "mentions_24h_ago": 54,
         "positive": 0,
         "negative": 0,
-        "neutral": 136,
+        "neutral": 134,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4217,41 +4243,41 @@
         "rank": 6,
         "ticker": "QQQ",
         "name": "Invesco QQQ ETF",
-        "mentions": 124,
-        "upvotes": 429,
-        "rank_24h_ago": 3,
-        "mentions_24h_ago": 52,
+        "mentions": 127,
+        "upvotes": 465,
+        "rank_24h_ago": 4,
+        "mentions_24h_ago": 44,
         "positive": 0,
         "negative": 0,
-        "neutral": 124,
+        "neutral": 127,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 7,
-        "ticker": "AVGO",
-        "name": "Broadcom",
-        "mentions": 101,
-        "upvotes": 257,
-        "rank_24h_ago": 7,
-        "mentions_24h_ago": 39,
+        "ticker": "AAPL",
+        "name": "Apple",
+        "mentions": 104,
+        "upvotes": 454,
+        "rank_24h_ago": 67,
+        "mentions_24h_ago": 2,
         "positive": 0,
         "negative": 0,
-        "neutral": 101,
+        "neutral": 104,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 8,
-        "ticker": "AAPL",
-        "name": "Apple",
-        "mentions": 88,
-        "upvotes": 385,
-        "rank_24h_ago": 99,
-        "mentions_24h_ago": 2,
+        "ticker": "AVGO",
+        "name": "Broadcom",
+        "mentions": 102,
+        "upvotes": 255,
+        "rank_24h_ago": 6,
+        "mentions_24h_ago": 40,
         "positive": 0,
         "negative": 0,
-        "neutral": 88,
+        "neutral": 102,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4259,13 +4285,13 @@
         "rank": 9,
         "ticker": "TSLA",
         "name": "Tesla",
-        "mentions": 81,
-        "upvotes": 841,
-        "rank_24h_ago": 11,
-        "mentions_24h_ago": 31,
+        "mentions": 89,
+        "upvotes": 1019,
+        "rank_24h_ago": 9,
+        "mentions_24h_ago": 30,
         "positive": 0,
         "negative": 0,
-        "neutral": 81,
+        "neutral": 89,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4273,13 +4299,13 @@
         "rank": 10,
         "ticker": "DTE",
         "name": "DTE Energy",
-        "mentions": 70,
-        "upvotes": 902,
-        "rank_24h_ago": 9,
-        "mentions_24h_ago": 26,
+        "mentions": 76,
+        "upvotes": 1175,
+        "rank_24h_ago": 10,
+        "mentions_24h_ago": 27,
         "positive": 0,
         "negative": 0,
-        "neutral": 70,
+        "neutral": 76,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4287,27 +4313,27 @@
         "rank": 11,
         "ticker": "AM",
         "name": "Antero Midstream",
-        "mentions": 53,
-        "upvotes": 164,
-        "rank_24h_ago": 23,
-        "mentions_24h_ago": 12,
+        "mentions": 55,
+        "upvotes": 153,
+        "rank_24h_ago": 20,
+        "mentions_24h_ago": 13,
         "positive": 0,
         "negative": 0,
-        "neutral": 53,
+        "neutral": 55,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
       {
         "rank": 12,
-        "ticker": "SPCX",
-        "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
-        "mentions": 53,
-        "upvotes": 1557,
-        "rank_24h_ago": 6,
-        "mentions_24h_ago": 36,
+        "ticker": "NBIS",
+        "name": "Nebius Group",
+        "mentions": 55,
+        "upvotes": 143,
+        "rank_24h_ago": 32,
+        "mentions_24h_ago": 9,
         "positive": 0,
         "negative": 0,
-        "neutral": 53,
+        "neutral": 55,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       },
@@ -4316,9 +4342,9 @@
         "ticker": "META",
         "name": "Meta Platforms (Facebook)",
         "mentions": 53,
-        "upvotes": 242,
-        "rank_24h_ago": 20,
-        "mentions_24h_ago": 10,
+        "upvotes": 200,
+        "rank_24h_ago": 22,
+        "mentions_24h_ago": 12,
         "positive": 0,
         "negative": 0,
         "neutral": 53,
@@ -4327,12 +4353,12 @@
       },
       {
         "rank": 14,
-        "ticker": "MSTR",
-        "name": "MicroStrategy",
+        "ticker": "SPCX",
+        "name": "Collaborative Investment Series Trust - The SPAC and New Issue ETF",
         "mentions": 48,
-        "upvotes": 478,
-        "rank_24h_ago": 18,
-        "mentions_24h_ago": 17,
+        "upvotes": 885,
+        "rank_24h_ago": 7,
+        "mentions_24h_ago": 35,
         "positive": 0,
         "negative": 0,
         "neutral": 48,
@@ -4341,15 +4367,15 @@
       },
       {
         "rank": 15,
-        "ticker": "ASTS",
-        "name": "AST SpaceMobile",
-        "mentions": 43,
-        "upvotes": 112,
-        "rank_24h_ago": 8,
-        "mentions_24h_ago": 33,
+        "ticker": "MSTR",
+        "name": "MicroStrategy",
+        "mentions": 44,
+        "upvotes": 499,
+        "rank_24h_ago": 16,
+        "mentions_24h_ago": 17,
         "positive": 0,
         "negative": 0,
-        "neutral": 43,
+        "neutral": 44,
         "net_sentiment": 0.0,
         "sample_mentions": 0
       }
@@ -4364,13 +4390,13 @@
   "short_exposure_context": {
     "status": "ok",
     "note": "",
-    "generated_at_utc": "2026-06-08T19:37:05Z",
+    "generated_at_utc": "2026-06-08T22:02:57Z",
     "spce": {
       "short_percent_float": 22.59848880581121,
-      "short_notional_to_market_cap_pct": 21.739371202078754,
+      "short_notional_to_market_cap_pct": 21.73936969588713,
       "shares_short": 22707202.0,
-      "market_cap": 446009920.0,
-      "short_notional": 96959752.1068945,
+      "market_cap": 430342144.0,
+      "short_notional": 93553669.64136696,
       "settlement_date": "2026-05-15",
       "rank_in_top100_short_float": null,
       "top100_count_above_spce": 100,
@@ -4401,36 +4427,36 @@
         "symbol": "XOMA",
         "company": "XOMA Royalty Corporation",
         "short_percent_float": 89.2,
-        "price": 42.18,
-        "change_pct": 0.21,
-        "market_cap": "528.98M"
+        "price": 41.92,
+        "change_pct": -0.4,
+        "market_cap": "525.72M"
       },
       {
         "rank": 3,
         "symbol": "ONCO",
         "company": "Onconetix, Inc.",
         "short_percent_float": 89.19,
-        "price": 1.0,
-        "change_pct": -2.91,
-        "market_cap": "69.29K"
+        "price": 1.01,
+        "change_pct": -1.94,
+        "market_cap": "69.99K"
       },
       {
         "rank": 4,
         "symbol": "ICCM",
         "company": "IceCure Medical Ltd",
         "short_percent_float": 87.13,
-        "price": 3.73,
-        "change_pct": -14.55,
-        "market_cap": "10.09M"
+        "price": 3.64,
+        "change_pct": -16.61,
+        "market_cap": "9.85M"
       },
       {
         "rank": 5,
         "symbol": "FLWS",
         "company": "1-800-FLOWERS.COM, Inc.",
         "short_percent_float": 80.49,
-        "price": 4.395,
-        "change_pct": 1.27,
-        "market_cap": "281.71M"
+        "price": 4.42,
+        "change_pct": 1.84,
+        "market_cap": "283.32M"
       },
       {
         "rank": 6,
@@ -4446,17 +4472,17 @@
         "symbol": "CETX",
         "company": "Cemtrex, Inc.",
         "short_percent_float": 77.05,
-        "price": 5.19,
-        "change_pct": -5.98,
-        "market_cap": "5.77M"
+        "price": 5.24,
+        "change_pct": -5.07,
+        "market_cap": "5.83M"
       },
       {
         "rank": 8,
         "symbol": "BH",
         "company": "Biglari Holdings Inc.",
         "short_percent_float": 76.24,
-        "price": 303.92,
-        "change_pct": 3.54,
+        "price": 299.72,
+        "change_pct": 2.11,
         "market_cap": "946.10M"
       },
       {
@@ -4464,36 +4490,36 @@
         "symbol": "LNAI",
         "company": "Lunai Bioworks Inc.",
         "short_percent_float": 74.35,
-        "price": 2.391,
-        "change_pct": -2.4,
-        "market_cap": "10.84M"
+        "price": 2.37,
+        "change_pct": -3.27,
+        "market_cap": "10.75M"
       },
       {
         "rank": 10,
         "symbol": "SILO",
         "company": "Silo Pharma, Inc.",
         "short_percent_float": 69.01,
-        "price": 6.25,
-        "change_pct": 5.93,
-        "market_cap": "6.78M"
+        "price": 6.26,
+        "change_pct": 6.1,
+        "market_cap": "6.79M"
       },
       {
         "rank": 11,
         "symbol": "WOLF",
         "company": "Wolfspeed, Inc.",
         "short_percent_float": 68.27,
-        "price": 54.35,
-        "change_pct": -1.29,
-        "market_cap": "2.63B"
+        "price": 55.42,
+        "change_pct": 0.65,
+        "market_cap": "2.68B"
       },
       {
         "rank": 12,
         "symbol": "ELPW",
         "company": "Elong Power Holding Limited",
         "short_percent_float": 67.94,
-        "price": 0.8,
-        "change_pct": 4.23,
-        "market_cap": "1.14M"
+        "price": 0.771,
+        "change_pct": 0.4,
+        "market_cap": "1.10M"
       }
     ],
     "source": "StockAnalysis 고공매도 종목 리스트",
